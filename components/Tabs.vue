@@ -24,8 +24,6 @@ const getContainerBounds = () => {
 const getActiveTabBounds = () => {
   const tab = tabElements.value[activeTab.value];
   if (!tab) return null;
-
-  console.log(tab.getBoundingClientRect());
   return tab.getBoundingClientRect();
 };
 </script>

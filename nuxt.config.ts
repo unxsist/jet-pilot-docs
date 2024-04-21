@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@nuxtjs/google-fonts",
+    "@nuxtjs/device",
   ],
   googleFonts: {
     families: {

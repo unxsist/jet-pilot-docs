@@ -1,15 +1,15 @@
 <script setup lang="ts">
+const { isMacOS, isWindows } = useDevice();
 const activeImage = ref("Object Browser");
 
 const getOperatingSystem = () => {
-  if (navigator.userAgent.indexOf("Mac") !== -1) {
+  if (isMacOS) {
     return "Mac";
-  } else if (navigator.userAgent.indexOf("Windows") !== -1) {
+  } else if (isWindows) {
     return "Windows";
-  } else if (navigator.userAgent.indexOf("Linux") !== -1) {
-    return "Linux";
   }
-  return "Other";
+
+  return "Linux";
 };
 </script>
 <template>
