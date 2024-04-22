@@ -23,11 +23,11 @@ onMounted(() => {
 </script>
 <template>
   <div class="text-center my-5">
-    <h1 class="text-lg lg:text-xl font-medium mb-3">
+    <h1 class="text-lg sm:text-xl lg:text-2xl font-medium mb-3">
       Manage Kubernetes in style
     </h1>
     <h2
-      class="lg:text-lg font-normal w-1/2 mx-auto text-dark-gray dark:text-gray"
+      class="lg:text-lg font-normal w-5/6 lg:w-1/2 mx-auto text-dark-gray dark:text-gray"
     >
       JET Pilot is an open-source Kubernetes desktop client that focuses on less
       clutter, speed and good looks.
@@ -102,11 +102,19 @@ onMounted(() => {
       />
     </div>
     <div
-      class="flex flex-col items-center relative bg-white dark:bg-black -mt-[250px] min-h-[250px] z-10"
+      class="flex flex-col items-center relative bg-white dark:bg-black -mt-[100px] min-h-[100px] sm:-mt-[250px] sm:min-h-[250px] z-10"
     >
-      <div class="absolute mx-auto">
-        <img src="~/assets/images/line-dark.svg" class="hidden dark:block" />
-        <img src="~/assets/images/line-light.svg" class="dark:hidden" />
+      <div
+        class="flex justify-center absolute mx-auto max-w-full overflow-hidden sm:overflow-visible"
+      >
+        <img
+          src="~/assets/images/line-dark.svg"
+          class="min-w-[1000px] sm:min-w-full hidden dark:block"
+        />
+        <img
+          src="~/assets/images/line-light.svg"
+          class="min-w-[1000px] sm:min-w-full dark:hidden"
+        />
       </div>
       <a
         href="https://www.github.com/unxsist/jet-pilot/releases/latest"

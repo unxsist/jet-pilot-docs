@@ -5,8 +5,10 @@ export default <Partial<Config>>{
   theme: {
     fontSize: {
       xs: "0.75rem",
+      md: "1rem",
       lg: "1.25rem",
-      xl: "4rem",
+      xl: "2rem",
+      "2xl": "4rem",
     },
     fontFamily: {
       sans: ["Inter", "sans-serif"],
