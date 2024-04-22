@@ -1,20 +1,5 @@
 <script setup lang="ts">
 useHead({
-  htmlAttrs: {
-    lang: "en",
-  },
-  title: "JET Pilot - Manage Kubernetes in style",
-  meta: [
-    {
-      name: "description",
-      content:
-        "JET Pilot is an open-source Kubernetes desktop client that focuses on less clutter, speed and good looks.",
-    },
-    {
-      name: "keywords",
-      content: "kubernetes, desktop, client, open-source, jet pilot",
-    },
-  ],
   link: [
     {
       rel: "icon",
