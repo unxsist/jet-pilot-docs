@@ -44,61 +44,77 @@ onMounted(() => {
       />
     </div>
     <div class="flex justify-center">
-      <img
-        src="~/assets/images/dark-object-browser.png"
+      <NuxtImg
+        src="/images/dark-object-browser.png"
         v-show="activeImage === 'Object Browser'"
         :title="activeImage"
         :alt="activeImage"
         class="w-[1000px] hidden dark:block"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/light-object-browser.png"
+      <NuxtImg
+        src="/images/light-object-browser.png"
         v-show="activeImage === 'Object Browser'"
         title="Object Browser"
         alt="Object Browser"
         class="w-[1000px] block dark:hidden"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/dark-object-editor.png"
+      <NuxtImg
+        src="/images/dark-object-editor.png"
         v-show="activeImage === 'Object Editor'"
         :title="activeImage"
         :alt="activeImage"
         class="w-[1000px] hidden dark:block"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/light-object-editor.png"
+      <NuxtImg
+        src="/images/light-object-editor.png"
         v-show="activeImage === 'Object Editor'"
         title="Object Browser"
         alt="Object Browser"
         class="w-[1000px] block dark:hidden"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/dark-log-viewer.png"
+      <NuxtImg
+        src="/images/dark-log-viewer.png"
         v-show="activeImage === 'Log Viewer'"
         :title="activeImage"
         :alt="activeImage"
         class="w-[1000px] hidden dark:block"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/light-log-viewer.png"
+      <NuxtImg
+        src="/images/light-log-viewer.png"
         v-show="activeImage === 'Log Viewer'"
         title="Object Browser"
         alt="Object Browser"
         class="w-[1000px] block dark:hidden"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/dark-shell-access.png"
+      <NuxtImg
+        src="/images/dark-shell-access.png"
         v-show="activeImage === 'Shell Access'"
         :title="activeImage"
         :alt="activeImage"
         class="w-[1000px] hidden dark:block"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
-      <img
-        src="~/assets/images/light-shell-access.png"
+      <NuxtImg
+        src="/images/light-shell-access.png"
         v-show="activeImage === 'Shell Access'"
         title="Object Browser"
         alt="Object Browser"
         class="w-[1000px] block dark:hidden"
+        format="webp"
+        sizes="400px md:640px lg:768px xl:1000px"
       />
     </div>
     <div

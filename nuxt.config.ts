@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxtjs/google-fonts",
     "@nuxtjs/device",
+    "@nuxt/image"
   ],
   googleFonts: {
     families: {
