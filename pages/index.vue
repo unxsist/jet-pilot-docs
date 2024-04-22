@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { isMacOS, isWindows } = useDevice();
 const activeImage = ref("Object Browser");
+const latestVersion = ref("v1.0.0");
 
 const getOperatingSystem = () => {
   if (isMacOS) {
@@ -11,6 +12,14 @@ const getOperatingSystem = () => {
 
   return "Linux";
 };
+
+onMounted(() => {
+  fetch("https://api.github.com/repos/unxsist/jet-pilot/releases/latest")
+    .then((response) => response.json())
+    .then((data) => {
+      latestVersion.value = data.tag_name;
+    });
+});
 </script>
 <template>
   <div class="text-center my-5">
@@ -105,7 +114,7 @@ const getOperatingSystem = () => {
         class="mt-14 flex items-baseline space-x-2 font-semibold bg-black dark:bg-white text-white dark:text-black rounded py-3 px-5 z-50"
       >
         <span>Download for {{ getOperatingSystem() }}</span>
-        <span class="text-gray text-xs">v1.21.1</span>
+        <span class="text-gray text-xs">{{ latestVersion }}</span>
       </a>
     </div>
   </div>
