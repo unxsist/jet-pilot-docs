@@ -43,6 +43,8 @@ jobs:
             ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: npm ci
+      - name: Download latest.json manifest
+        run: curl -o public/latest.json https://github.com/unxsist/jet-pilot/releases/latest/download/latest.json
       - name: Static HTML export with Nuxt
         run: npx nuxt build --preset github_pages
       - name: Upload artifact
