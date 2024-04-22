@@ -3,7 +3,9 @@
     <Menu class="mr-auto sm:mx-auto" />
     <div class="flex items-center absolute right-0 space-x-3">
       <GithubStargazers />
-      <ColorModeSwitcher />
+      <ClientOnly>
+        <ColorModeSwitcher />
+      </ClientOnly>
     </div>
   </div>
 </template>
