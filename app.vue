@@ -38,6 +38,14 @@ useHead({
     },
   ],
 });
+
+useSeoMeta({
+  ogTitle: "JET Pilot - Manage Kubernetes in style",
+  ogDescription:
+    "JET Pilot is an open-source Kubernetes desktop client that focuses on less clutter, speed and good looks.",
+  ogImage: "/images/og-image.png",
+  ogUrl: "https://www.jet-pilot.app",
+});
 </script>
 
 <template>
