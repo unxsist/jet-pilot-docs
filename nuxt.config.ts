@@ -15,4 +15,9 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: "",
   },
+  nitro: {
+    prerender: {
+      failOnError: false,
+    },
+  },
 });
