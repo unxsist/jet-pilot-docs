@@ -126,10 +126,12 @@ onMounted(() => {
         <img
           src="~/assets/images/line-dark.svg"
           class="min-w-[1000px] sm:min-w-full hidden dark:block"
+          alt=""
         />
         <img
           src="~/assets/images/line-light.svg"
           class="min-w-[1000px] sm:min-w-full dark:hidden"
+          alt=""
         />
       </div>
       <a

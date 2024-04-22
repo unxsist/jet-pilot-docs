@@ -15,6 +15,7 @@ onMounted(() => {
       class="flex items-center"
       href="https://www.github.com/unxsist/jet-pilot"
       target="_blank"
+      aria-label="Star JET Pilot on GitHub"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
