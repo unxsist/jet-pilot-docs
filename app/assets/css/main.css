@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ fonts */
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/inter-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("/fonts/jetbrains-mono-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallback: keeps layout stable while Inter loads. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 107.12%;
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+}
+
+/* ----------------------------------------------------------------- tokens */
+
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --surface-2: #f4f4f5;
+  --surface-3: #ffffff;
+  --fg: #0b0b0f;
+  --muted: #52525b;
+  --faint: #6b6b74;
+  --line: rgb(9 9 11 / 0.08);
+  --line-strong: rgb(9 9 11 / 0.14);
+  --accent: #5048e5;
+  --accent-text: #4338ca;
+  --accent-soft: rgb(80 72 229 / 0.08);
+  --success: #107a4c;
+  --warning: #b45309;
+  --danger: #c81e1e;
+  --code-bg: #f6f6f8;
+  --shadow-card: 0 1px 2px rgb(15 15 20 / 0.04), 0 4px 16px -4px rgb(15 15 20 / 0.06);
+  --shadow-float: 0 2px 4px -1px rgb(15 15 20 / 0.05), 0 24px 64px -16px rgb(15 15 20 / 0.22);
+  --highlight: inset 0 1px 0 0 rgb(255 255 255 / 0.9);
+  --accent-gradient: linear-gradient(100deg, #4f46e5 0%, #6d28d9 55%, #4338ca 100%);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #09090b;
+  --surface: #0e0e11;
+  --surface-2: #131316;
+  --surface-3: #18181c;
+  --fg: #ededf0;
+  --muted: #a1a1aa;
+  --faint: #8b8b95;
+  --line: rgb(255 255 255 / 0.075);
+  --line-strong: rgb(255 255 255 / 0.13);
+  --accent: #615aed;
+  --accent-text: #a5a1ff;
+  --accent-soft: rgb(97 90 237 / 0.12);
+  --success: #3ccf91;
+  --warning: #f5b544;
+  --danger: #f47171;
+  --code-bg: #0c0c0f;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -8px rgb(0 0 0 / 0.5);
+  --shadow-float: 0 2px 6px rgb(0 0 0 / 0.4), 0 40px 100px -20px rgb(0 0 0 / 0.7);
+  --highlight: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+  --accent-gradient: linear-gradient(100deg, #9690ff 0%, #6f68f2 45%, #c3b8ff 100%);
+}
+
+@theme inline {
+  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-code: var(--code-bg);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-float: var(--shadow-float);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------- base */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    font-feature-settings: "cv11", "ss01", "ss03";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  code,
+  kbd,
+  pre {
+    @apply font-mono;
+    font-feature-settings: "calt" 0;
+  }
+}
+
+/* -------------------------------------------------------------- utilities */
+
+@utility container-x {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Skip layout/paint of off-screen sections until they approach the viewport. */
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Hairline card with a top highlight. */
+@utility card {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-card), var(--highlight);
+}
+
+/* Headline gradient. */
+@utility text-shine {
+  background: linear-gradient(180deg, var(--fg) 30%, color-mix(in srgb, var(--fg) 58%, transparent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-accent-shine {
+  background-image: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Fine grid, faded out with a radial mask. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+@utility bg-dots {
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* Film grain; a tiny inline SVG, no request. */
+@utility noise {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@utility eyebrow {
+  @apply font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-accent-text;
+}
+
+/* ------------------------------------------------------------- reveal fx */
+
+/* Hidden only once JS has armed the observer, so no-JS shows everything. */
+.reveal-armed [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-armed [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.9s var(--ease-out-expo) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Transform only (compositor): never hides content, so LCP isn't delayed. */
+@keyframes rise {
+  from {
+    transform: translateY(32px) scale(0.98);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise 1.1s var(--ease-out-expo) both;
+}
+
+@keyframes keycap-press {
+  0%,
+  62%,
+  100% {
+    transform: translateY(0);
+  }
+  70%,
+  80% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal-armed [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
