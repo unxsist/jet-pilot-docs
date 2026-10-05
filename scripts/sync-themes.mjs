@@ -10,6 +10,7 @@
  *   public/schemas/theme.json    THEME_JSON_SCHEMA, served at THEME_SCHEMA_URI
  *   app/data/themes.json         every built-in theme, resolved per appearance
  *                                (CSS tokens, swatch roles, terminal, syntax)
+ *   app/data/theme-swatches.json four colours per built-in, for the homepage teaser
  *   app/data/theme-roles.json    the roles reference, from the schema descriptions
  *   app/vendor/jet-themes/       the theme engine (import → resolve → serialize)
  *                                for the "try your own theme" previewer; only
@@ -111,6 +112,25 @@ const presets = builtins.map(({ id, name, origin, appearances, file }) => {
 write(
   "app/data/themes.json",
   `${JSON.stringify({ schemaUri: THEME_SCHEMA_URI, themes: presets, credits: credits.map(({ names, ...c }) => c), portedFrom })}\n`
+);
+
+/* A few colours per built-in for the homepage teaser (keeps themes.json off the homepage). */
+const hex = (triplet) => `hsl(${triplet})`;
+write(
+  "app/data/theme-swatches.json",
+  `${JSON.stringify(
+    presets.map(({ id, name, group, looks }) => ({
+      id,
+      name,
+      group,
+      looks: Object.fromEntries(
+        Object.entries(looks).map(([appearance, look]) => [
+          appearance,
+          [look.vars["surface-1"], look.vars.background, look.vars.primary, look.vars.success].map(hex),
+        ])
+      ),
+    }))
+  )}\n`
 );
 
 /* ---------------------------------------------------- roles table -- */

@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { LIVE_RELEASE_VERSION, REPO_URL } from "~/composables/useGitHub";
+import { LIVE_RELEASE_VERSION, REPO_URL, THEMES_RELEASE_VERSION } from "~/composables/useGitHub";
 
 const { primary, platforms } = useDownloads();
 const { stars } = useGitHub();
 const shipped = useNewReleaseShipped();
 const { release } = useGitHub();
 const liveShipped = useReleaseAtLeast(LIVE_RELEASE_VERSION);
+const themesShipped = useReleaseAtLeast(THEMES_RELEASE_VERSION);
 
-const pill = computed(() => {
-  // v1.37+: live data & the new graph. Before that (or while we don't know), the v1.36 pill.
+const pill = computed<{ tag: string; text: string; short?: string; href?: string }>(() => {
+  // v1.38+: custom themes. v1.37: live data & the new graph. Before that (or while we don't know), the v1.36 pill.
+  if (themesShipped.value) return { tag: "New in v1.38", text: "Custom themes — bring your VS Code theme", short: "Custom themes", href: "/themes/" };
   if (liveShipped.value) return { tag: "New in v1.37", text: "Live data, a reimagined resource graph & more", short: "Live data & a new resource graph" };
   if (shipped.value === false) return { tag: "Coming soon", text: "Multi-cluster, a built-in terminal & a whole new look" };
   if (shipped.value && release.value) return { tag: `New in v${release.value.version}`, text: "Multi-cluster, built-in terminal & a whole new look" };
@@ -45,12 +47,12 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
 
     <div class="container-x text-center">
       <a
-        href="#whats-new"
+        :href="pill.href ?? '#whats-new'"
         class="group inline-flex max-w-full items-center gap-2 rounded-full border border-line bg-surface/70 py-1 pl-1 pr-3 text-[0.8rem] text-muted shadow-card backdrop-blur transition-colors hover:border-line-strong hover:text-fg"
       >
         <span class="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.72rem] font-semibold text-white">{{ pill.tag }}</span>
-        <span v-if="'short' in pill" class="truncate sm:hidden">{{ pill.short }}</span>
-        <span class="truncate" :class="'short' in pill ? 'max-sm:hidden' : ''">{{ pill.text }}</span>
+        <span v-if="pill.short" class="truncate sm:hidden">{{ pill.short }}</span>
+        <span class="truncate" :class="pill.short ? 'max-sm:hidden' : ''">{{ pill.text }}</span>
         <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
       </a>
 

@@ -29,6 +29,14 @@ export const faqs = [
     a: `From v1.37, lists stream changes from the Kubernetes API through watches instead of polling <code>kubectl</code>. Changes show up in a fraction of a second — about 200 ms from scaling a Deployment to the update on screen in our tests against a real kube-apiserver — and coming back to a view is instant.`,
   },
   {
+    q: "Can I use my VS Code theme?",
+    a: `Yes. From v1.38, JET Pilot imports VS Code colour themes (JSONC and <code>include</code> chains too), Sublime Text <code>.sublime-color-scheme</code> files, TextMate <code>.tmTheme</code> files and T3 Code themes. Drop the file on Settings › Appearance, or install a theme from the Open VSX gallery inside the app. The workbench colours become JET Pilot’s palette, <code>tokenColors</code> colour the YAML editor and <code>terminal.ansi*</code> the terminal. Want to see it first? <a href="/themes/#try">Preview your theme on the website</a> — it’s converted in your browser.`,
+  },
+  {
+    q: "Why only MIT-licensed themes from Open VSX?",
+    a: `JET Pilot is MIT licensed, and we want everything it downloads and installs for you to fit that licence without reviewing extensions one by one. So the gallery only installs extensions whose licence is MIT, or allows MIT (such as <code>MIT OR Apache-2.0</code>). That still covers most popular themes — Catppuccin, Dracula, GitHub, Tokyo Night and many more. A theme under another licence isn’t blocked: you can import a file you already have yourself.`,
+  },
+  {
     q: "Does JET Pilot modify my kubeconfig?",
     a: `No. It reads your kubeconfig files. The built-in terminal uses a temporary, owner-only kubeconfig that contains just the current context, so your own files are never touched.`,
   },
