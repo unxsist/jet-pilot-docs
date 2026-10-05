@@ -44,7 +44,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Download latest.json manifest
-        run: curl -L -o public/latest.json https://github.com/unxsist/jet-pilot/releases/latest/download/latest.json
+        run: curl -fL -o public/latest.json https://github.com/unxsist/jet-pilot/releases/latest/download/latest.json
+      - name: Prepend the update notice to the release notes
+        run: node scripts/patch-update-manifest.mjs
       - name: Static HTML export with Nuxt
         run: npx nuxt build --preset github_pages
       - name: Upload artifact
