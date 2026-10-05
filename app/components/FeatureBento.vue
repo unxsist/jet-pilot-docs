@@ -1,10 +1,18 @@
 <script setup lang="ts">
 const pods = [
-  { name: "payments-api-7qjjhld4s-974t2", status: "Running", tone: "success", restarts: 0, cpu: 62, mem: 38 },
-  { name: "checkout-api-rqmxcfxbp-bq7vj", status: "CrashLoopBackOff", tone: "danger", restarts: 14, cpu: 78, mem: 44 },
-  { name: "image-resizer-khjm9jqhm-xnh6c", status: "ContainerCreating", tone: "warning", restarts: 0, cpu: 4, mem: 6 },
-  { name: "ledger-7mcnr47lw-8shxv", status: "Running", tone: "success", restarts: 0, cpu: 24, mem: 71 },
+  { name: "payments-api-7qjjhld4s-974t2", status: "Running", tone: "success", restarts: 0, cpu: 62, seed: 1 },
+  { name: "checkout-api-rqmxcfxbp-bq7vj", status: "CrashLoopBackOff", tone: "danger", restarts: 14, cpu: 78, seed: 2 },
+  { name: "image-resizer-khjm9jqhm-xnh6c", status: "ContainerCreating", tone: "warning", restarts: 0, cpu: null, seed: 3 },
+  { name: "ledger-7mcnr47lw-8shxv", status: "Running", tone: "success", restarts: 0, cpu: 24, seed: 4 },
 ];
+/* A deterministic little usage history (decorative sparkline). */
+const spark = (seed: number, level: number | null) =>
+  Array.from({ length: 16 }, (_, i) => {
+    const wave = Math.sin(i * 0.9 + seed * 1.7) * 0.5 + Math.sin(i * 2.3 + seed) * 0.3;
+    const base = level ?? 0;
+    const v = Math.min(95, Math.max(5, base + wave * Math.max(8, base * 0.35)));
+    return `${(i * 4).toFixed(0)},${(16 - (v / 100) * 14 - 1).toFixed(1)}`;
+  }).join(" ");
 const toneText: Record<string, string> = { success: "text-success", danger: "text-danger", warning: "text-warning" };
 const toneBg: Record<string, string> = { success: "bg-success", danger: "bg-danger", warning: "bg-warning" };
 </script>
@@ -24,20 +32,20 @@ const toneBg: Record<string, string> = { success: "bg-success", danger: "bg-dang
         <article data-reveal class="card overflow-hidden p-6 md:col-span-2 sm:p-7">
           <div class="flex items-center gap-2 text-sm font-medium"><Icon name="activity" :size="16" class="text-accent-text" /> Pod health at a glance</div>
           <p class="mt-2 max-w-lg text-[0.95rem] leading-relaxed text-muted">
-            Live CPU and memory usage, readiness, restarts and colour-coded statuses — so the broken pod finds you, not the other way round.
+            CPU and memory sparklines, readiness, restarts and colour-coded statuses, updated live — so the broken pod finds you, not the other way round.
           </p>
           <div class="mt-6 overflow-hidden rounded-xl border border-line bg-bg/60" aria-hidden="true">
             <div class="grid grid-cols-[1fr_auto_auto] gap-x-4 border-b border-line px-4 py-2 font-mono text-[0.68rem] uppercase tracking-wider text-faint sm:grid-cols-[1fr_9rem_3.5rem_5rem]">
-              <span>Name</span><span class="hidden sm:block">Status</span><span class="text-right">Restarts</span><span>Usage</span>
+              <span>Name</span><span class="hidden sm:block">Status</span><span class="text-right">Restarts</span><span>CPU</span>
             </div>
             <div v-for="pod in pods" :key="pod.name" class="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 border-b border-line px-4 py-2.5 text-[0.8rem] last:border-0 sm:grid-cols-[1fr_9rem_3.5rem_5rem]">
               <span class="truncate font-medium">{{ pod.name }}</span>
               <span class="hidden items-center gap-1.5 sm:flex" :class="toneText[pod.tone]"><span class="size-1.5 rounded-full" :class="toneBg[pod.tone]" />{{ pod.status }}</span>
               <span class="text-right tabular-nums" :class="pod.restarts ? 'text-warning' : 'text-muted'">{{ pod.restarts }}</span>
-              <span class="grid w-14 gap-1 sm:w-auto">
-                <span class="h-1 rounded-full bg-fg/10"><span class="block h-1 rounded-full" :class="pod.cpu > 70 ? 'bg-warning' : 'bg-success'" :style="{ width: pod.cpu + '%' }" /></span>
-                <span class="h-1 rounded-full bg-fg/10"><span class="block h-1 rounded-full" :class="pod.mem > 70 ? 'bg-warning' : 'bg-success'" :style="{ width: pod.mem + '%' }" /></span>
-              </span>
+              <span v-if="pod.cpu === null" class="text-faint">–</span>
+              <svg v-else viewBox="0 0 60 16" class="h-4 w-14 sm:w-full" preserveAspectRatio="none" :class="(pod.cpu ?? 0) > 70 ? 'text-warning' : 'text-fg/45'">
+                <polyline :points="spark(pod.seed, pod.cpu)" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+              </svg>
             </div>
           </div>
         </article>
@@ -45,7 +53,7 @@ const toneBg: Record<string, string> = { success: "bg-success", danger: "bg-dang
         <!-- Port forwarding -->
         <article data-reveal style="--reveal-delay: 80ms" class="card p-6 sm:p-7">
           <div class="flex items-center gap-2 text-sm font-medium"><Icon name="plug" :size="16" class="text-accent-text" /> Port forwarding</div>
-          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">Start, stop and open forwards in your browser. JET Pilot waits until a forward is really ready.</p>
+          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">Start, stop and open forwards in your browser — or save them as profiles that start with the app. JET Pilot waits until a forward is really ready.</p>
           <div class="mt-6 space-y-2" aria-hidden="true">
             <div v-for="pf in [['payments-api:80', '127.0.0.1:8080'], ['grafana:3000', '127.0.0.1:3000']]" :key="pf[0]" class="flex items-center gap-3 rounded-lg border border-line bg-bg/60 px-3 py-2.5 font-mono text-[0.72rem]">
               <span class="relative flex size-2"><span class="absolute inset-0 animate-ping rounded-full bg-success/50" /><span class="relative size-2 rounded-full bg-success" /></span>
@@ -60,7 +68,7 @@ const toneBg: Record<string, string> = { success: "bg-success", danger: "bg-dang
         <!-- Helm -->
         <article data-reveal class="card p-6 sm:p-7">
           <div class="flex items-center gap-2 text-sm font-medium"><Icon name="anchor" :size="16" class="text-accent-text" /> Helm releases</div>
-          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">List releases and charts, inspect history, roll back or uninstall.</p>
+          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">Upgrade with a values diff, inspect history, roll back or uninstall.</p>
           <div class="mt-6 space-y-2 text-[0.78rem]" aria-hidden="true">
             <div class="flex items-center gap-3 rounded-lg border border-line bg-bg/60 px-3 py-2.5">
               <span class="font-medium">payments-api</span><span class="font-mono text-faint">rev 42</span>
@@ -105,9 +113,9 @@ const toneBg: Record<string, string> = { success: "bg-success", danger: "bg-dang
         <!-- Security -->
         <article data-reveal class="card p-6 sm:p-7">
           <div class="flex items-center gap-2 text-sm font-medium"><Icon name="shield" :size="16" class="text-accent-text" /> Hardened by default</div>
-          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">A strict content security policy, minimal app permissions and no secrets written to disk while you edit them.</p>
+          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">A strict content security policy and minimal app permissions. Secret values stay in memory and never reach the resource graph.</p>
           <ul class="mt-5 space-y-2 text-[0.8rem]">
-            <li v-for="s in ['Strict CSP', 'Minimal permissions', 'Secrets stay in memory']" :key="s" class="flex items-center gap-2 text-fg/85">
+            <li v-for="s in ['Strict CSP', 'Minimal permissions', 'Secrets stay in memory', 'Editor bundled — no CDN']" :key="s" class="flex items-center gap-2 text-fg/85">
               <Icon name="check" :size="14" class="text-success" />{{ s }}
             </li>
           </ul>
@@ -115,11 +123,16 @@ const toneBg: Record<string, string> = { success: "bg-success", danger: "bg-dang
 
         <!-- Keyboard -->
         <article data-reveal style="--reveal-delay: 80ms" class="card p-6 sm:p-7">
-          <div class="flex items-center gap-2 text-sm font-medium"><Icon name="keyboard" :size="16" class="text-accent-text" /> Keyboard-first</div>
-          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">Start typing to filter any table. Pin your favourite resources and jump to them instantly.</p>
-          <div class="mt-5 flex flex-wrap items-center gap-1.5 font-mono text-[0.72rem]" aria-hidden="true">
-            <kbd v-for="k in ['⌘1', '⌘2', '⌘3', '…', '⌘9']" :key="k" class="rounded-md border border-line-strong bg-surface-3 px-2 py-1 shadow-[0_1px_0_var(--line-strong)]">{{ k }}</kbd>
-          </div>
+          <div class="flex items-center gap-2 text-sm font-medium"><Icon name="keyboard" :size="16" class="text-accent-text" /> Keyboard-first tables</div>
+          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">Type to filter, then move through rows k9s-style. Reorder, resize and group columns — fast even with thousands of rows.</p>
+          <dl class="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 text-[0.78rem]">
+            <div v-for="k in [['j k', 'Move'], ['l', 'Logs'], ['s', 'Shell'], ['e', 'Edit YAML'], ['d', 'Describe'], ['?', 'Cheat sheet']]" :key="k[1]" class="flex items-center gap-2">
+              <dt class="flex gap-1">
+                <kbd v-for="key in k[0].split(' ')" :key="key" class="min-w-[1.6rem] rounded-md border border-line-strong bg-surface-3 px-1.5 py-0.5 text-center font-mono text-[0.72rem] shadow-[0_1px_0_var(--line-strong)]">{{ key }}</kbd>
+              </dt>
+              <dd class="text-muted">{{ k[1] }}</dd>
+            </div>
+          </dl>
         </article>
 
         <!-- Describe & events -->

@@ -12,7 +12,7 @@
           </h2>
           <p class="mx-auto mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-muted">
             JET Pilot keeps the power of the command line and adds the overview you can’t get from it — across every
-            cluster you work with.
+            cluster you work with, updated live.
           </p>
         </div>
       </div>
@@ -22,7 +22,6 @@
         id="multi-cluster"
         eyebrow="Multi-cluster"
         icon="layers"
-        badge="New"
         title="Every cluster. Every namespace. One table."
         lead="Select several contexts — even from different kubeconfig files — and any mix of namespaces. JET Pilot merges them into one view, so comparing prod and staging is a glance, not a context switch."
         :points="[
@@ -33,63 +32,84 @@
         shot="context-switcher"
         :zoom="1.5"
         focus="0% 0%"
-        alt="The context switcher open with two active contexts, prod-eu-west-1 and staging-us-east-2, and the payments and checkout namespaces selected"
+        alt="The context switcher open with two active contexts, prod-eu-west-1 and staging-us-east-2, each with the payments and checkout namespaces selected"
       />
 
       <LazyFeatureRow
         hydrate-never
-        id="terminal"
-        eyebrow="Built-in terminal"
-        icon="terminal"
+        id="live"
+        eyebrow="Live data"
+        icon="zap"
         badge="New"
-        title="A terminal that already knows where you are."
-        lead="Press Ctrl+` and a terminal opens with kubectl pointed at the current context. It uses a temporary single-context kubeconfig, so your own kubeconfig is never touched."
+        title="Straight from the API server. No polling."
+        lead="Lists stream changes from the Kubernetes API through watches instead of re-running kubectl. Updates land in a fraction of a second, and coming back to a view is instant."
         :points="[
-          '<kbd>Ctrl</kbd> + <kbd>`</kbd> from anywhere, or “Open terminal” in the command palette',
-          'One-click shells into any container with <code>kubectl exec</code>',
-          'Pod shells now work on Windows, too',
+          'Scale a Deployment and the table follows in <strong>~200 ms</strong>',
+          'A 2,000-pod snapshot loads in about <strong>0.7 s</strong>',
+          'CPU and memory <strong>sparklines</strong> for every pod',
+          'Tested against a real kube-apiserver with thousands of pods',
         ]"
-        shot="terminal"
-        :zoom="1.3"
-        focus="0% 100%"
-        alt="The built-in terminal panel running kubectl get deployments and kubectl rollout status against prod-eu-west-1"
+        shot="live"
+        :zoom="1.55"
+        focus="68% 0%"
+        alt="The pods table with CPU and memory sparkline columns next to each pod's status"
         reverse
-      />
+      >
+        <template #overlay>
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute -bottom-6 left-4 rounded-2xl border border-line-strong bg-surface-3/90 px-4 py-3 shadow-float backdrop-blur sm:-bottom-8 sm:-left-6 sm:px-5 sm:py-4"
+          >
+            <div class="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-faint">
+              <span class="relative flex size-2"><span class="absolute inset-0 rounded-full bg-success/60 motion-safe:animate-[pulse-dot_2s_ease-in-out_infinite]" /><span class="relative size-2 rounded-full bg-success" /></span>
+              scale → screen
+            </div>
+            <div class="mt-1 flex items-baseline gap-1">
+              <span class="text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">~200</span>
+              <span class="font-mono text-sm text-faint">ms</span>
+            </div>
+          </div>
+        </template>
+      </LazyFeatureRow>
 
       <LazyFeatureRow
         hydrate-never
         id="graph"
         eyebrow="Resource graph"
         icon="graph"
-        title="See how it all fits together."
-        lead="A live map of a namespace: Services lead to Deployments, ReplicaSets and Pods, with ConfigMaps, Secrets, Jobs and Ingresses alongside. Health dots show what’s ready and what’s struggling."
+        badge="Reimagined"
+        title="Every app, mapped. What’s broken, first."
+        lead="Each app gets its own lane — Ingress → Service → workload → Pods — with its config, storage, scaling and policies alongside. Health rolls up from pods to apps, and the graph updates live."
         :points="[
-          'Spot a failing ReplicaSet behind a healthy Service instantly',
-          'Pod health summarised per workload, at a glance',
-          'Zoom, pan, fit and refresh — across one or more namespaces',
+          'ConfigMaps, Secrets, PVCs, ServiceAccounts, HPAs, PDBs and NetworkPolicies, in context',
+          'Missing references show up as <strong>red dashed nodes</strong>; <kbd>P</kbd> shows only the problems',
+          'Click a node to light up its full path, with details in the side panel',
+          'Search, filters and a minimap — and Secret values never reach the graph',
         ]"
         shot="graph"
         :zoom="1.2"
         focus="100% 0%"
-        alt="The resource graph for the payments namespace showing services, deployments, replica sets and pods with green and orange health dots"
+        alt="The resource graph with the checkout-api Deployment selected: its Service, PodDisruptionBudget and ConfigMap highlighted along the path, and a side panel listing its pods, relationships and replica status"
       />
 
       <LazyFeatureRow
         hydrate-never
         id="logs"
-        eyebrow="Structured logs"
+        eyebrow="Logs"
         icon="logs"
-        title="Logs you can actually read."
-        lead="Follow logs live and let JET Pilot parse JSON lines into fields. Filter by level, logger or any other field from the sidebar, search, and jump between time ranges."
+        badge="New"
+        title="Every pod’s logs. One stream."
+        lead="Open logs on a Deployment, StatefulSet, DaemonSet, Job or Service and follow all of its pods at once, colour-coded per pod. JSON lines are still parsed into fields you can filter on."
         :points="[
-          'Facet sidebar with counts for every parsed field',
-          'Level colours so warnings and errors stand out',
-          'Live tail, head / tail and 1m – 1h time ranges',
+          'Filter by pod and container, or read previous containers',
+          'Search with match navigation; pause the view while the tail keeps up',
+          'Facets for level, logger and any other parsed field',
+          'Export what you’re looking at to a file',
         ]"
         shot="logs"
         :zoom="1.3"
-        focus="0% 100%"
-        alt="The structured log viewer with Level and Logger facets expanded, and JSON log lines coloured by level"
+        focus="70% 100%"
+        alt="Logs for the payments-api Deployment: four pods listed with their own colours, container and field filters, and interleaved log lines prefixed with the pod and container they came from"
         reverse
       />
 
@@ -98,35 +118,77 @@
         id="editor"
         eyebrow="YAML editor"
         icon="code"
-        title="Edit anything, with an editor you already know."
-        lead="Open any object in a Monaco-powered YAML editor — the editor behind VS Code — and apply with ⌘S or Ctrl+S. Create new objects just as easily, or read the full describe output."
+        badge="New"
+        title="See the change before the cluster does."
+        lead="The Monaco editor — the one behind VS Code — is now bundled, so it works offline. It reads your cluster’s own OpenAPI schemas, CRDs included, and every save shows a diff and runs a server-side dry run before anything is applied."
         :points="[
-          'Syntax highlighting, folding and indentation guides',
-          'Create and edit any resource, including custom resources',
+          'Completion, hover docs and validation from the cluster’s schemas',
+          'Diff and server-side dry run on <kbd>⌘S</kbd> / <kbd>Ctrl+S</kbd> — then apply',
+          'Compare an object across contexts, side by side',
           'Secrets are never written to disk while you edit them',
         ]"
-        shot="yaml"
-        :zoom="1.35"
-        focus="0% 100%"
-        alt="A pod manifest open in the YAML editor below the pods table"
+        shot="editor"
+        :zoom="1.2"
+        focus="95% 100%"
+        alt="Reviewing changes to the payments-api Deployment: a side-by-side diff with replicas changed from 4 to 6 and a new image tag, and a “Server dry run passed” status next to the Apply button"
+      />
+
+      <LazyFeatureRow
+        hydrate-never
+        id="workloads"
+        eyebrow="Workloads"
+        icon="refresh"
+        badge="New"
+        title="Roll out, roll back, debug."
+        lead="The things you’d reach for kubectl rollout, helm or kubectl debug for — a click away, with a preview before anything changes."
+        :points="[
+          'Rollout history with a diff per revision and a safe rollback',
+          'Helm upgrades with a values diff, plus release history',
+          'Ephemeral debug containers and node shells',
+          'Copy files to and from containers, like <code>kubectl cp</code>',
+        ]"
+        shot="rollouts"
+        :zoom="1.2"
+        focus="95% 100%"
+        alt="Rollout history for the payments-api Deployment: a list of revisions with their change causes and images, and a diff between the current revision and r6 with a “Roll back to r6” button"
+        reverse
+      />
+
+      <LazyFeatureRow
+        hydrate-never
+        id="workspaces"
+        eyebrow="Workspaces"
+        icon="columns"
+        badge="New"
+        title="Pick up exactly where you left off."
+        lead="Save the contexts, namespaces, open tabs and running port forwards for a task as a workspace, then switch in one keystroke. Split view puts two tabs side by side, and your tabs come back when you restart."
+        :points="[
+          'Switch with <kbd>⌘⌥</kbd> / <kbd>Ctrl+Alt</kbd> + <kbd>1</kbd>–<kbd>9</kbd>, or from the command palette',
+          'Split view: describe next to logs, or any two tabs',
+          'Port-forward profiles that start when JET Pilot launches',
+        ]"
+        shot="workspaces"
+        :zoom="1.15"
+        focus="0% 45%"
+        alt="The workspace switcher listing Payments on-call, Checkout incident, Staging rollout and Platform &amp; ingress with their shortcuts, above a split view of a describe tab and a logs tab"
       />
 
       <LazyFeatureRow
         hydrate-never
         id="command-palette"
-        eyebrow="Command palette"
+        eyebrow="Keyboard"
         icon="command"
         title="Everything is a keystroke away."
-        lead="Hit ⌘K or Ctrl+K and fuzzy-search your way anywhere: resources, Helm, settings, a fresh terminal, or a different context and namespace."
+        lead="Hit ⌘K or Ctrl+K and fuzzy-search your way anywhere: resources, workspaces, Helm, settings, a fresh terminal, or a different context and namespace. Tables are keyboard-first, too."
         :points="[
           'Jump to any resource kind, including CRDs',
-          'Switch context or namespace without touching the mouse',
+          'k9s-style rows: arrows or <kbd>j</kbd>/<kbd>k</kbd> to move, <kbd>l</kbd> logs, <kbd>s</kbd> shell, <kbd>e</kbd> edit — <kbd>?</kbd> shows them all',
           'Pinned resources on <kbd>⌘1</kbd>–<kbd>⌘9</kbd> / <kbd>Ctrl+1</kbd>–<kbd>9</kbd>',
         ]"
         shot="command-palette"
         :zoom="1.25"
         focus="45% 25%"
-        alt="The command palette open over the pods table, listing Open terminal, Switch context and Switch namespace actions"
+        alt="The command palette open over the pods table, listing Switch workspace, Save workspace, Open terminal, Switch context and Switch namespace actions"
         reverse
       >
         <template #overlay>
@@ -136,6 +198,24 @@
           </div>
         </template>
       </LazyFeatureRow>
+
+      <LazyFeatureRow
+        hydrate-never
+        id="terminal"
+        eyebrow="Built-in terminal"
+        icon="terminal"
+        title="A terminal that already knows where you are."
+        lead="Press Ctrl+` and a terminal opens with kubectl pointed at the current context. It uses a temporary single-context kubeconfig, so your own kubeconfig is never touched."
+        :points="[
+          '<kbd>Ctrl</kbd> + <kbd>`</kbd> from anywhere, or “Open terminal” in the command palette',
+          'One-click shells into any container with <code>kubectl exec</code>',
+          'Pod shells work on Windows, too',
+        ]"
+        shot="terminal"
+        :zoom="1.3"
+        focus="0% 100%"
+        alt="The built-in terminal panel below the pods table, opened for prod-eu-west-1 with a note that KUBECONFIG points to a temporary copy"
+      />
     </div>
 
     <LazyThemeCompare hydrate-on-visible />
