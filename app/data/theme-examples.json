@@ -1,0 +1,64 @@
+{
+  "seeded": {
+    "$schema": "https://www.jet-pilot.app/schemas/theme.json",
+    "name": "Nightfall",
+    "appearance": "dark",
+    "canvas": "#16161e",
+    "accent": "#7aa2f7"
+  },
+  "full": {
+    "$schema": "https://www.jet-pilot.app/schemas/theme.json",
+    "version": 1,
+    "id": "nightfall",
+    "name": "Nightfall",
+    "appearance": "dark",
+    "canvas": "#16161e",
+    "accent": "#7aa2f7",
+    "colors": {
+      "text": "#c0caf5",
+      "sidebar": "#1a1b26",
+      "messageAction": "#bb9af7",
+      "errorForeground": "#f7768e"
+    },
+    "jetPilot": {
+      "colors": { "success": "#9ece6a", "info": "#7dcfff" },
+      "terminal": {
+        "black": "#15161e",
+        "red": "#f7768e",
+        "green": "#9ece6a",
+        "yellow": "#e0af68",
+        "blue": "#7aa2f7",
+        "magenta": "#bb9af7",
+        "cyan": "#7dcfff",
+        "white": "#a9b1d6",
+        "brightBlack": "#414868",
+        "brightRed": "#f7768e",
+        "brightGreen": "#9ece6a",
+        "brightYellow": "#e0af68",
+        "brightBlue": "#7aa2f7",
+        "brightMagenta": "#bb9af7",
+        "brightCyan": "#7dcfff",
+        "brightWhite": "#c0caf5"
+      },
+      "syntax": {
+        "key": "#7aa2f7",
+        "string": "#9ece6a",
+        "number": "#ff9e64",
+        "constant": "#bb9af7",
+        "comment": "#565f89",
+        "punctuation": "#89ddff"
+      },
+      "editor": { "editor.lineHighlightBackground": "#1e2030" }
+    },
+    "variants": {
+      "light": {
+        "canvas": "#f6f6fb",
+        "accent": "#2e7de9",
+        "colors": { "text": "#343b58" },
+        "jetPilot": {
+          "syntax": { "key": "#2e7de9", "string": "#587539", "number": "#b15c00", "comment": "#848cb5" }
+        }
+      }
+    }
+  }
+}
