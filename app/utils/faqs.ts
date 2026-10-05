@@ -6,7 +6,7 @@ export const faqs = [
   },
   {
     q: "macOS says JET Pilot is “damaged” or can’t be opened. What now?",
-    a: `Nothing is wrong with the app: JET Pilot isn’t notarized by Apple, so macOS quarantines it after download. Open Terminal and run <code>xattr -dr com.apple.quarantine "/Applications/JET Pilot.app"</code> once — also after installing with Homebrew. Auto-updates keep working afterwards.`,
+    a: `Nothing is wrong with the app: JET Pilot isn’t notarized by Apple, so macOS quarantines it after download. Open Terminal and run <code>xattr -dr com.apple.quarantine "/Applications/JET Pilot.app"</code> once. Auto-updates keep working afterwards. Installing with Homebrew (<code>brew install --cask unxsist/tap/jet-pilot</code>) takes care of this for you.`,
   },
   {
     q: "Windows SmartScreen warns me about the installer.",
@@ -38,7 +38,7 @@ export const faqs = [
   },
   {
     q: "How do updates work?",
-    a: `JET Pilot has a built-in updater that checks for new versions and installs them for you. Homebrew users can also run <code>brew upgrade --cask jet-pilot</code>.`,
+    a: `JET Pilot has a built-in updater that checks for new versions and installs them for you. Homebrew users can also run <code>brew upgrade --cask unxsist/tap/jet-pilot</code>.`,
   },
   {
     q: "What is it built with?",

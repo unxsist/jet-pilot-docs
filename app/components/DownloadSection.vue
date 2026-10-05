@@ -95,7 +95,7 @@ const osIcon: Record<string, string> = { macos: "apple", windows: "windows", lin
             flag once and you’re good. Auto-updates keep working.
           </p>
           <CopyCommand class="mt-5" command='xattr -dr com.apple.quarantine "/Applications/JET Pilot.app"' label="quarantine fix command" />
-          <p class="mt-3 text-[0.78rem] text-faint">Run it in Terminal after moving JET Pilot to Applications — also after installing with Homebrew.</p>
+          <p class="mt-3 text-[0.78rem] text-faint">Run it in Terminal after moving JET Pilot to Applications. Not needed with Homebrew: the tap does it for you.</p>
         </article>
 
         <!-- Homebrew -->
@@ -104,8 +104,12 @@ const osIcon: Record<string, string> = { macos: "apple", windows: "windows", lin
             <span class="inline-flex size-8 items-center justify-center rounded-lg bg-accent-soft text-accent-text"><Icon name="package" :size="16" /></span>
             <h3 class="font-semibold tracking-tight">Prefer Homebrew?</h3>
           </div>
-          <p class="mt-3 text-[0.93rem] leading-relaxed text-muted">Install the cask in one line on macOS.</p>
-          <CopyCommand class="mt-5" command="brew install --cask jet-pilot" label="Homebrew command" />
+          <p class="mt-3 text-[0.93rem] leading-relaxed text-muted">Install from our tap in one line — it opens right away, no quarantine step.</p>
+          <CopyCommand class="mt-5" command="brew install --cask unxsist/tap/jet-pilot" label="Homebrew command" />
+          <p class="mt-3 text-[0.78rem] leading-relaxed text-faint">
+            Installed it from <code>homebrew/cask</code> before? Run <code>brew uninstall --cask jet-pilot</code> first —
+            Homebrew’s main repository only carries notarized apps now.
+          </p>
           <p class="mt-5 text-[0.78rem] leading-relaxed text-faint">
             Looking for older versions? Every release is on
             <a :href="RELEASES_URL" class="text-fg/80 underline decoration-line-strong underline-offset-4 hover:text-fg">GitHub Releases</a>.
