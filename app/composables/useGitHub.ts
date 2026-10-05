@@ -11,6 +11,9 @@ export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 /** Last version without multi-cluster, the built-in terminal and the redesign. */
 export const LAST_LEGACY_VERSION = "1.35.0";
 
+/** First version with live data, the reimagined resource graph and workspaces. */
+export const LIVE_RELEASE_VERSION = "1.37.0";
+
 export interface ReleaseAsset {
   name: string;
   size: number;
@@ -138,6 +141,17 @@ export function useNewReleaseShipped() {
   const { release } = useGitHub();
   return computed<boolean | null>(() =>
     release.value ? compareVersions(release.value.version, LAST_LEGACY_VERSION) > 0 : null
+  );
+}
+
+/**
+ * Whether the latest release is at least `version`.
+ * `null` while we don't know yet (static HTML, API down).
+ */
+export function useReleaseAtLeast(version: string) {
+  const { release } = useGitHub();
+  return computed<boolean | null>(() =>
+    release.value ? compareVersions(release.value.version, version) >= 0 : null
   );
 }
 

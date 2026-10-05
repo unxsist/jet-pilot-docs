@@ -3,7 +3,7 @@ import { faqJsonLd } from "~/utils/faqs";
 
 const title = "JET Pilot — A beautiful, native Kubernetes desktop client";
 const description =
-  "Free, open-source Kubernetes desktop client for macOS, Windows and Linux. Multi-cluster views, a built-in kubectl terminal, structured logs, a resource graph and a YAML editor — native, fast and private.";
+  "Free, open-source Kubernetes desktop client for macOS, Windows and Linux. Live multi-cluster views, a resource graph, logs across pods, a YAML editor with dry run and a built-in kubectl terminal — native, fast and private.";
 
 useHead({
   script: [

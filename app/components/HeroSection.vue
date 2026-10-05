@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { REPO_URL } from "~/composables/useGitHub";
+import { LIVE_RELEASE_VERSION, REPO_URL } from "~/composables/useGitHub";
 
 const { primary, platforms } = useDownloads();
 const { stars } = useGitHub();
 const shipped = useNewReleaseShipped();
 const { release } = useGitHub();
+const liveShipped = useReleaseAtLeast(LIVE_RELEASE_VERSION);
 
 const pill = computed(() => {
+  // v1.37+: live data & the new graph. Before that (or while we don't know), the v1.36 pill.
+  if (liveShipped.value) return { tag: "New in v1.37", text: "Live data, a reimagined resource graph & more", short: "Live data & a new resource graph" };
   if (shipped.value === false) return { tag: "Coming soon", text: "Multi-cluster, a built-in terminal & a whole new look" };
   if (shipped.value && release.value) return { tag: `New in v${release.value.version}`, text: "Multi-cluster, built-in terminal & a whole new look" };
   return { tag: "New", text: "Multi-cluster, built-in terminal & a whole new look" };
@@ -46,7 +49,8 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
         class="group inline-flex max-w-full items-center gap-2 rounded-full border border-line bg-surface/70 py-1 pl-1 pr-3 text-[0.8rem] text-muted shadow-card backdrop-blur transition-colors hover:border-line-strong hover:text-fg"
       >
         <span class="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.72rem] font-semibold text-white">{{ pill.tag }}</span>
-        <span class="truncate">{{ pill.text }}</span>
+        <span v-if="'short' in pill" class="truncate sm:hidden">{{ pill.short }}</span>
+        <span class="truncate" :class="'short' in pill ? 'max-sm:hidden' : ''">{{ pill.text }}</span>
         <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
       </a>
 
@@ -62,7 +66,7 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
         style="--delay: 120ms"
       >
         JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster and namespace in one calm
-        interface — with a built-in terminal, structured logs and a live resource graph.
+        interface, updating live — with a resource graph, logs across pods and a built-in terminal.
       </p>
 
       <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" style="--delay: 180ms">
@@ -122,7 +126,7 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
             <AppShot
               name="pods"
               priority
-              alt="JET Pilot showing pods from two clusters, prod-eu-west-1 and staging-us-east-2, in one table with Context and Namespace columns, live CPU and memory bars and colour-coded statuses"
+              alt="JET Pilot showing pods from two clusters, prod-eu-west-1 and staging-us-east-2, in one table with Context and Namespace columns, live CPU and memory sparklines and colour-coded statuses"
               sizes="(min-width: 1280px) 1200px, (min-width: 640px) 94vw, 100vw"
             />
             </div>

@@ -25,6 +25,10 @@ export const faqs = [
     a: `Yes. Add multiple kubeconfig files, then select several contexts and namespaces together. Tables aggregate everything and show Context and Namespace columns so you always know where a resource lives.`,
   },
   {
+    q: "How does JET Pilot stay up to date with my cluster?",
+    a: `From v1.37, lists stream changes from the Kubernetes API through watches instead of polling <code>kubectl</code>. Changes show up in a fraction of a second — about 200 ms from scaling a Deployment to the update on screen in our tests against a real kube-apiserver — and coming back to a view is instant.`,
+  },
+  {
     q: "Does JET Pilot modify my kubeconfig?",
     a: `No. It reads your kubeconfig files. The built-in terminal uses a temporary, owner-only kubeconfig that contains just the current context, so your own files are never touched.`,
   },
