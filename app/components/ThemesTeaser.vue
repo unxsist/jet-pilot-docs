@@ -43,7 +43,6 @@ const shotStyle = {
                 <Icon name="palette" :size="16" />
               </span>
               <span class="eyebrow">Themes</span>
-              <span class="rounded-full border border-accent/30 bg-accent-soft px-2 py-0.5 text-[0.68rem] font-semibold text-accent-text">New</span>
             </div>
             <h3 id="themes-teaser-title" class="mt-5 text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[2.5rem]">
               Your colours. Every pixel.
@@ -78,7 +77,7 @@ const shotStyle = {
                   <div class="teaser-crop absolute" :style="shotStyle">
                     <AppShot
                       name="themes-library"
-                      alt="JET Pilot's theme library under Settings › Appearance: theme cards with live mini previews for JET, Catppuccin, Tokyo Night, Dracula, Nord, GitHub, One Dark Pro, Rosé Pine and Gruvbox, each with light and dark badges"
+                      alt="JET Pilot's theme library under Settings › Appearance: theme cards with live mini previews for JET, Catppuccin, Tokyo Night, Dracula, Nord, GitHub, One Dark Pro, Rosé Pine and Gruvbox, with Rosé Pine previewed on the whole app"
                       sizes="(min-width: 1024px) 1240px, (min-width: 640px) 1270px, 900px"
                     />
                   </div>

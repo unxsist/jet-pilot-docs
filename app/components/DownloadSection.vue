@@ -23,6 +23,7 @@ const osIcon: Record<string, string> = { macos: "apple", windows: "windows", lin
           Free for everyone, forever. Pick your platform —
           <template v-if="release">
             <span class="font-mono text-fg">{{ release.tag }}</span>, released {{ formatDate(release.publishedAt) }}.
+            <a :href="release.url" class="text-fg underline decoration-line-strong underline-offset-4 hover:decoration-fg">See what’s new</a>.
           </template>
           <template v-else>always the latest release.</template>
         </p>
