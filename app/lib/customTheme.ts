@@ -6,9 +6,9 @@
 import { importTheme } from "~/vendor/jet-themes/import/index";
 import { pairVariants } from "~/vendor/jet-themes/import/vscode";
 import { resolveTheme } from "~/vendor/jet-themes/resolve";
-import { themeAppearances, themeIdFromName } from "~/vendor/jet-themes/runtime";
+import { RESERVED_THEME_IDS, themeAppearances, themeIdFromName } from "~/vendor/jet-themes/runtime";
 import { serializeTheme } from "~/vendor/jet-themes/serialize";
-import type { ImportFormat, ThemeFile } from "~/vendor/jet-themes/types";
+import { THEME_COLOR_ROLES, type ThemeFile } from "~/vendor/jet-themes/types";
 import { toLook, type ThemeLook, type ThemePreset } from "./themeLook";
 
 export interface ThemeSource {
@@ -21,20 +21,49 @@ export interface ImportedTheme {
   /** File name for the JET Pilot download. */
   fileName: string;
   jet: string;
-  t3: string;
+  /** The standard theme file: every role resolved, no JET Pilot-only extras. */
+  standard: string;
 }
 
 export type ImportOutcome =
   | { ok: true; format: string; themes: ImportedTheme[]; warnings: string[] }
   | { ok: false; error: string };
 
-const FORMATS: Record<ImportFormat, string> = {
-  jet: "JET Pilot theme",
-  t3: "T3 Code theme",
+/* Every other format the engine reports is a plain theme file. */
+const FORMATS: Record<string, string> = {
   vscode: "VS Code theme",
   sublime: "Sublime Text colour scheme",
   tmtheme: "TextMate theme",
 };
+const formatLabel = (format: string) => FORMATS[format] ?? "JET Pilot theme";
+
+/*
+ * The standard theme file: version 1, every colour role resolved as hex for
+ * the base appearance and each variant, and no `jetPilot` block — for tools
+ * that only read the standard roles.
+ */
+function standardTheme(file: ThemeFile): string {
+  const roles = (appearance: ThemeFile["appearance"]) => {
+    const resolved = resolveTheme(file, appearance).roles;
+    return Object.fromEntries(THEME_COLOR_ROLES.map((role) => [role, resolved[role]]));
+  };
+  let id = file.id ?? themeIdFromName(file.name);
+  if (RESERVED_THEME_IDS.has(id)) id = `${id}-theme`;
+  const variants = Object.fromEntries(
+    themeAppearances(file)
+      .filter((appearance) => appearance !== file.appearance)
+      .map((appearance) => [appearance, roles(appearance)])
+  );
+  const value = {
+    version: 1,
+    id,
+    name: file.name.trim(),
+    appearance: file.appearance,
+    colors: roles(file.appearance),
+    ...(Object.keys(variants).length ? { variants } : {}),
+  };
+  return `${JSON.stringify(value, null, 2)}\n`;
+}
 
 function toImported(file: ThemeFile, index: number): ImportedTheme {
   const looks: ThemePreset["looks"] = {};
@@ -52,7 +81,7 @@ function toImported(file: ThemeFile, index: number): ImportedTheme {
     },
     fileName: `${id}.json`,
     jet: serializeTheme(file),
-    t3: serializeTheme(file, { forT3: true }),
+    standard: standardTheme(file),
   };
 }
 
@@ -67,7 +96,7 @@ export function importThemes(sources: ThemeSource[]): ImportOutcome {
       const where = sources.length > 1 && source.name ? `${source.name}: ` : "";
       return { ok: false, error: `${where}${result.error}` };
     }
-    formats.add(FORMATS[result.format]);
+    formats.add(formatLabel(result.format));
     files.push(...result.themes);
     warnings.push(...result.warnings.map((w) => (sources.length > 1 && source.name ? `${source.name}: ${w}` : w)));
   }

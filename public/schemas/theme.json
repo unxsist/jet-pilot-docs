@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://www.jet-pilot.app/schemas/theme.json",
   "title": "JET Pilot theme",
-  "description": "A JET Pilot theme: T3 Code's theme file (version 1) plus an optional jetPilot block. Short form: name, appearance, canvas and accent.",
+  "description": "A JET Pilot theme: a portable JSON theme file (version 1) plus an optional jetPilot block. Short form: name, appearance, canvas and accent.",
   "type": "object",
   "required": [
     "name",
@@ -46,7 +46,7 @@
     },
     "colors": {
       "type": "object",
-      "description": "T3 Code colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
+      "description": "The standard colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
       "properties": {
         "canvas": {
           "type": "string",
@@ -56,37 +56,37 @@
         "chrome": {
           "type": "string",
           "format": "color-hex",
-          "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+          "description": "Window chrome background in apps that have one. JET Pilot paints its chrome with `sidebar`."
         },
         "toolbar": {
           "type": "string",
           "format": "color-hex",
-          "description": "Toolbar background (T3 Code)."
+          "description": "Toolbar background. Not painted by JET Pilot (kept for portable theme files)."
         },
         "toolbarForeground": {
           "type": "string",
           "format": "color-hex",
-          "description": "Text on the toolbar (T3 Code)."
+          "description": "Text on the toolbar. Not painted by JET Pilot (kept for portable theme files)."
         },
         "toolbarBorder": {
           "type": "string",
           "format": "color-hex",
-          "description": "Toolbar border (T3 Code)."
+          "description": "Toolbar border. Not painted by JET Pilot (kept for portable theme files)."
         },
         "toolbarControl": {
           "type": "string",
           "format": "color-hex",
-          "description": "Toolbar button background (T3 Code)."
+          "description": "Toolbar button background. Not painted by JET Pilot (kept for portable theme files)."
         },
         "toolbarControlForeground": {
           "type": "string",
           "format": "color-hex",
-          "description": "Toolbar button text (T3 Code)."
+          "description": "Toolbar button text. Not painted by JET Pilot (kept for portable theme files)."
         },
         "toolbarControlHover": {
           "type": "string",
           "format": "color-hex",
-          "description": "Toolbar button background on hover (T3 Code)."
+          "description": "Toolbar button background on hover. Not painted by JET Pilot (kept for portable theme files)."
         },
         "surface": {
           "type": "string",
@@ -106,12 +106,12 @@
         "text": {
           "type": "string",
           "format": "color-hex",
-          "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+          "description": "Primary text (--foreground). Derived at 7:1 on the canvas; a colour you set is kept unless it is below 4.5:1."
         },
         "textMuted": {
           "type": "string",
           "format": "color-hex",
-          "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+          "description": "Secondary text on the canvas; the editor's comments, punctuation and line numbers. JET Pilot's muted UI text is `mutedForeground`."
         },
         "border": {
           "type": "string",
@@ -126,7 +126,7 @@
         "focus": {
           "type": "string",
           "format": "color-hex",
-          "description": "Focus rings (--ring) and the editor's focus border."
+          "description": "Focus rings (--ring) and the editor's focus border. A neutral focus colour louder than 6:1 is softened toward the canvas for the rings."
         },
         "accent": {
           "type": "string",
@@ -166,17 +166,17 @@
         "secondaryLabel": {
           "type": "string",
           "format": "color-hex",
-          "description": "Secondary labels (T3 Code)."
+          "description": "Secondary labels. Not painted by JET Pilot (kept for portable theme files)."
         },
         "iconMuted": {
           "type": "string",
           "format": "color-hex",
-          "description": "Muted icons (T3 Code)."
+          "description": "Muted icons. Not painted by JET Pilot (kept for portable theme files)."
         },
         "error": {
           "type": "string",
           "format": "color-hex",
-          "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+          "description": "Error signal colour (solid fills); readable error text is `errorForeground`."
         },
         "errorForeground": {
           "type": "string",
@@ -206,17 +206,17 @@
         "update": {
           "type": "string",
           "format": "color-hex",
-          "description": "Update / info signal colour (T3 Code)."
+          "description": "Update notice colour. Not painted by JET Pilot (kept for portable theme files)."
         },
         "updateForeground": {
           "type": "string",
           "format": "color-hex",
-          "description": "Text on update surfaces (T3 Code)."
+          "description": "Text on update notices. Not painted by JET Pilot (kept for portable theme files)."
         },
         "updateSurface": {
           "type": "string",
           "format": "color-hex",
-          "description": "Background of update notices (T3 Code)."
+          "description": "Background of update notices. Not painted by JET Pilot (kept for portable theme files)."
         },
         "accentSurface": {
           "type": "string",
@@ -231,17 +231,17 @@
         "messageSurface": {
           "type": "string",
           "format": "color-hex",
-          "description": "Message bubble background (T3 Code)."
+          "description": "Message bubble background. Not painted by JET Pilot (kept for portable theme files)."
         },
         "messageForeground": {
           "type": "string",
           "format": "color-hex",
-          "description": "Message bubble text (T3 Code)."
+          "description": "Message bubble text. Not painted by JET Pilot (kept for portable theme files)."
         },
         "messageAction": {
           "type": "string",
           "format": "color-hex",
-          "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+          "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. A neutral one louder than 6:1 (a monochrome theme's text colour) is softened toward the canvas, to at least 4.5:1."
         },
         "messageActionForeground": {
           "type": "string",
@@ -251,7 +251,7 @@
         "messageActionHover": {
           "type": "string",
           "format": "color-hex",
-          "description": "Primary button hover (T3 Code)."
+          "description": "Primary button hover. Not painted by JET Pilot (kept for portable theme files)."
         },
         "codeBackground": {
           "type": "string",
@@ -281,27 +281,27 @@
         "sidebarControlSurface": {
           "type": "string",
           "format": "color-hex",
-          "description": "Controls in the sidebar (T3 Code)."
+          "description": "Controls in the sidebar. Not painted by JET Pilot (kept for portable theme files)."
         },
         "sidebarRowHover": {
           "type": "string",
           "format": "color-hex",
-          "description": "Sidebar row on hover (T3 Code)."
+          "description": "Sidebar row on hover. Not painted by JET Pilot (kept for portable theme files)."
         },
         "sidebarRowActive": {
           "type": "string",
           "format": "color-hex",
-          "description": "Active sidebar row (T3 Code)."
+          "description": "Active sidebar row. Not painted by JET Pilot (kept for portable theme files)."
         },
         "sidebarRowSelected": {
           "type": "string",
           "format": "color-hex",
-          "description": "Selected sidebar row (T3 Code)."
+          "description": "Selected sidebar row. Not painted by JET Pilot (kept for portable theme files)."
         },
         "sidebarBorder": {
           "type": "string",
           "format": "color-hex",
-          "description": "Sidebar border (T3 Code)."
+          "description": "Sidebar border. Not painted by JET Pilot (kept for portable theme files)."
         },
         "terminalBackground": {
           "type": "string",
@@ -342,7 +342,7 @@
       "properties": {
         "light": {
           "type": "object",
-          "description": "The other appearance. Either JET's form ({ \"canvas\", \"accent\", \"colors\", \"jetPilot\" }) or T3's flat role map.",
+          "description": "The other appearance. Either the structured form ({ \"canvas\", \"accent\", \"colors\", \"jetPilot\" }) or a flat role map.",
           "properties": {
             "canvas": {
               "type": "string",
@@ -356,7 +356,7 @@
             },
             "colors": {
               "type": "object",
-              "description": "T3 Code colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
+              "description": "The standard colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
               "properties": {
                 "canvas": {
                   "type": "string",
@@ -366,37 +366,37 @@
                 "chrome": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+                  "description": "Window chrome background in apps that have one. JET Pilot paints its chrome with `sidebar`."
                 },
                 "toolbar": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar background (T3 Code)."
+                  "description": "Toolbar background. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Text on the toolbar (T3 Code)."
+                  "description": "Text on the toolbar. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarBorder": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar border (T3 Code)."
+                  "description": "Toolbar border. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarControl": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar button background (T3 Code)."
+                  "description": "Toolbar button background. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarControlForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar button text (T3 Code)."
+                  "description": "Toolbar button text. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarControlHover": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar button background on hover (T3 Code)."
+                  "description": "Toolbar button background on hover. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "surface": {
                   "type": "string",
@@ -416,12 +416,12 @@
                 "text": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+                  "description": "Primary text (--foreground). Derived at 7:1 on the canvas; a colour you set is kept unless it is below 4.5:1."
                 },
                 "textMuted": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+                  "description": "Secondary text on the canvas; the editor's comments, punctuation and line numbers. JET Pilot's muted UI text is `mutedForeground`."
                 },
                 "border": {
                   "type": "string",
@@ -436,7 +436,7 @@
                 "focus": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Focus rings (--ring) and the editor's focus border."
+                  "description": "Focus rings (--ring) and the editor's focus border. A neutral focus colour louder than 6:1 is softened toward the canvas for the rings."
                 },
                 "accent": {
                   "type": "string",
@@ -476,17 +476,17 @@
                 "secondaryLabel": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Secondary labels (T3 Code)."
+                  "description": "Secondary labels. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "iconMuted": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Muted icons (T3 Code)."
+                  "description": "Muted icons. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "error": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+                  "description": "Error signal colour (solid fills); readable error text is `errorForeground`."
                 },
                 "errorForeground": {
                   "type": "string",
@@ -516,17 +516,17 @@
                 "update": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Update / info signal colour (T3 Code)."
+                  "description": "Update notice colour. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "updateForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Text on update surfaces (T3 Code)."
+                  "description": "Text on update notices. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "updateSurface": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Background of update notices (T3 Code)."
+                  "description": "Background of update notices. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "accentSurface": {
                   "type": "string",
@@ -541,17 +541,17 @@
                 "messageSurface": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Message bubble background (T3 Code)."
+                  "description": "Message bubble background. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "messageForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Message bubble text (T3 Code)."
+                  "description": "Message bubble text. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "messageAction": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+                  "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. A neutral one louder than 6:1 (a monochrome theme's text colour) is softened toward the canvas, to at least 4.5:1."
                 },
                 "messageActionForeground": {
                   "type": "string",
@@ -561,7 +561,7 @@
                 "messageActionHover": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Primary button hover (T3 Code)."
+                  "description": "Primary button hover. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "codeBackground": {
                   "type": "string",
@@ -591,27 +591,27 @@
                 "sidebarControlSurface": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Controls in the sidebar (T3 Code)."
+                  "description": "Controls in the sidebar. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarRowHover": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Sidebar row on hover (T3 Code)."
+                  "description": "Sidebar row on hover. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarRowActive": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Active sidebar row (T3 Code)."
+                  "description": "Active sidebar row. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarRowSelected": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Selected sidebar row (T3 Code)."
+                  "description": "Selected sidebar row. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarBorder": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Sidebar border (T3 Code)."
+                  "description": "Sidebar border. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "terminalBackground": {
                   "type": "string",
@@ -648,7 +648,7 @@
             },
             "jetPilot": {
               "type": "object",
-              "description": "JET Pilot extensions (T3 Code ignores this block).",
+              "description": "JET Pilot extensions (other readers of the format ignore this block).",
               "properties": {
                 "colors": {
                   "type": "object",
@@ -657,7 +657,7 @@
                     "success": {
                       "type": "string",
                       "format": "color-hex",
-                      "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+                      "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing, as muted as the theme's own error / warning colours."
                     },
                     "successForeground": {
                       "type": "string",
@@ -667,7 +667,7 @@
                     "info": {
                       "type": "string",
                       "format": "color-hex",
-                      "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+                      "description": "Info colour, text-grade on the canvas (--info): traffic edges, info badges. Derived as a blue when missing, as muted as the theme's own error / warning colours."
                     },
                     "infoForeground": {
                       "type": "string",
@@ -998,284 +998,284 @@
             "chrome": {
               "type": "string",
               "format": "color-hex",
-              "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome. (T3 flat variant form)"
+              "description": "Window chrome background in apps that have one. JET Pilot paints its chrome with `sidebar`. (flat variant form)"
             },
             "toolbar": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar background (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar background. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on the toolbar (T3 Code). (T3 flat variant form)"
+              "description": "Text on the toolbar. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarBorder": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar border (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar border. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarControl": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar button background (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar button background. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarControlForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar button text (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar button text. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarControlHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar button background on hover (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar button background on hover. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "surface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card). (T3 flat variant form)"
+              "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card). (flat variant form)"
             },
             "surfaceRaised": {
               "type": "string",
               "format": "color-hex",
-              "description": "Raised surfaces; the placeholder text is checked against it. (T3 flat variant form)"
+              "description": "Raised surfaces; the placeholder text is checked against it. (flat variant form)"
             },
             "surfaceOverlay": {
               "type": "string",
               "format": "color-hex",
-              "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover). (T3 flat variant form)"
+              "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover). (flat variant form)"
             },
             "text": {
               "type": "string",
               "format": "color-hex",
-              "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas. (T3 flat variant form)"
+              "description": "Primary text (--foreground). Derived at 7:1 on the canvas; a colour you set is kept unless it is below 4.5:1. (flat variant form)"
             },
             "textMuted": {
               "type": "string",
               "format": "color-hex",
-              "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`. (T3 flat variant form)"
+              "description": "Secondary text on the canvas; the editor's comments, punctuation and line numbers. JET Pilot's muted UI text is `mutedForeground`. (flat variant form)"
             },
             "border": {
               "type": "string",
               "format": "color-hex",
-              "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it. (T3 flat variant form)"
+              "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it. (flat variant form)"
             },
             "input": {
               "type": "string",
               "format": "color-hex",
-              "description": "Input borders (--input). (T3 flat variant form)"
+              "description": "Input borders (--input). (flat variant form)"
             },
             "focus": {
               "type": "string",
               "format": "color-hex",
-              "description": "Focus rings (--ring) and the editor's focus border. (T3 flat variant form)"
+              "description": "Focus rings (--ring) and the editor's focus border. A neutral focus colour louder than 6:1 is softened toward the canvas for the rings. (flat variant form)"
             },
             "accentForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on a solid accent fill. (T3 flat variant form)"
+              "description": "Text on a solid accent fill. (flat variant form)"
             },
             "secondary": {
               "type": "string",
               "format": "color-hex",
-              "description": "Secondary buttons and controls (--secondary). (T3 flat variant form)"
+              "description": "Secondary buttons and controls (--secondary). (flat variant form)"
             },
             "secondaryForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on secondary buttons (--secondary-foreground). (T3 flat variant form)"
+              "description": "Text on secondary buttons (--secondary-foreground). (flat variant form)"
             },
             "muted": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted backgrounds: skeletons, subtle fills (--muted). (T3 flat variant form)"
+              "description": "Muted backgrounds: skeletons, subtle fills (--muted). (flat variant form)"
             },
             "mutedForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted text: descriptions, captions, table meta (--muted-foreground). (T3 flat variant form)"
+              "description": "Muted text: descriptions, captions, table meta (--muted-foreground). (flat variant form)"
             },
             "placeholder": {
               "type": "string",
               "format": "color-hex",
-              "description": "Input placeholder text. (T3 flat variant form)"
+              "description": "Input placeholder text. (flat variant form)"
             },
             "secondaryLabel": {
               "type": "string",
               "format": "color-hex",
-              "description": "Secondary labels (T3 Code). (T3 flat variant form)"
+              "description": "Secondary labels. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "iconMuted": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted icons (T3 Code). (T3 flat variant form)"
+              "description": "Muted icons. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "error": {
               "type": "string",
               "format": "color-hex",
-              "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`. (T3 flat variant form)"
+              "description": "Error signal colour (solid fills); readable error text is `errorForeground`. (flat variant form)"
             },
             "errorForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Readable error text; becomes --destructive (also checked on the canvas). (T3 flat variant form)"
+              "description": "Readable error text; becomes --destructive (also checked on the canvas). (flat variant form)"
             },
             "errorSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Background of error alerts. (T3 flat variant form)"
+              "description": "Background of error alerts. (flat variant form)"
             },
             "warning": {
               "type": "string",
               "format": "color-hex",
-              "description": "Warning signal colour; editor find-match highlight. (T3 flat variant form)"
+              "description": "Warning signal colour; editor find-match highlight. (flat variant form)"
             },
             "warningForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Readable warning text; becomes --warning (also checked on the canvas). (T3 flat variant form)"
+              "description": "Readable warning text; becomes --warning (also checked on the canvas). (flat variant form)"
             },
             "warningSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Background of warning alerts. (T3 flat variant form)"
+              "description": "Background of warning alerts. (flat variant form)"
             },
             "update": {
               "type": "string",
               "format": "color-hex",
-              "description": "Update / info signal colour (T3 Code). (T3 flat variant form)"
+              "description": "Update notice colour. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "updateForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on update surfaces (T3 Code). (T3 flat variant form)"
+              "description": "Text on update notices. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "updateSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Background of update notices (T3 Code). (T3 flat variant form)"
+              "description": "Background of update notices. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "accentSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion. (T3 flat variant form)"
+              "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion. (flat variant form)"
             },
             "accentSurfaceForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on hovered / selected rows (--accent-foreground). (T3 flat variant form)"
+              "description": "Text on hovered / selected rows (--accent-foreground). (flat variant form)"
             },
             "messageSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Message bubble background (T3 Code). (T3 flat variant form)"
+              "description": "Message bubble background. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "messageForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Message bubble text (T3 Code). (T3 flat variant form)"
+              "description": "Message bubble text. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "messageAction": {
               "type": "string",
               "format": "color-hex",
-              "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. (T3 flat variant form)"
+              "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. A neutral one louder than 6:1 (a monochrome theme's text colour) is softened toward the canvas, to at least 4.5:1. (flat variant form)"
             },
             "messageActionForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on primary buttons (--primary-foreground). (T3 flat variant form)"
+              "description": "Text on primary buttons (--primary-foreground). (flat variant form)"
             },
             "messageActionHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Primary button hover (T3 Code). (T3 flat variant form)"
+              "description": "Primary button hover. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "codeBackground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Inline code background. (T3 flat variant form)"
+              "description": "Inline code background. (flat variant form)"
             },
             "codeForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Inline code text. (T3 flat variant form)"
+              "description": "Inline code text. (flat variant form)"
             },
             "sidebar": {
               "type": "string",
               "format": "color-hex",
-              "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar). (T3 flat variant form)"
+              "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar). (flat variant form)"
             },
             "sidebarForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Navigation text (--sidebar-foreground). (T3 flat variant form)"
+              "description": "Navigation text (--sidebar-foreground). (flat variant form)"
             },
             "sidebarMutedForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted navigation text. (T3 flat variant form)"
+              "description": "Muted navigation text. (flat variant form)"
             },
             "sidebarControlSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Controls in the sidebar (T3 Code). (T3 flat variant form)"
+              "description": "Controls in the sidebar. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarRowHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Sidebar row on hover (T3 Code). (T3 flat variant form)"
+              "description": "Sidebar row on hover. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarRowActive": {
               "type": "string",
               "format": "color-hex",
-              "description": "Active sidebar row (T3 Code). (T3 flat variant form)"
+              "description": "Active sidebar row. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarRowSelected": {
               "type": "string",
               "format": "color-hex",
-              "description": "Selected sidebar row (T3 Code). (T3 flat variant form)"
+              "description": "Selected sidebar row. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarBorder": {
               "type": "string",
               "format": "color-hex",
-              "description": "Sidebar border (T3 Code). (T3 flat variant form)"
+              "description": "Sidebar border. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "terminalBackground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal background. (T3 flat variant form)"
+              "description": "Terminal background. (flat variant form)"
             },
             "terminalForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal text. (T3 flat variant form)"
+              "description": "Terminal text. (flat variant form)"
             },
             "terminalCursor": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal and editor cursor. (T3 flat variant form)"
+              "description": "Terminal and editor cursor. (flat variant form)"
             },
             "terminalSelection": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal selection. (T3 flat variant form)"
+              "description": "Terminal selection. (flat variant form)"
             },
             "terminalScrollbar": {
               "type": "string",
               "format": "color-hex",
-              "description": "Scrollbar thumbs (--scrollbar), also in the editor. (T3 flat variant form)"
+              "description": "Scrollbar thumbs (--scrollbar), also in the editor. (flat variant form)"
             },
             "terminalScrollbarHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Scrollbar thumbs on hover (--scrollbar-hover). (T3 flat variant form)"
+              "description": "Scrollbar thumbs on hover (--scrollbar-hover). (flat variant form)"
             }
           },
           "additionalProperties": false
         },
         "dark": {
           "type": "object",
-          "description": "The other appearance. Either JET's form ({ \"canvas\", \"accent\", \"colors\", \"jetPilot\" }) or T3's flat role map.",
+          "description": "The other appearance. Either the structured form ({ \"canvas\", \"accent\", \"colors\", \"jetPilot\" }) or a flat role map.",
           "properties": {
             "canvas": {
               "type": "string",
@@ -1289,7 +1289,7 @@
             },
             "colors": {
               "type": "object",
-              "description": "T3 Code colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
+              "description": "The standard colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
               "properties": {
                 "canvas": {
                   "type": "string",
@@ -1299,37 +1299,37 @@
                 "chrome": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+                  "description": "Window chrome background in apps that have one. JET Pilot paints its chrome with `sidebar`."
                 },
                 "toolbar": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar background (T3 Code)."
+                  "description": "Toolbar background. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Text on the toolbar (T3 Code)."
+                  "description": "Text on the toolbar. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarBorder": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar border (T3 Code)."
+                  "description": "Toolbar border. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarControl": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar button background (T3 Code)."
+                  "description": "Toolbar button background. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarControlForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar button text (T3 Code)."
+                  "description": "Toolbar button text. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "toolbarControlHover": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Toolbar button background on hover (T3 Code)."
+                  "description": "Toolbar button background on hover. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "surface": {
                   "type": "string",
@@ -1349,12 +1349,12 @@
                 "text": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+                  "description": "Primary text (--foreground). Derived at 7:1 on the canvas; a colour you set is kept unless it is below 4.5:1."
                 },
                 "textMuted": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+                  "description": "Secondary text on the canvas; the editor's comments, punctuation and line numbers. JET Pilot's muted UI text is `mutedForeground`."
                 },
                 "border": {
                   "type": "string",
@@ -1369,7 +1369,7 @@
                 "focus": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Focus rings (--ring) and the editor's focus border."
+                  "description": "Focus rings (--ring) and the editor's focus border. A neutral focus colour louder than 6:1 is softened toward the canvas for the rings."
                 },
                 "accent": {
                   "type": "string",
@@ -1409,17 +1409,17 @@
                 "secondaryLabel": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Secondary labels (T3 Code)."
+                  "description": "Secondary labels. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "iconMuted": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Muted icons (T3 Code)."
+                  "description": "Muted icons. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "error": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+                  "description": "Error signal colour (solid fills); readable error text is `errorForeground`."
                 },
                 "errorForeground": {
                   "type": "string",
@@ -1449,17 +1449,17 @@
                 "update": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Update / info signal colour (T3 Code)."
+                  "description": "Update notice colour. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "updateForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Text on update surfaces (T3 Code)."
+                  "description": "Text on update notices. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "updateSurface": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Background of update notices (T3 Code)."
+                  "description": "Background of update notices. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "accentSurface": {
                   "type": "string",
@@ -1474,17 +1474,17 @@
                 "messageSurface": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Message bubble background (T3 Code)."
+                  "description": "Message bubble background. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "messageForeground": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Message bubble text (T3 Code)."
+                  "description": "Message bubble text. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "messageAction": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+                  "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. A neutral one louder than 6:1 (a monochrome theme's text colour) is softened toward the canvas, to at least 4.5:1."
                 },
                 "messageActionForeground": {
                   "type": "string",
@@ -1494,7 +1494,7 @@
                 "messageActionHover": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Primary button hover (T3 Code)."
+                  "description": "Primary button hover. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "codeBackground": {
                   "type": "string",
@@ -1524,27 +1524,27 @@
                 "sidebarControlSurface": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Controls in the sidebar (T3 Code)."
+                  "description": "Controls in the sidebar. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarRowHover": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Sidebar row on hover (T3 Code)."
+                  "description": "Sidebar row on hover. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarRowActive": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Active sidebar row (T3 Code)."
+                  "description": "Active sidebar row. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarRowSelected": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Selected sidebar row (T3 Code)."
+                  "description": "Selected sidebar row. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "sidebarBorder": {
                   "type": "string",
                   "format": "color-hex",
-                  "description": "Sidebar border (T3 Code)."
+                  "description": "Sidebar border. Not painted by JET Pilot (kept for portable theme files)."
                 },
                 "terminalBackground": {
                   "type": "string",
@@ -1581,7 +1581,7 @@
             },
             "jetPilot": {
               "type": "object",
-              "description": "JET Pilot extensions (T3 Code ignores this block).",
+              "description": "JET Pilot extensions (other readers of the format ignore this block).",
               "properties": {
                 "colors": {
                   "type": "object",
@@ -1590,7 +1590,7 @@
                     "success": {
                       "type": "string",
                       "format": "color-hex",
-                      "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+                      "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing, as muted as the theme's own error / warning colours."
                     },
                     "successForeground": {
                       "type": "string",
@@ -1600,7 +1600,7 @@
                     "info": {
                       "type": "string",
                       "format": "color-hex",
-                      "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+                      "description": "Info colour, text-grade on the canvas (--info): traffic edges, info badges. Derived as a blue when missing, as muted as the theme's own error / warning colours."
                     },
                     "infoForeground": {
                       "type": "string",
@@ -1931,277 +1931,277 @@
             "chrome": {
               "type": "string",
               "format": "color-hex",
-              "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome. (T3 flat variant form)"
+              "description": "Window chrome background in apps that have one. JET Pilot paints its chrome with `sidebar`. (flat variant form)"
             },
             "toolbar": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar background (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar background. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on the toolbar (T3 Code). (T3 flat variant form)"
+              "description": "Text on the toolbar. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarBorder": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar border (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar border. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarControl": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar button background (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar button background. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarControlForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar button text (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar button text. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "toolbarControlHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Toolbar button background on hover (T3 Code). (T3 flat variant form)"
+              "description": "Toolbar button background on hover. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "surface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card). (T3 flat variant form)"
+              "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card). (flat variant form)"
             },
             "surfaceRaised": {
               "type": "string",
               "format": "color-hex",
-              "description": "Raised surfaces; the placeholder text is checked against it. (T3 flat variant form)"
+              "description": "Raised surfaces; the placeholder text is checked against it. (flat variant form)"
             },
             "surfaceOverlay": {
               "type": "string",
               "format": "color-hex",
-              "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover). (T3 flat variant form)"
+              "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover). (flat variant form)"
             },
             "text": {
               "type": "string",
               "format": "color-hex",
-              "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas. (T3 flat variant form)"
+              "description": "Primary text (--foreground). Derived at 7:1 on the canvas; a colour you set is kept unless it is below 4.5:1. (flat variant form)"
             },
             "textMuted": {
               "type": "string",
               "format": "color-hex",
-              "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`. (T3 flat variant form)"
+              "description": "Secondary text on the canvas; the editor's comments, punctuation and line numbers. JET Pilot's muted UI text is `mutedForeground`. (flat variant form)"
             },
             "border": {
               "type": "string",
               "format": "color-hex",
-              "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it. (T3 flat variant form)"
+              "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it. (flat variant form)"
             },
             "input": {
               "type": "string",
               "format": "color-hex",
-              "description": "Input borders (--input). (T3 flat variant form)"
+              "description": "Input borders (--input). (flat variant form)"
             },
             "focus": {
               "type": "string",
               "format": "color-hex",
-              "description": "Focus rings (--ring) and the editor's focus border. (T3 flat variant form)"
+              "description": "Focus rings (--ring) and the editor's focus border. A neutral focus colour louder than 6:1 is softened toward the canvas for the rings. (flat variant form)"
             },
             "accentForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on a solid accent fill. (T3 flat variant form)"
+              "description": "Text on a solid accent fill. (flat variant form)"
             },
             "secondary": {
               "type": "string",
               "format": "color-hex",
-              "description": "Secondary buttons and controls (--secondary). (T3 flat variant form)"
+              "description": "Secondary buttons and controls (--secondary). (flat variant form)"
             },
             "secondaryForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on secondary buttons (--secondary-foreground). (T3 flat variant form)"
+              "description": "Text on secondary buttons (--secondary-foreground). (flat variant form)"
             },
             "muted": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted backgrounds: skeletons, subtle fills (--muted). (T3 flat variant form)"
+              "description": "Muted backgrounds: skeletons, subtle fills (--muted). (flat variant form)"
             },
             "mutedForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted text: descriptions, captions, table meta (--muted-foreground). (T3 flat variant form)"
+              "description": "Muted text: descriptions, captions, table meta (--muted-foreground). (flat variant form)"
             },
             "placeholder": {
               "type": "string",
               "format": "color-hex",
-              "description": "Input placeholder text. (T3 flat variant form)"
+              "description": "Input placeholder text. (flat variant form)"
             },
             "secondaryLabel": {
               "type": "string",
               "format": "color-hex",
-              "description": "Secondary labels (T3 Code). (T3 flat variant form)"
+              "description": "Secondary labels. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "iconMuted": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted icons (T3 Code). (T3 flat variant form)"
+              "description": "Muted icons. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "error": {
               "type": "string",
               "format": "color-hex",
-              "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`. (T3 flat variant form)"
+              "description": "Error signal colour (solid fills); readable error text is `errorForeground`. (flat variant form)"
             },
             "errorForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Readable error text; becomes --destructive (also checked on the canvas). (T3 flat variant form)"
+              "description": "Readable error text; becomes --destructive (also checked on the canvas). (flat variant form)"
             },
             "errorSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Background of error alerts. (T3 flat variant form)"
+              "description": "Background of error alerts. (flat variant form)"
             },
             "warning": {
               "type": "string",
               "format": "color-hex",
-              "description": "Warning signal colour; editor find-match highlight. (T3 flat variant form)"
+              "description": "Warning signal colour; editor find-match highlight. (flat variant form)"
             },
             "warningForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Readable warning text; becomes --warning (also checked on the canvas). (T3 flat variant form)"
+              "description": "Readable warning text; becomes --warning (also checked on the canvas). (flat variant form)"
             },
             "warningSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Background of warning alerts. (T3 flat variant form)"
+              "description": "Background of warning alerts. (flat variant form)"
             },
             "update": {
               "type": "string",
               "format": "color-hex",
-              "description": "Update / info signal colour (T3 Code). (T3 flat variant form)"
+              "description": "Update notice colour. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "updateForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on update surfaces (T3 Code). (T3 flat variant form)"
+              "description": "Text on update notices. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "updateSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Background of update notices (T3 Code). (T3 flat variant form)"
+              "description": "Background of update notices. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "accentSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion. (T3 flat variant form)"
+              "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion. (flat variant form)"
             },
             "accentSurfaceForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on hovered / selected rows (--accent-foreground). (T3 flat variant form)"
+              "description": "Text on hovered / selected rows (--accent-foreground). (flat variant form)"
             },
             "messageSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Message bubble background (T3 Code). (T3 flat variant form)"
+              "description": "Message bubble background. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "messageForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Message bubble text (T3 Code). (T3 flat variant form)"
+              "description": "Message bubble text. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "messageAction": {
               "type": "string",
               "format": "color-hex",
-              "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. (T3 flat variant form)"
+              "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. A neutral one louder than 6:1 (a monochrome theme's text colour) is softened toward the canvas, to at least 4.5:1. (flat variant form)"
             },
             "messageActionForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Text on primary buttons (--primary-foreground). (T3 flat variant form)"
+              "description": "Text on primary buttons (--primary-foreground). (flat variant form)"
             },
             "messageActionHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Primary button hover (T3 Code). (T3 flat variant form)"
+              "description": "Primary button hover. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "codeBackground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Inline code background. (T3 flat variant form)"
+              "description": "Inline code background. (flat variant form)"
             },
             "codeForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Inline code text. (T3 flat variant form)"
+              "description": "Inline code text. (flat variant form)"
             },
             "sidebar": {
               "type": "string",
               "format": "color-hex",
-              "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar). (T3 flat variant form)"
+              "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar). (flat variant form)"
             },
             "sidebarForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Navigation text (--sidebar-foreground). (T3 flat variant form)"
+              "description": "Navigation text (--sidebar-foreground). (flat variant form)"
             },
             "sidebarMutedForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Muted navigation text. (T3 flat variant form)"
+              "description": "Muted navigation text. (flat variant form)"
             },
             "sidebarControlSurface": {
               "type": "string",
               "format": "color-hex",
-              "description": "Controls in the sidebar (T3 Code). (T3 flat variant form)"
+              "description": "Controls in the sidebar. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarRowHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Sidebar row on hover (T3 Code). (T3 flat variant form)"
+              "description": "Sidebar row on hover. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarRowActive": {
               "type": "string",
               "format": "color-hex",
-              "description": "Active sidebar row (T3 Code). (T3 flat variant form)"
+              "description": "Active sidebar row. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarRowSelected": {
               "type": "string",
               "format": "color-hex",
-              "description": "Selected sidebar row (T3 Code). (T3 flat variant form)"
+              "description": "Selected sidebar row. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "sidebarBorder": {
               "type": "string",
               "format": "color-hex",
-              "description": "Sidebar border (T3 Code). (T3 flat variant form)"
+              "description": "Sidebar border. Not painted by JET Pilot (kept for portable theme files). (flat variant form)"
             },
             "terminalBackground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal background. (T3 flat variant form)"
+              "description": "Terminal background. (flat variant form)"
             },
             "terminalForeground": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal text. (T3 flat variant form)"
+              "description": "Terminal text. (flat variant form)"
             },
             "terminalCursor": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal and editor cursor. (T3 flat variant form)"
+              "description": "Terminal and editor cursor. (flat variant form)"
             },
             "terminalSelection": {
               "type": "string",
               "format": "color-hex",
-              "description": "Terminal selection. (T3 flat variant form)"
+              "description": "Terminal selection. (flat variant form)"
             },
             "terminalScrollbar": {
               "type": "string",
               "format": "color-hex",
-              "description": "Scrollbar thumbs (--scrollbar), also in the editor. (T3 flat variant form)"
+              "description": "Scrollbar thumbs (--scrollbar), also in the editor. (flat variant form)"
             },
             "terminalScrollbarHover": {
               "type": "string",
               "format": "color-hex",
-              "description": "Scrollbar thumbs on hover (--scrollbar-hover). (T3 flat variant form)"
+              "description": "Scrollbar thumbs on hover (--scrollbar-hover). (flat variant form)"
             }
           },
           "additionalProperties": false
@@ -2211,7 +2211,7 @@
     },
     "jetPilot": {
       "type": "object",
-      "description": "JET Pilot extensions (T3 Code ignores this block).",
+      "description": "JET Pilot extensions (other readers of the format ignore this block).",
       "properties": {
         "colors": {
           "type": "object",
@@ -2220,7 +2220,7 @@
             "success": {
               "type": "string",
               "format": "color-hex",
-              "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+              "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing, as muted as the theme's own error / warning colours."
             },
             "successForeground": {
               "type": "string",
@@ -2230,7 +2230,7 @@
             "info": {
               "type": "string",
               "format": "color-hex",
-              "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+              "description": "Info colour, text-grade on the canvas (--info): traffic edges, info badges. Derived as a blue when missing, as muted as the theme's own error / warning colours."
             },
             "infoForeground": {
               "type": "string",
@@ -2579,11 +2579,11 @@
     },
     "origin": {
       "type": "object",
-      "description": "Where the theme came from (JET Pilot; T3 Code ignores it).",
+      "description": "Where the theme came from (JET Pilot; other readers ignore it).",
       "properties": {
         "label": {
           "type": "string",
-          "description": "E.g. \"Open VSX\", \"VS Code\", \"T3 Code\"."
+          "description": "E.g. \"Open VSX\", \"VS Code\", \"Sublime Text\"."
         },
         "url": {
           "type": "string"

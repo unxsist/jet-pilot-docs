@@ -128,7 +128,7 @@ function download(name: string, content: string) {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-const t3Name = (name: string) => name.replace(/\.json$/, ".t3.json");
+const standardName = (name: string) => name.replace(/\.json$/, ".standard.json");
 const appearances = (theme: ImportedTheme) => {
   const keys = Object.keys(theme.preset.looks);
   return keys.length === 2 ? "Light and dark" : `${keys[0] === "light" ? "Light" : "Dark"} only`;
@@ -149,7 +149,7 @@ const swatches = (theme: ImportedTheme) =>
       <div class="p-6 sm:p-8">
         <h3 id="try-title" class="text-xl font-semibold tracking-tight">Try your own theme</h3>
         <p class="mt-2 text-[0.92rem] leading-relaxed text-muted">
-          Drop a VS Code theme, a Sublime Text colour scheme, a TextMate theme or a T3 Code / JET Pilot theme.
+          Drop a VS Code theme, a Sublime Text colour scheme, a TextMate theme or a JET Pilot theme file.
           The same engine JET Pilot uses converts it right here in your browser.
         </p>
 
@@ -244,8 +244,8 @@ const swatches = (theme: ImportedTheme) =>
             <button type="button" class="inline-flex h-10 items-center gap-2 rounded-xl bg-fg px-4 text-[0.85rem] font-semibold text-bg transition-opacity hover:opacity-90" @click="download(selected.fileName, selected.jet)">
               <Icon name="download" :size="15" /> Download as JET Pilot theme
             </button>
-            <button type="button" class="inline-flex h-10 items-center gap-2 rounded-xl border border-line-strong px-4 text-[0.85rem] font-semibold transition-colors hover:bg-fg/5" @click="download(t3Name(selected.fileName), selected.t3)">
-              Export for T3 Code
+            <button type="button" class="inline-flex h-10 items-center gap-2 rounded-xl border border-line-strong px-4 text-[0.85rem] font-semibold transition-colors hover:bg-fg/5" title="The theme with every colour role resolved and without JET Pilot-only extras" @click="download(standardName(selected.fileName), selected.standard)">
+              Download standard theme
             </button>
           </div>
           <p class="mt-3 text-[0.8rem] leading-relaxed text-faint">
@@ -269,7 +269,7 @@ const swatches = (theme: ImportedTheme) =>
             <li class="flex gap-3"><span class="mt-0.5 w-[4.6rem] shrink-0 self-start whitespace-nowrap rounded-md border border-line bg-surface-3 py-px text-center font-mono text-[0.68rem] text-fg">VS Code</span><span><code>*-color-theme.json</code> — workbench colours, <code>tokenColors</code> for the editor and <code>terminal.ansi*</code> for the terminal. JSONC and <code>include</code> are fine.</span></li>
             <li class="flex gap-3"><span class="mt-0.5 w-[4.6rem] shrink-0 self-start whitespace-nowrap rounded-md border border-line bg-surface-3 py-px text-center font-mono text-[0.68rem] text-fg">Sublime</span><span><code>.sublime-color-scheme</code>, with variables and <code>color()</code>.</span></li>
             <li class="flex gap-3"><span class="mt-0.5 w-[4.6rem] shrink-0 self-start whitespace-nowrap rounded-md border border-line bg-surface-3 py-px text-center font-mono text-[0.68rem] text-fg">TextMate</span><span><code>.tmTheme</code> property lists.</span></li>
-            <li class="flex gap-3"><span class="mt-0.5 w-[4.6rem] shrink-0 self-start whitespace-nowrap rounded-md border border-line bg-surface-3 py-px text-center font-mono text-[0.68rem] text-fg">T3 · JET</span><span>T3 Code themes as they are, and JET Pilot’s own files.</span></li>
+            <li class="flex gap-3"><span class="mt-0.5 w-[4.6rem] shrink-0 self-start whitespace-nowrap rounded-md border border-line bg-surface-3 py-px text-center font-mono text-[0.68rem] text-fg">JET Pilot</span><span>JET Pilot theme files — the short two-colour form or a full palette.</span></li>
           </ul>
           <p class="mt-5 text-[0.8rem] leading-relaxed text-faint">Light and dark files of one theme? Drop both at once — they pair up into one theme, as in the app.</p>
         </div>

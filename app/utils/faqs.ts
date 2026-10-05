@@ -30,7 +30,7 @@ export const faqs = [
   },
   {
     q: "Can I use my VS Code theme?",
-    a: `Yes. From v1.38, JET Pilot imports VS Code colour themes (JSONC and <code>include</code> chains too), Sublime Text <code>.sublime-color-scheme</code> files, TextMate <code>.tmTheme</code> files and T3 Code themes. Drop the file on Settings › Appearance, or install a theme from the Open VSX gallery inside the app. The workbench colours become JET Pilot’s palette, <code>tokenColors</code> colour the YAML editor and <code>terminal.ansi*</code> the terminal. Want to see it first? <a href="/themes/#try">Preview your theme on the website</a> — it’s converted in your browser.`,
+    a: `Yes. From v1.38, JET Pilot imports VS Code colour themes (JSONC and <code>include</code> chains too), Sublime Text <code>.sublime-color-scheme</code> files and TextMate <code>.tmTheme</code> files. Drop the file on Settings › Appearance, or install a theme from the Open VSX gallery inside the app. The workbench colours become JET Pilot’s palette, <code>tokenColors</code> colour the YAML editor and <code>terminal.ansi*</code> the terminal. Want to see it first? <a href="/themes/#try">Preview your theme on the website</a> — it’s converted in your browser.`,
   },
   {
     q: "Why only MIT-licensed themes from Open VSX?",
