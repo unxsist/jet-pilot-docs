@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import { LIVE_RELEASE_VERSION, REPO_URL, THEMES_RELEASE_VERSION } from "~/composables/useGitHub";
+import { CLUSTERS_RELEASE_VERSION, REPO_URL } from "~/composables/useGitHub";
 
 const { primary, platforms } = useDownloads();
 const { stars } = useGitHub();
-const shipped = useNewReleaseShipped();
-const { release } = useGitHub();
-const liveShipped = useReleaseAtLeast(LIVE_RELEASE_VERSION);
-const themesShipped = useReleaseAtLeast(THEMES_RELEASE_VERSION);
+const clustersShipped = useReleaseAtLeast(CLUSTERS_RELEASE_VERSION);
 
-const pill = computed<{ tag: string; text: string; short?: string; href?: string }>(() => {
-  // v1.38+: custom themes. v1.37: live data & the new graph. Before that (or while we don't know), the v1.36 pill.
-  if (themesShipped.value) return { tag: "New in v1.38", text: "Custom themes — bring your VS Code theme", short: "Custom themes", href: "/themes/" };
-  if (liveShipped.value) return { tag: "New in v1.37", text: "Live data, a reimagined resource graph & more", short: "Live data & a new resource graph" };
-  if (shipped.value === false) return { tag: "Coming soon", text: "Multi-cluster, a built-in terminal & a whole new look" };
-  if (shipped.value && release.value) return { tag: `New in v${release.value.version}`, text: "Multi-cluster, built-in terminal & a whole new look" };
-  return { tag: "New", text: "Multi-cluster, built-in terminal & a whole new look" };
-});
+/* This deploys once 2.0 is out, so 2.0 is the pill unless the latest release says otherwise. */
+const pill = computed<{ tag: string; text: string; short: string; href: string }>(() =>
+  clustersShipped.value === false
+    ? { tag: "Coming soon", text: "JET Pilot 2.0: every cluster, every cloud", short: "JET Pilot 2.0", href: "#features" }
+    : { tag: "New in 2.0", text: "Every cluster, every cloud, in one calm hub", short: "Every cluster, every cloud", href: "#clusters" }
+);
 
 // The hero shot is the LCP element: start fetching it with the HTML.
 useHead({
@@ -47,12 +42,12 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
 
     <div class="container-x text-center">
       <a
-        :href="pill.href ?? '#whats-new'"
+        :href="pill.href"
         class="group inline-flex max-w-full items-center gap-2 rounded-full border border-line bg-surface/70 py-1 pl-1 pr-3 text-[0.8rem] text-muted shadow-card backdrop-blur transition-colors hover:border-line-strong hover:text-fg"
       >
         <span class="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.72rem] font-semibold text-white">{{ pill.tag }}</span>
-        <span v-if="pill.short" class="truncate sm:hidden">{{ pill.short }}</span>
-        <span class="truncate" :class="pill.short ? 'max-sm:hidden' : ''">{{ pill.text }}</span>
+        <span class="truncate sm:hidden">{{ pill.short }}</span>
+        <span class="truncate max-sm:hidden">{{ pill.text }}</span>
         <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
       </a>
 
@@ -67,8 +62,9 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
         class="mx-auto mt-6 max-w-2xl text-[1.075rem] leading-relaxed text-muted sm:text-xl sm:leading-relaxed"
         style="--delay: 120ms"
       >
-        JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster and namespace in one calm
-        interface, updating live — with a resource graph, logs across pods and a built-in terminal.
+        JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster, from your kubeconfig or
+        your cloud, in one calm interface that updates live — with a resource graph, logs across pods and a built-in
+        terminal.
       </p>
 
       <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" style="--delay: 180ms">

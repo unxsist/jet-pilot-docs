@@ -8,14 +8,8 @@ export const REPO = "unxsist/jet-pilot";
 export const REPO_URL = `https://github.com/${REPO}`;
 export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 
-/** Last version without multi-cluster, the built-in terminal and the redesign. */
-export const LAST_LEGACY_VERSION = "1.35.0";
-
-/** First version with live data, the reimagined resource graph and workspaces. */
-export const LIVE_RELEASE_VERSION = "1.37.0";
-
-/** First version with custom themes (VS Code / Sublime Text / TextMate imports, Open VSX). */
-export const THEMES_RELEASE_VERSION = "1.38.0";
+/** First version with Clusters 2.0: the Clusters hub, every cloud, in-app sign-in and guardrails. */
+export const CLUSTERS_RELEASE_VERSION = "2.0.0";
 
 export interface ReleaseAsset {
   name: string;
@@ -134,17 +128,6 @@ export function compareVersions(a: string, b: string) {
     if ((pa[i] ?? 0) !== (pb[i] ?? 0)) return (pa[i] ?? 0) - (pb[i] ?? 0);
   }
   return 0;
-}
-
-/**
- * The redesign / multi-cluster / terminal work landed after v1.35.0.
- * `null` while we don't know yet (static HTML, API down).
- */
-export function useNewReleaseShipped() {
-  const { release } = useGitHub();
-  return computed<boolean | null>(() =>
-    release.value ? compareVersions(release.value.version, LAST_LEGACY_VERSION) > 0 : null
-  );
 }
 
 /**

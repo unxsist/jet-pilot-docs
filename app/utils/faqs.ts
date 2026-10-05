@@ -18,11 +18,15 @@ export const faqs = [
   },
   {
     q: "What do I need to connect to my clusters?",
-    a: `Your existing kubeconfig and <code>kubectl</code> on your PATH (plus <code>helm</code> for the Helm views). JET Pilot works with any conformant cluster you can reach — EKS, GKE, AKS, k3s, kind, minikube, Rancher, OpenShift and more — including exec-plugin and SSO logins such as kubelogin and AWS SSO.`,
+    a: `A kubeconfig, or a cloud account. JET Pilot finds the kubeconfig files you already have, and from 2.0 it connects AWS, Google Cloud, Azure, DigitalOcean, Akamai, Civo, Scaleway, Vultr and Exoscale and finds the clusters in them. You can also paste a kubeconfig, import a file or enter a cluster by hand. It needs <code>kubectl</code> (plus <code>helm</code> for the Helm views); if you don’t have them, Settings › Advanced downloads checksum-verified copies. It works with any conformant cluster you can reach, including exec-plugin and SSO sign-ins such as kubelogin, AWS IAM Identity Center, gcloud and az.`,
+  },
+  {
+    q: "How does signing in work?",
+    a: `When a session runs out, JET Pilot shows a quiet notice and lets you sign in without leaving the app: device codes and sign-in links show up in a dialog, and your views, log streams and port forwards reconnect on their own. Background checks never start a sign-in, so no browser window opens out of nowhere.`,
   },
   {
     q: "Can I use several clusters and kubeconfig files at once?",
-    a: `Yes. Add multiple kubeconfig files, then select several contexts and namespaces together. Tables aggregate everything and show Context and Namespace columns so you always know where a resource lives.`,
+    a: `Yes. JET Pilot finds <code>~/.kube/config</code>, <code>$KUBECONFIG</code>, <code>~/.kube/*.yaml</code> and <code>~/.kube/config.d</code>, and the Clusters hub lists every context in them. Select several contexts and namespaces together: tables aggregate everything and show Context and Namespace columns so you always know where a resource lives.`,
   },
   {
     q: "How does JET Pilot stay up to date with my cluster?",
@@ -38,11 +42,15 @@ export const faqs = [
   },
   {
     q: "Does JET Pilot modify my kubeconfig?",
-    a: `No. It reads your kubeconfig files. The built-in terminal uses a temporary, owner-only kubeconfig that contains just the current context, so your own files are never touched.`,
+    a: `No. It reads your kubeconfig files and only writes to one when you export a cluster into it (after making a backup). Clusters you add in JET Pilot go into its own kubeconfig, <code>~/.kube/jet-pilot/config</code>, with their tokens and keys in your system keychain. The built-in terminal uses a temporary, owner-only kubeconfig that contains just the current context.`,
+  },
+  {
+    q: "Do clusters I add in JET Pilot work in kubectl and k9s?",
+    a: `Yes. JET Pilot’s kubeconfig gets credentials through a small helper, <code>jetpilot-auth</code>, so <code>KUBECONFIG=~/.kube/config:~/.kube/jet-pilot/config kubectl get pods</code> works, and so does k9s. Settings › Advanced shows the line to copy.`,
   },
   {
     q: "Does JET Pilot collect any data?",
-    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters through your own credentials, and checks for updates.`,
+    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters, and to the cloud accounts you connect, with your own credentials, and checks for updates.`,
   },
   {
     q: "How do updates work?",

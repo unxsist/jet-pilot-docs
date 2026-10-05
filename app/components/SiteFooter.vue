@@ -10,7 +10,6 @@ const columns = computed(() => [
     links: [
       { label: "Features", href: href("#features") },
       { label: "Themes", href: "/themes/" },
-      { label: "What's new", href: href("#whats-new") },
       { label: "Download", href: href("#download") },
       { label: "FAQ", href: href("#faq") },
     ],

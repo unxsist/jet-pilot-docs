@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Text only — no third-party logos.
-const clusters = ["Amazon EKS", "Google GKE", "Azure AKS", "k3s", "kind", "minikube", "Rancher", "OpenShift", "DigitalOcean", "Docker Desktop", "MicroK8s", "Talos"];
+const clusters = ["Amazon EKS", "Google GKE", "Azure AKS", "DigitalOcean", "Akamai LKE", "Civo", "Scaleway Kapsule", "Vultr VKE", "Exoscale SKS", "k3s", "kind", "minikube", "Rancher", "OpenShift", "Docker Desktop", "MicroK8s", "Talos"];
 </script>
 
 <template>
