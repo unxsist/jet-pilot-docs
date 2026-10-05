@@ -72,7 +72,7 @@ export interface ThemeOriginInfo {
 export interface ThemePreset {
   id: string;
   name: string;
-  group: "Built-in" | "T3 Code" | "Yours";
+  group: "Built-in" | "Yours";
   origin?: ThemeOriginInfo;
   looks: Partial<Record<Appearance, ThemeLook>>;
 }

@@ -9,8 +9,8 @@
  * Its outputs are committed, so the site's CI never needs the app repo:
  *   public/schemas/theme.json    THEME_JSON_SCHEMA, served at THEME_SCHEMA_URI
  *   app/data/themes.json         every built-in theme, resolved per appearance
- *                                (CSS tokens, swatch roles, terminal, syntax)
- *   app/data/theme-swatches.json four colours per built-in, for the homepage teaser
+ *                                (CSS tokens, swatch roles, terminal, syntax),
+ *                                and the credits for the community themes
  *   app/data/theme-roles.json    the roles reference, from the schema descriptions
  *   app/vendor/jet-themes/       the theme engine (import → resolve → serialize)
  *                                for the "try your own theme" previewer; only
@@ -41,13 +41,14 @@ const write = (path, text) => {
   console.log(`  wrote ${path} (${(Buffer.byteLength(text) / 1024).toFixed(1)} kB)`);
 };
 
-const [{ THEME_JSON_SCHEMA, THEME_SCHEMA_URI }, { resolveTheme }, { importTheme }, { JET_THEME }, { toLook }] =
+const [{ THEME_JSON_SCHEMA, THEME_SCHEMA_URI }, { resolveTheme }, { importTheme }, { JET_THEME }, { toLook }, { isJetPalette }] =
   await Promise.all([
     load("schema.ts"),
     load("resolve.ts"),
     load("import/index.ts"),
     load("builtin/jet.ts"),
     import(pathToFileURL(join(SITE, "app/lib/themeLook.ts")).href),
+    import(pathToFileURL(join(SITE, "app/lib/builtinThemes.ts")).href),
   ]);
 
 console.log(`Syncing themes from ${APP}`);
@@ -62,7 +63,7 @@ write(join("public", schemaPath), `${JSON.stringify({ ...THEME_JSON_SCHEMA, $id:
 
 /* ------------------------------------------------------- built-ins -- */
 
-/* Copyright holders and upstream links from THIRD_PARTY_THEMES.md. */
+/* Copyright holders and upstream links from THIRD_PARTY_THEMES.md (community themes). */
 const thirdParty = readFileSync(join(APP, "THIRD_PARTY_THEMES.md"), "utf8");
 const credits = [];
 for (const line of thirdParty.split("\n")) {
@@ -80,8 +81,6 @@ for (const line of thirdParty.split("\n")) {
     copyright,
   });
 }
-const portedFrom = thirdParty.match(/The theme engine in `src\/lib\/themes\/` ports code from ([^:]+):/)?.[1]?.replace(/\s+/g, " ");
-
 const manifest = JSON.parse(readFileSync(join(THEMES, "builtin/manifest.json"), "utf8"));
 const builtins = [
   { id: "jet", name: "JET", origin: { label: "JET Pilot", license: "MIT", author: "JET Pilot contributors" }, appearances: ["light", "dark"], file: JET_THEME },
@@ -91,9 +90,12 @@ const builtins = [
   })),
 ];
 
+/* JET Pilot's own palettes (JET and its siblings) need no third-party credit. */
+const own = (id, origin) => isJetPalette({ id, origin });
+
 const presets = builtins.map(({ id, name, origin, appearances, file }) => {
-  const credit = credits.find((c) => c.names.includes(name));
-  if (id !== "jet" && !credit) throw new Error(`No THIRD_PARTY_THEMES.md entry for ${name}`);
+  const credit = own(id, origin) ? undefined : credits.find((c) => c.names.includes(name));
+  if (!own(id, origin) && !credit) throw new Error(`No THIRD_PARTY_THEMES.md entry for ${name}`);
   const looks = {};
   for (const appearance of appearances) {
     const resolved = resolveTheme(file, appearance);
@@ -103,34 +105,19 @@ const presets = builtins.map(({ id, name, origin, appearances, file }) => {
   return {
     id,
     name,
-    group: origin?.label === "T3 Code" ? "T3 Code" : "Built-in",
+    group: "Built-in",
     origin: { ...origin, ...(credit ? { author: credit.copyright.replace(/^Copyright\s*(\(c\)|©)?\s*[\d-]+(?:present)?\s*/i, "") } : {}) },
     looks,
   };
 });
 
+/* Only the rows for themes the site shows as community themes. */
+const community = new Set(builtins.filter(({ id, origin }) => !own(id, origin)).map(({ name }) => name));
+const communityCredits = credits.filter((c) => c.names.some((name) => community.has(name)));
+
 write(
   "app/data/themes.json",
-  `${JSON.stringify({ schemaUri: THEME_SCHEMA_URI, themes: presets, credits: credits.map(({ names, ...c }) => c), portedFrom })}\n`
-);
-
-/* A few colours per built-in for the homepage teaser (keeps themes.json off the homepage). */
-const hex = (triplet) => `hsl(${triplet})`;
-write(
-  "app/data/theme-swatches.json",
-  `${JSON.stringify(
-    presets.map(({ id, name, group, looks }) => ({
-      id,
-      name,
-      group,
-      looks: Object.fromEntries(
-        Object.entries(looks).map(([appearance, look]) => [
-          appearance,
-          [look.vars["surface-1"], look.vars.background, look.vars.primary, look.vars.success].map(hex),
-        ])
-      ),
-    }))
-  )}\n`
+  `${JSON.stringify({ schemaUri: THEME_SCHEMA_URI, themes: presets, credits: communityCredits.map(({ names, ...c }) => c) })}\n`
 );
 
 /* ---------------------------------------------------- roles table -- */
@@ -142,7 +129,7 @@ const GROUPS = [
   ["status", "Status", ["error", "errorForeground", "errorSurface", "warning", "warningForeground", "warningSurface", "update", "updateForeground", "updateSurface"]],
   ["sidebar", "Sidebar", ["sidebar", "sidebarForeground", "sidebarMutedForeground", "sidebarControlSurface", "sidebarRowHover", "sidebarRowActive", "sidebarRowSelected", "sidebarBorder"]],
   ["terminal", "Terminal", ["terminalBackground", "terminalForeground", "terminalCursor", "terminalSelection", "terminalScrollbar", "terminalScrollbarHover"]],
-  ["t3", "T3 Code chrome", ["chrome", "toolbar", "toolbarForeground", "toolbarBorder", "toolbarControl", "toolbarControlForeground", "toolbarControlHover", "messageSurface", "messageForeground"]],
+  ["chrome", "Window chrome", ["chrome", "toolbar", "toolbarForeground", "toolbarBorder", "toolbarControl", "toolbarControlForeground", "toolbarControlHover", "messageSurface", "messageForeground"]],
 ];
 const colorRoles = THEME_JSON_SCHEMA.properties.colors.properties;
 const jet = THEME_JSON_SCHEMA.properties.jetPilot.properties;

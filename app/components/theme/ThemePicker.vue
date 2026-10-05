@@ -9,7 +9,7 @@ const props = defineProps<{ presets: ThemePreset[]; mode: Appearance }>();
 const selected = defineModel<string>({ required: true });
 
 const groups = computed(() => {
-  const order = ["Built-in", "T3 Code", "Yours"] as const;
+  const order = ["Built-in", "Yours"] as const;
   return order
     .map((label) => ({ label, items: props.presets.filter((p) => p.group === label) }))
     .filter((g) => g.items.length);
@@ -24,6 +24,18 @@ const only = (preset: ThemePreset) => {
 const hsl = (triplet: string | undefined) => (triplet ? `hsl(${triplet})` : "transparent");
 
 const root = ref<HTMLElement>();
+
+/* On narrow screens a group is one scrolling row: keep the selected chip in view (e.g. from a shared link). */
+function revealSelected(smooth: boolean) {
+  const chip = root.value?.querySelector<HTMLElement>(`[data-theme-id="${selected.value}"]`);
+  const row = chip?.parentElement;
+  if (!chip || !row || row.scrollWidth <= row.clientWidth) return;
+  const left = chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  row.scrollTo({ left, behavior: smooth && !reduce ? "smooth" : "auto" });
+}
+onMounted(() => nextTick(() => revealSelected(false)));
+watch(selected, () => nextTick(() => revealSelected(true)));
 function onKey(event: KeyboardEvent) {
   const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp", "Home", "End"];
   if (!keys.includes(event.key)) return;
@@ -45,7 +57,7 @@ function onKey(event: KeyboardEvent) {
   <div ref="root" role="radiogroup" aria-label="Theme" class="space-y-3 sm:space-y-4" @keydown="onKey">
     <div v-for="group in groups" :key="group.label" class="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-4">
       <p class="w-20 shrink-0 font-mono sm:pt-3 text-[0.68rem] uppercase tracking-[0.12em] text-faint" aria-hidden="true">{{ group.label }}</p>
-      <div class="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
+      <div class="relative -mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
         <button
           v-for="preset in group.items"
           :key="preset.id"
@@ -54,7 +66,7 @@ function onKey(event: KeyboardEvent) {
           :data-theme-id="preset.id"
           :aria-checked="preset.id === selected"
           :tabindex="preset.id === selected ? 0 : -1"
-          :aria-label="`${preset.name}${only(preset) ? ` (${only(preset)} only)` : ''}${group.label === 'T3 Code' ? ', from T3 Code' : ''}`"
+          :aria-label="`${preset.name}${only(preset) ? ` (${only(preset)} only)` : ''}`"
           class="group/chip inline-flex h-10 shrink-0 items-center gap-2.5 rounded-xl border pl-1.5 pr-3 text-[0.85rem] font-medium transition-[border-color,background-color,box-shadow] duration-200"
           :class="
             preset.id === selected

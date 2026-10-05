@@ -3,12 +3,13 @@ import themesData from "~/data/themes.json";
 import examples from "~/data/theme-examples.json";
 import type { Appearance, ThemePreset } from "~/lib/themeLook";
 import type { ImportedTheme } from "~/lib/customTheme";
+import { builtinPresets, canonicalThemeId, creditNames, isJetPalette } from "~/lib/builtinThemes";
 import { REPO_URL } from "~/composables/useGitHub";
 
 const PAGE_URL = "https://www.jet-pilot.app/themes/";
 const title = "Themes — Make JET Pilot yours";
 const description =
-  "Custom themes for JET Pilot, the Kubernetes desktop client: import VS Code, Sublime Text, TextMate and T3 Code themes, install MIT-licensed themes from Open VSX, or write your own JSON theme. Preview every built-in theme — and your own — right here.";
+  "Custom themes for JET Pilot, the Kubernetes desktop client: import VS Code, Sublime Text and TextMate themes, install MIT-licensed themes from Open VSX, or write your own JSON theme. Preview every built-in theme — and your own — right here.";
 
 useHead({ link: [{ rel: "canonical", href: PAGE_URL }] });
 useSeoMeta({
@@ -31,7 +32,7 @@ useSeoMeta({
 
 /* ------------------------------------------------------------ previewer */
 
-const builtins = themesData.themes as unknown as ThemePreset[];
+const builtins = builtinPresets(themesData.themes as unknown as ThemePreset[]);
 const yours = ref<(ImportedTheme & { preset: ThemePreset })[]>([]);
 const presets = computed<ThemePreset[]>(() => [...builtins, ...yours.value.map((t) => t.preset)]);
 
@@ -56,7 +57,7 @@ const colorMode = useColorMode();
 
 onMounted(() => {
   const q = route.query;
-  const wantedTheme = typeof q.theme === "string" ? q.theme : null;
+  const wantedTheme = typeof q.theme === "string" ? canonicalThemeId(q.theme) : null;
   if (wantedTheme && builtins.some((p) => p.id === wantedTheme)) themeId.value = wantedTheme;
   if (q.mode === "light" || q.mode === "dark") {
     mode.value = q.mode;
@@ -73,7 +74,7 @@ onMounted(() => {
       if (!modeChosen.value && (value === "light" || value === "dark")) mode.value = value;
     }
   );
-  watch([themeId, mode, view], () => {
+  const syncUrl = () => {
     const custom = themeId.value.startsWith("yours-");
     const query: Record<string, string> = {};
     if (!custom && themeId.value !== "jet") query.theme = themeId.value;
@@ -81,7 +82,10 @@ onMounted(() => {
     if (view.value === "graph") query.view = "graph";
     // Keep the trailing slash GitHub Pages serves the page at, so copied URLs don't redirect.
     router.replace({ path: "/themes/", query, hash: route.hash });
-  });
+  };
+  watch([themeId, mode, view], syncUrl);
+  // A link with a renamed theme id: show the current id in the address bar.
+  if (typeof q.theme === "string" && q.theme !== themeId.value && themeId.value !== "jet") syncUrl();
 });
 
 function setMode(value: Appearance) {
@@ -142,7 +146,11 @@ const folders = [
   { os: "Linux", icon: "linux", path: "~/.config/com.unxsist.jetpilot/themes" },
 ];
 
-const credits = themesData.credits;
+/* Credit the community themes; JET Pilot's own palettes get a line of their own. */
+const communityNames = new Set(builtins.filter((p) => !isJetPalette(p)).map((p) => p.name));
+const credits = themesData.credits.filter((credit) => creditNames(credit.themes).some((name) => communityNames.has(name)));
+const ownNames = builtins.filter(isJetPalette).map((p) => p.name);
+const ownPalettes = ownNames.length > 1 ? `${ownNames.slice(0, -1).join(", ")} and ${ownNames.at(-1)}` : (ownNames[0] ?? "JET");
 </script>
 
 <template>
@@ -166,11 +174,11 @@ const credits = themesData.credits;
           <span class="text-shine">Make JET Pilot</span>{{ " " }}<span class="text-accent-shine pb-1">yours.</span>
         </h1>
         <p class="mx-auto mt-6 max-w-2xl text-[1.075rem] leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
-          Bring your VS Code, Sublime Text, TextMate or T3 Code theme — or pick one of the built-ins. The
+          Bring your VS Code, Sublime Text or TextMate theme — or pick one of the built-ins. The
           sidebar, tables, YAML editor and terminal all follow.
         </p>
         <ul class="mt-7 flex flex-wrap items-center justify-center gap-2 text-[0.78rem]" aria-label="Highlights">
-          <li v-for="tag in ['T3 Code compatible', 'VS Code · Sublime · TextMate', 'Open VSX gallery', 'JSON editor with live preview', 'MIT']" :key="tag" class="rounded-full border border-line bg-surface/60 px-3 py-1 text-muted">
+          <li v-for="tag in ['VS Code · Sublime Text · TextMate', 'Open VSX gallery', 'JSON editor with live preview', 'MIT']" :key="tag" class="rounded-full border border-line bg-surface/60 px-3 py-1 text-muted">
             {{ tag }}
           </li>
         </ul>
@@ -273,8 +281,8 @@ const credits = themesData.credits;
             <span class="inline-flex size-10 items-center justify-center rounded-xl border border-line bg-surface-2 text-accent-text"><Icon name="palette" :size="18" /></span>
             <h3 class="mt-5 text-lg font-semibold tracking-tight">Settings › Appearance</h3>
             <p class="mt-2 text-[0.92rem] leading-relaxed text-muted">
-              Drag theme files onto the theme library, pick them with the file picker or paste the JSON. VS Code, Sublime,
-              TextMate and T3 Code themes are converted on the spot. Hover a card to preview it on the whole app.
+              Drag theme files onto the theme library, pick them with the file picker or paste the JSON. VS Code, Sublime
+              Text and TextMate themes are converted on the spot. Hover a card to preview it on the whole app.
             </p>
             <div class="mt-auto pt-6" aria-hidden="true">
               <div class="rounded-xl border border-dashed border-line-strong bg-bg/60 p-3">
@@ -391,19 +399,19 @@ const credits = themesData.credits;
           </div>
         </div>
 
-        <!-- T3 compatibility -->
+        <!-- The format -->
         <div data-reveal class="mt-16 grid gap-4 md:grid-cols-3">
           <div class="card p-6">
-            <p class="font-medium">T3 Code themes import as they are</p>
-            <p class="mt-2 text-[0.88rem] leading-relaxed text-muted">The format is T3 Code’s theme file (version 1, its 57 roles, the seeded short form and variants). Paste a T3 theme and you’re done.</p>
+            <p class="font-medium">A plain, portable format</p>
+            <p class="mt-2 text-[0.88rem] leading-relaxed text-muted">Version 1, 57 colour roles, the seeded short form and light / dark variants. Everything only JET Pilot uses lives in one <code>jetPilot</code> block.</p>
           </div>
           <div class="card p-6">
-            <p class="font-medium">And they go back, too</p>
-            <p class="mt-2 text-[0.88rem] leading-relaxed text-muted">T3 Code ignores the <code>jetPilot</code> block. <strong class="font-medium text-fg">Export for T3 Code</strong> writes a strict T3 file: all 57 roles resolved, variants included.</p>
+            <p class="font-medium">Take it with you</p>
+            <p class="mt-2 text-[0.88rem] leading-relaxed text-muted"><strong class="font-medium text-fg">Download standard theme</strong> writes the file without JET Pilot’s extras: all 57 roles resolved, variants included.</p>
           </div>
           <div class="card p-6">
             <p class="font-medium">More than a palette</p>
-            <p class="mt-2 text-[0.88rem] leading-relaxed text-muted">VS Code themes bring their <code>tokenColors</code> to the YAML editor and <code>terminal.ansi*</code> to the terminal — the parts T3 Code leaves out.</p>
+            <p class="mt-2 text-[0.88rem] leading-relaxed text-muted">VS Code themes bring their <code>tokenColors</code> to the YAML editor and <code>terminal.ansi*</code> to the terminal, so code and output look the way you know them.</p>
           </div>
         </div>
 
@@ -414,7 +422,6 @@ const credits = themesData.credits;
             <p class="mt-3 leading-relaxed text-muted">
               Every key a theme can set, straight from the
               <a :href="themesData.schemaUri" class="text-fg underline decoration-line-strong underline-offset-4 hover:decoration-fg">JSON schema</a>.
-              Roles marked T3 Code are kept for compatibility; JET Pilot paints the rest.
             </p>
           </div>
           <div data-reveal class="mt-8"><LazyThemeRolesReference hydrate-never /></div>
@@ -430,9 +437,8 @@ const credits = themesData.credits;
             <span class="eyebrow">Credits</span>
             <h2 id="credits-title" class="mt-3 text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">Built on the shoulders of great themes.</h2>
             <p class="mt-3 max-w-3xl text-[0.92rem] leading-relaxed text-muted">
-              The built-in themes are converted from their upstream projects, all under the MIT licence. Palettes and parts of
-              the theme engine — the palette derivation, the contrast solver and the VS Code mapping — are ported from
-              <a href="https://github.com/pingdotgg/t3code" class="text-fg underline decoration-line-strong underline-offset-4 hover:decoration-fg">T3 Code</a> (MIT). Thank you.
+              The community themes are converted from their upstream projects, all under the MIT licence. Thank you to
+              everyone who made them.
             </p>
           </div>
           <div class="overflow-x-auto border-t border-line">
@@ -461,7 +467,7 @@ const credits = themesData.credits;
           <p class="border-t border-line px-6 py-4 text-[0.8rem] text-faint sm:px-8">
             Full notices in
             <a :href="`${REPO_URL}/blob/main/THIRD_PARTY_THEMES.md`" class="underline decoration-line-strong underline-offset-4 hover:text-fg">THIRD_PARTY_THEMES.md</a>.
-            JET is JET Pilot’s own theme.
+            {{ ownPalettes }} are JET Pilot’s own built-in palettes (MIT).
           </p>
         </div>
       </div>
