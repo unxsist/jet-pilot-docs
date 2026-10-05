@@ -37,7 +37,7 @@
         {
           "name": "focus",
           "path": "colors.focus",
-          "description": "Focus rings (--ring) and the editor's focus border."
+          "description": "Focus rings (--ring) and the editor's focus border. A neutral focus colour louder than 6:1 is softened toward the canvas for the rings."
         },
         {
           "name": "codeBackground",
@@ -58,12 +58,12 @@
         {
           "name": "text",
           "path": "colors.text",
-          "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+          "description": "Primary text (--foreground). Derived at 7:1 on the canvas; a colour you set is kept unless it is below 4.5:1."
         },
         {
           "name": "textMuted",
           "path": "colors.textMuted",
-          "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+          "description": "Secondary text on the canvas; the editor's comments, punctuation and line numbers. JET Pilot's muted UI text is `mutedForeground`."
         },
         {
           "name": "muted",
@@ -83,12 +83,12 @@
         {
           "name": "secondaryLabel",
           "path": "colors.secondaryLabel",
-          "description": "Secondary labels (T3 Code)."
+          "description": "Secondary labels. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "iconMuted",
           "path": "colors.iconMuted",
-          "description": "Muted icons (T3 Code)."
+          "description": "Muted icons. Not painted by JET Pilot (kept for portable theme files)."
         }
       ]
     },
@@ -119,7 +119,7 @@
         {
           "name": "messageAction",
           "path": "colors.messageAction",
-          "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+          "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. A neutral one louder than 6:1 (a monochrome theme's text colour) is softened toward the canvas, to at least 4.5:1."
         },
         {
           "name": "messageActionForeground",
@@ -129,7 +129,7 @@
         {
           "name": "messageActionHover",
           "path": "colors.messageActionHover",
-          "description": "Primary button hover (T3 Code)."
+          "description": "Primary button hover. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "secondary",
@@ -150,7 +150,7 @@
         {
           "name": "error",
           "path": "colors.error",
-          "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+          "description": "Error signal colour (solid fills); readable error text is `errorForeground`."
         },
         {
           "name": "errorForeground",
@@ -180,17 +180,17 @@
         {
           "name": "update",
           "path": "colors.update",
-          "description": "Update / info signal colour (T3 Code)."
+          "description": "Update notice colour. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "updateForeground",
           "path": "colors.updateForeground",
-          "description": "Text on update surfaces (T3 Code)."
+          "description": "Text on update notices. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "updateSurface",
           "path": "colors.updateSurface",
-          "description": "Background of update notices (T3 Code)."
+          "description": "Background of update notices. Not painted by JET Pilot (kept for portable theme files)."
         }
       ]
     },
@@ -216,27 +216,27 @@
         {
           "name": "sidebarControlSurface",
           "path": "colors.sidebarControlSurface",
-          "description": "Controls in the sidebar (T3 Code)."
+          "description": "Controls in the sidebar. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "sidebarRowHover",
           "path": "colors.sidebarRowHover",
-          "description": "Sidebar row on hover (T3 Code)."
+          "description": "Sidebar row on hover. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "sidebarRowActive",
           "path": "colors.sidebarRowActive",
-          "description": "Active sidebar row (T3 Code)."
+          "description": "Active sidebar row. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "sidebarRowSelected",
           "path": "colors.sidebarRowSelected",
-          "description": "Selected sidebar row (T3 Code)."
+          "description": "Selected sidebar row. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "sidebarBorder",
           "path": "colors.sidebarBorder",
-          "description": "Sidebar border (T3 Code)."
+          "description": "Sidebar border. Not painted by JET Pilot (kept for portable theme files)."
         }
       ]
     },
@@ -277,53 +277,53 @@
       ]
     },
     {
-      "id": "t3",
-      "label": "T3 Code chrome",
+      "id": "chrome",
+      "label": "Window chrome",
       "roles": [
         {
           "name": "chrome",
           "path": "colors.chrome",
-          "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+          "description": "Window chrome background in apps that have one. JET Pilot paints its chrome with `sidebar`."
         },
         {
           "name": "toolbar",
           "path": "colors.toolbar",
-          "description": "Toolbar background (T3 Code)."
+          "description": "Toolbar background. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "toolbarForeground",
           "path": "colors.toolbarForeground",
-          "description": "Text on the toolbar (T3 Code)."
+          "description": "Text on the toolbar. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "toolbarBorder",
           "path": "colors.toolbarBorder",
-          "description": "Toolbar border (T3 Code)."
+          "description": "Toolbar border. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "toolbarControl",
           "path": "colors.toolbarControl",
-          "description": "Toolbar button background (T3 Code)."
+          "description": "Toolbar button background. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "toolbarControlForeground",
           "path": "colors.toolbarControlForeground",
-          "description": "Toolbar button text (T3 Code)."
+          "description": "Toolbar button text. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "toolbarControlHover",
           "path": "colors.toolbarControlHover",
-          "description": "Toolbar button background on hover (T3 Code)."
+          "description": "Toolbar button background on hover. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "messageSurface",
           "path": "colors.messageSurface",
-          "description": "Message bubble background (T3 Code)."
+          "description": "Message bubble background. Not painted by JET Pilot (kept for portable theme files)."
         },
         {
           "name": "messageForeground",
           "path": "colors.messageForeground",
-          "description": "Message bubble text (T3 Code)."
+          "description": "Message bubble text. Not painted by JET Pilot (kept for portable theme files)."
         }
       ]
     },
@@ -335,7 +335,7 @@
         {
           "name": "success",
           "path": "jetPilot.colors.success",
-          "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+          "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing, as muted as the theme's own error / warning colours."
         },
         {
           "name": "successForeground",
@@ -345,7 +345,7 @@
         {
           "name": "info",
           "path": "jetPilot.colors.info",
-          "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+          "description": "Info colour, text-grade on the canvas (--info): traffic edges, info badges. Derived as a blue when missing, as muted as the theme's own error / warning colours."
         },
         {
           "name": "infoForeground",

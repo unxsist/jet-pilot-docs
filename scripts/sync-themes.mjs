@@ -174,6 +174,9 @@ for (const [key, example] of Object.entries(examples)) {
 const ENTRIES = ["import/index.ts", "import/vscode.ts", "resolve.ts", "serialize.ts", "runtime.ts"];
 const HEADER = "/* Synced from unxsist/jet-pilot src/lib/themes (MIT) by scripts/sync-themes.mjs — do not edit. */\n";
 const closure = new Set();
+/* JSON data the engine reads (the built-in id list); copied as-is. */
+const ALLOWED_JSON = new Set(["builtin/manifest.json"]);
+const jsonFiles = new Set();
 const visit = (path) => {
   if (closure.has(path)) return;
   if (path.startsWith("builtin/")) throw new Error(`The engine imports a built-in (${path}); keep built-ins out of the vendored copy.`);
@@ -181,6 +184,11 @@ const visit = (path) => {
   const text = readFileSync(join(THEMES, path), "utf8");
   for (const match of text.matchAll(/(?:from|import)\s*\(?\s*["'](\.{1,2}\/[^"']+)["']/g)) {
     let target = relative(THEMES, resolve(dirname(join(THEMES, path)), match[1]));
+    if (target.endsWith(".json")) {
+      if (!ALLOWED_JSON.has(target)) throw new Error(`${path} imports ${match[1]}, which is not an allowed data file`);
+      jsonFiles.add(target);
+      continue;
+    }
     if (!target.endsWith(".ts")) target += ".ts";
     if (!existsSync(join(THEMES, target))) throw new Error(`${path} imports ${match[1]}, which is not a .ts module`);
     visit(target);
@@ -193,6 +201,10 @@ for (const path of [...closure].sort()) {
   const file = join(VENDOR, path);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, HEADER + readFileSync(join(THEMES, path), "utf8"));
+}
+for (const path of jsonFiles) {
+  mkdirSync(dirname(join(VENDOR, path)), { recursive: true });
+  copyFileSync(join(THEMES, path), join(VENDOR, path));
 }
 copyFileSync(join(APP, "LICENSE"), join(VENDOR, "LICENSE"));
 console.log(`  vendored ${closure.size} engine modules into app/vendor/jet-themes: ${[...closure].sort().join(", ")}`);
