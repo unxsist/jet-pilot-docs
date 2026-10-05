@@ -7,18 +7,24 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "sync:themes": "tsx scripts/sync-themes.mjs"
   },
   "dependencies": {
     "@nuxtjs/color-mode": "^4.0.1",
     "@nuxtjs/robots": "^6.2.4",
     "@nuxtjs/sitemap": "^8.6.1",
+    "culori": "^4.0.2",
+    "fast-plist": "^0.1.3",
+    "jsonc-parser": "^3.3.1",
     "nuxt": "^4.5.2",
     "vue": "^3.5.0",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3"
+    "@types/culori": "^4.0.1",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15"
   }
 }

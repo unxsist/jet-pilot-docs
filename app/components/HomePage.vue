@@ -216,6 +216,8 @@
         focus="0% 100%"
         alt="The built-in terminal panel below the pods table, opened for prod-eu-west-1 with a note that KUBECONFIG points to a temporary copy"
       />
+
+      <LazyThemesTeaser hydrate-on-visible />
     </div>
 
     <LazyThemeCompare hydrate-on-visible />

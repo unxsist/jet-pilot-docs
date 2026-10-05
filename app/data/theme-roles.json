@@ -1,0 +1,489 @@
+{
+  "groups": [
+    {
+      "id": "surfaces",
+      "label": "Surfaces & lines",
+      "roles": [
+        {
+          "name": "canvas",
+          "path": "colors.canvas",
+          "description": "Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+        },
+        {
+          "name": "surface",
+          "path": "colors.surface",
+          "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card)."
+        },
+        {
+          "name": "surfaceRaised",
+          "path": "colors.surfaceRaised",
+          "description": "Raised surfaces; the placeholder text is checked against it."
+        },
+        {
+          "name": "surfaceOverlay",
+          "path": "colors.surfaceOverlay",
+          "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover)."
+        },
+        {
+          "name": "border",
+          "path": "colors.border",
+          "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it."
+        },
+        {
+          "name": "input",
+          "path": "colors.input",
+          "description": "Input borders (--input)."
+        },
+        {
+          "name": "focus",
+          "path": "colors.focus",
+          "description": "Focus rings (--ring) and the editor's focus border."
+        },
+        {
+          "name": "codeBackground",
+          "path": "colors.codeBackground",
+          "description": "Inline code background."
+        },
+        {
+          "name": "codeForeground",
+          "path": "colors.codeForeground",
+          "description": "Inline code text."
+        }
+      ]
+    },
+    {
+      "id": "text",
+      "label": "Text",
+      "roles": [
+        {
+          "name": "text",
+          "path": "colors.text",
+          "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+        },
+        {
+          "name": "textMuted",
+          "path": "colors.textMuted",
+          "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+        },
+        {
+          "name": "muted",
+          "path": "colors.muted",
+          "description": "Muted backgrounds: skeletons, subtle fills (--muted)."
+        },
+        {
+          "name": "mutedForeground",
+          "path": "colors.mutedForeground",
+          "description": "Muted text: descriptions, captions, table meta (--muted-foreground)."
+        },
+        {
+          "name": "placeholder",
+          "path": "colors.placeholder",
+          "description": "Input placeholder text."
+        },
+        {
+          "name": "secondaryLabel",
+          "path": "colors.secondaryLabel",
+          "description": "Secondary labels (T3 Code)."
+        },
+        {
+          "name": "iconMuted",
+          "path": "colors.iconMuted",
+          "description": "Muted icons (T3 Code)."
+        }
+      ]
+    },
+    {
+      "id": "accents",
+      "label": "Accent & actions",
+      "roles": [
+        {
+          "name": "accent",
+          "path": "colors.accent",
+          "description": "Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+        },
+        {
+          "name": "accentForeground",
+          "path": "colors.accentForeground",
+          "description": "Text on a solid accent fill."
+        },
+        {
+          "name": "accentSurface",
+          "path": "colors.accentSurface",
+          "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion."
+        },
+        {
+          "name": "accentSurfaceForeground",
+          "path": "colors.accentSurfaceForeground",
+          "description": "Text on hovered / selected rows (--accent-foreground)."
+        },
+        {
+          "name": "messageAction",
+          "path": "colors.messageAction",
+          "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+        },
+        {
+          "name": "messageActionForeground",
+          "path": "colors.messageActionForeground",
+          "description": "Text on primary buttons (--primary-foreground)."
+        },
+        {
+          "name": "messageActionHover",
+          "path": "colors.messageActionHover",
+          "description": "Primary button hover (T3 Code)."
+        },
+        {
+          "name": "secondary",
+          "path": "colors.secondary",
+          "description": "Secondary buttons and controls (--secondary)."
+        },
+        {
+          "name": "secondaryForeground",
+          "path": "colors.secondaryForeground",
+          "description": "Text on secondary buttons (--secondary-foreground)."
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "label": "Status",
+      "roles": [
+        {
+          "name": "error",
+          "path": "colors.error",
+          "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+        },
+        {
+          "name": "errorForeground",
+          "path": "colors.errorForeground",
+          "description": "Readable error text; becomes --destructive (also checked on the canvas)."
+        },
+        {
+          "name": "errorSurface",
+          "path": "colors.errorSurface",
+          "description": "Background of error alerts."
+        },
+        {
+          "name": "warning",
+          "path": "colors.warning",
+          "description": "Warning signal colour; editor find-match highlight."
+        },
+        {
+          "name": "warningForeground",
+          "path": "colors.warningForeground",
+          "description": "Readable warning text; becomes --warning (also checked on the canvas)."
+        },
+        {
+          "name": "warningSurface",
+          "path": "colors.warningSurface",
+          "description": "Background of warning alerts."
+        },
+        {
+          "name": "update",
+          "path": "colors.update",
+          "description": "Update / info signal colour (T3 Code)."
+        },
+        {
+          "name": "updateForeground",
+          "path": "colors.updateForeground",
+          "description": "Text on update surfaces (T3 Code)."
+        },
+        {
+          "name": "updateSurface",
+          "path": "colors.updateSurface",
+          "description": "Background of update notices (T3 Code)."
+        }
+      ]
+    },
+    {
+      "id": "sidebar",
+      "label": "Sidebar",
+      "roles": [
+        {
+          "name": "sidebar",
+          "path": "colors.sidebar",
+          "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar)."
+        },
+        {
+          "name": "sidebarForeground",
+          "path": "colors.sidebarForeground",
+          "description": "Navigation text (--sidebar-foreground)."
+        },
+        {
+          "name": "sidebarMutedForeground",
+          "path": "colors.sidebarMutedForeground",
+          "description": "Muted navigation text."
+        },
+        {
+          "name": "sidebarControlSurface",
+          "path": "colors.sidebarControlSurface",
+          "description": "Controls in the sidebar (T3 Code)."
+        },
+        {
+          "name": "sidebarRowHover",
+          "path": "colors.sidebarRowHover",
+          "description": "Sidebar row on hover (T3 Code)."
+        },
+        {
+          "name": "sidebarRowActive",
+          "path": "colors.sidebarRowActive",
+          "description": "Active sidebar row (T3 Code)."
+        },
+        {
+          "name": "sidebarRowSelected",
+          "path": "colors.sidebarRowSelected",
+          "description": "Selected sidebar row (T3 Code)."
+        },
+        {
+          "name": "sidebarBorder",
+          "path": "colors.sidebarBorder",
+          "description": "Sidebar border (T3 Code)."
+        }
+      ]
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal",
+      "roles": [
+        {
+          "name": "terminalBackground",
+          "path": "colors.terminalBackground",
+          "description": "Terminal background."
+        },
+        {
+          "name": "terminalForeground",
+          "path": "colors.terminalForeground",
+          "description": "Terminal text."
+        },
+        {
+          "name": "terminalCursor",
+          "path": "colors.terminalCursor",
+          "description": "Terminal and editor cursor."
+        },
+        {
+          "name": "terminalSelection",
+          "path": "colors.terminalSelection",
+          "description": "Terminal selection."
+        },
+        {
+          "name": "terminalScrollbar",
+          "path": "colors.terminalScrollbar",
+          "description": "Scrollbar thumbs (--scrollbar), also in the editor."
+        },
+        {
+          "name": "terminalScrollbarHover",
+          "path": "colors.terminalScrollbarHover",
+          "description": "Scrollbar thumbs on hover (--scrollbar-hover)."
+        }
+      ]
+    },
+    {
+      "id": "t3",
+      "label": "T3 Code chrome",
+      "roles": [
+        {
+          "name": "chrome",
+          "path": "colors.chrome",
+          "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+        },
+        {
+          "name": "toolbar",
+          "path": "colors.toolbar",
+          "description": "Toolbar background (T3 Code)."
+        },
+        {
+          "name": "toolbarForeground",
+          "path": "colors.toolbarForeground",
+          "description": "Text on the toolbar (T3 Code)."
+        },
+        {
+          "name": "toolbarBorder",
+          "path": "colors.toolbarBorder",
+          "description": "Toolbar border (T3 Code)."
+        },
+        {
+          "name": "toolbarControl",
+          "path": "colors.toolbarControl",
+          "description": "Toolbar button background (T3 Code)."
+        },
+        {
+          "name": "toolbarControlForeground",
+          "path": "colors.toolbarControlForeground",
+          "description": "Toolbar button text (T3 Code)."
+        },
+        {
+          "name": "toolbarControlHover",
+          "path": "colors.toolbarControlHover",
+          "description": "Toolbar button background on hover (T3 Code)."
+        },
+        {
+          "name": "messageSurface",
+          "path": "colors.messageSurface",
+          "description": "Message bubble background (T3 Code)."
+        },
+        {
+          "name": "messageForeground",
+          "path": "colors.messageForeground",
+          "description": "Message bubble text (T3 Code)."
+        }
+      ]
+    },
+    {
+      "id": "jet",
+      "label": "JET Pilot extras",
+      "note": "JET Pilot's own colour roles.",
+      "roles": [
+        {
+          "name": "success",
+          "path": "jetPilot.colors.success",
+          "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+        },
+        {
+          "name": "successForeground",
+          "path": "jetPilot.colors.successForeground",
+          "description": "Text on a solid success fill (--success-foreground)."
+        },
+        {
+          "name": "info",
+          "path": "jetPilot.colors.info",
+          "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+        },
+        {
+          "name": "infoForeground",
+          "path": "jetPilot.colors.infoForeground",
+          "description": "Text on a solid info fill (--info-foreground)."
+        }
+      ]
+    },
+    {
+      "id": "syntax",
+      "label": "Editor syntax",
+      "note": "Syntax colours of the YAML / JSON editor.",
+      "roles": [
+        {
+          "name": "key",
+          "path": "jetPilot.syntax.key",
+          "description": "YAML / JSON keys."
+        },
+        {
+          "name": "string",
+          "path": "jetPilot.syntax.string",
+          "description": "String values."
+        },
+        {
+          "name": "number",
+          "path": "jetPilot.syntax.number",
+          "description": "Numbers."
+        },
+        {
+          "name": "constant",
+          "path": "jetPilot.syntax.constant",
+          "description": "Booleans, null and keywords."
+        },
+        {
+          "name": "comment",
+          "path": "jetPilot.syntax.comment",
+          "description": "Comments (italic)."
+        },
+        {
+          "name": "punctuation",
+          "path": "jetPilot.syntax.punctuation",
+          "description": "Colons, dashes, brackets."
+        },
+        {
+          "name": "text",
+          "path": "jetPilot.syntax.text",
+          "description": "Plain text."
+        }
+      ]
+    },
+    {
+      "id": "ansi",
+      "label": "Terminal ANSI",
+      "note": "The terminal's 16 ANSI colours.",
+      "roles": [
+        {
+          "name": "black",
+          "path": "jetPilot.terminal.black",
+          "description": "ANSI black (VS Code terminal.ansiBlack)."
+        },
+        {
+          "name": "red",
+          "path": "jetPilot.terminal.red",
+          "description": "ANSI red (VS Code terminal.ansiRed)."
+        },
+        {
+          "name": "green",
+          "path": "jetPilot.terminal.green",
+          "description": "ANSI green (VS Code terminal.ansiGreen)."
+        },
+        {
+          "name": "yellow",
+          "path": "jetPilot.terminal.yellow",
+          "description": "ANSI yellow (VS Code terminal.ansiYellow)."
+        },
+        {
+          "name": "blue",
+          "path": "jetPilot.terminal.blue",
+          "description": "ANSI blue (VS Code terminal.ansiBlue)."
+        },
+        {
+          "name": "magenta",
+          "path": "jetPilot.terminal.magenta",
+          "description": "ANSI magenta (VS Code terminal.ansiMagenta)."
+        },
+        {
+          "name": "cyan",
+          "path": "jetPilot.terminal.cyan",
+          "description": "ANSI cyan (VS Code terminal.ansiCyan)."
+        },
+        {
+          "name": "white",
+          "path": "jetPilot.terminal.white",
+          "description": "ANSI white (VS Code terminal.ansiWhite)."
+        },
+        {
+          "name": "brightBlack",
+          "path": "jetPilot.terminal.brightBlack",
+          "description": "ANSI bright black (VS Code terminal.ansiBrightBlack)."
+        },
+        {
+          "name": "brightRed",
+          "path": "jetPilot.terminal.brightRed",
+          "description": "ANSI bright red (VS Code terminal.ansiBrightRed)."
+        },
+        {
+          "name": "brightGreen",
+          "path": "jetPilot.terminal.brightGreen",
+          "description": "ANSI bright green (VS Code terminal.ansiBrightGreen)."
+        },
+        {
+          "name": "brightYellow",
+          "path": "jetPilot.terminal.brightYellow",
+          "description": "ANSI bright yellow (VS Code terminal.ansiBrightYellow)."
+        },
+        {
+          "name": "brightBlue",
+          "path": "jetPilot.terminal.brightBlue",
+          "description": "ANSI bright blue (VS Code terminal.ansiBrightBlue)."
+        },
+        {
+          "name": "brightMagenta",
+          "path": "jetPilot.terminal.brightMagenta",
+          "description": "ANSI bright magenta (VS Code terminal.ansiBrightMagenta)."
+        },
+        {
+          "name": "brightCyan",
+          "path": "jetPilot.terminal.brightCyan",
+          "description": "ANSI bright cyan (VS Code terminal.ansiBrightCyan)."
+        },
+        {
+          "name": "brightWhite",
+          "path": "jetPilot.terminal.brightWhite",
+          "description": "ANSI bright white (VS Code terminal.ansiBrightWhite)."
+        }
+      ]
+    }
+  ],
+  "editor": "Raw Monaco / VS Code colour keys, e.g. \"editor.lineHighlightBackground\". terminal.selectionBackground and terminalCursor.* go to the terminal.",
+  "tokens": "Exact CSS token values as HSL triplets (\"240 5% 6.5%\"); they win over the role mapping."
+}

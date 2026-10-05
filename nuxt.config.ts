@@ -18,6 +18,8 @@ export default defineNuxtConfig({
     name: "JET Pilot",
     description,
     defaultLocale: "en",
+    // GitHub Pages serves /themes/index.html at /themes/ (and redirects /themes there).
+    trailingSlash: true,
   },
   colorMode: {
     preference: "dark",
@@ -38,7 +40,6 @@ export default defineNuxtConfig({
       link: [
         { rel: "icon", type: "image/png", href: "/favicon.png" },
         { rel: "apple-touch-icon", href: "/favicon.png" },
-        { rel: "canonical", href: "https://www.jet-pilot.app" },
         {
           rel: "preload",
           href: "/fonts/inter-var.woff2",
@@ -50,11 +51,23 @@ export default defineNuxtConfig({
       ],
     },
   },
+  hooks: {
+    // The theme engine for "Try your own theme" (app/lib/customTheme.ts and the
+    // vendored engine) loads only when a visitor imports a theme: no prefetch.
+    "build:manifest"(manifest) {
+      for (const [key, chunk] of Object.entries(manifest)) {
+        if (/(^|\/)lib\/customTheme\.ts$|(^|\/)vendor\/jet-themes\/|node_modules\/(culori|jsonc-parser|fast-plist)\//.test(key)) {
+          chunk.prefetch = false;
+          chunk.preload = false;
+        }
+      }
+    },
+  },
   nitro: {
     prerender: {
       failOnError: false,
       crawlLinks: true,
-      routes: ["/", "/sitemap.xml", "/robots.txt", "/latest.json"],
+      routes: ["/", "/themes/", "/sitemap.xml", "/robots.txt", "/latest.json"],
     },
   },
 });

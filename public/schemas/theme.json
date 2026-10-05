@@ -1,0 +1,2603 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://www.jet-pilot.app/schemas/theme.json",
+  "title": "JET Pilot theme",
+  "description": "A JET Pilot theme: T3 Code's theme file (version 1) plus an optional jetPilot block. Short form: name, appearance, canvas and accent.",
+  "type": "object",
+  "required": [
+    "name",
+    "appearance"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "const": 1,
+      "description": "1 for the full form (optional in the canvas + accent short form)."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,47})$",
+      "description": "Lower-case letters, digits and hyphens. Derived from the name when missing."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "description": "Shown on the theme card."
+    },
+    "appearance": {
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "description": "The appearance of the base colours."
+    },
+    "canvas": {
+      "type": "string",
+      "format": "color-hex",
+      "description": "Seed: Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+    },
+    "accent": {
+      "type": "string",
+      "format": "color-hex",
+      "description": "Seed: Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+    },
+    "colors": {
+      "type": "object",
+      "description": "T3 Code colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
+      "properties": {
+        "canvas": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+        },
+        "chrome": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+        },
+        "toolbar": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Toolbar background (T3 Code)."
+        },
+        "toolbarForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Text on the toolbar (T3 Code)."
+        },
+        "toolbarBorder": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Toolbar border (T3 Code)."
+        },
+        "toolbarControl": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Toolbar button background (T3 Code)."
+        },
+        "toolbarControlForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Toolbar button text (T3 Code)."
+        },
+        "toolbarControlHover": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Toolbar button background on hover (T3 Code)."
+        },
+        "surface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card)."
+        },
+        "surfaceRaised": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Raised surfaces; the placeholder text is checked against it."
+        },
+        "surfaceOverlay": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover)."
+        },
+        "text": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+        },
+        "textMuted": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+        },
+        "border": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it."
+        },
+        "input": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Input borders (--input)."
+        },
+        "focus": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Focus rings (--ring) and the editor's focus border."
+        },
+        "accent": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+        },
+        "accentForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Text on a solid accent fill."
+        },
+        "secondary": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Secondary buttons and controls (--secondary)."
+        },
+        "secondaryForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Text on secondary buttons (--secondary-foreground)."
+        },
+        "muted": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Muted backgrounds: skeletons, subtle fills (--muted)."
+        },
+        "mutedForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Muted text: descriptions, captions, table meta (--muted-foreground)."
+        },
+        "placeholder": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Input placeholder text."
+        },
+        "secondaryLabel": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Secondary labels (T3 Code)."
+        },
+        "iconMuted": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Muted icons (T3 Code)."
+        },
+        "error": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+        },
+        "errorForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Readable error text; becomes --destructive (also checked on the canvas)."
+        },
+        "errorSurface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Background of error alerts."
+        },
+        "warning": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Warning signal colour; editor find-match highlight."
+        },
+        "warningForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Readable warning text; becomes --warning (also checked on the canvas)."
+        },
+        "warningSurface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Background of warning alerts."
+        },
+        "update": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Update / info signal colour (T3 Code)."
+        },
+        "updateForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Text on update surfaces (T3 Code)."
+        },
+        "updateSurface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Background of update notices (T3 Code)."
+        },
+        "accentSurface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion."
+        },
+        "accentSurfaceForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Text on hovered / selected rows (--accent-foreground)."
+        },
+        "messageSurface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Message bubble background (T3 Code)."
+        },
+        "messageForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Message bubble text (T3 Code)."
+        },
+        "messageAction": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+        },
+        "messageActionForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Text on primary buttons (--primary-foreground)."
+        },
+        "messageActionHover": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Primary button hover (T3 Code)."
+        },
+        "codeBackground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Inline code background."
+        },
+        "codeForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Inline code text."
+        },
+        "sidebar": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar)."
+        },
+        "sidebarForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Navigation text (--sidebar-foreground)."
+        },
+        "sidebarMutedForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Muted navigation text."
+        },
+        "sidebarControlSurface": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Controls in the sidebar (T3 Code)."
+        },
+        "sidebarRowHover": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Sidebar row on hover (T3 Code)."
+        },
+        "sidebarRowActive": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Active sidebar row (T3 Code)."
+        },
+        "sidebarRowSelected": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Selected sidebar row (T3 Code)."
+        },
+        "sidebarBorder": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Sidebar border (T3 Code)."
+        },
+        "terminalBackground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Terminal background."
+        },
+        "terminalForeground": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Terminal text."
+        },
+        "terminalCursor": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Terminal and editor cursor."
+        },
+        "terminalSelection": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Terminal selection."
+        },
+        "terminalScrollbar": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Scrollbar thumbs (--scrollbar), also in the editor."
+        },
+        "terminalScrollbarHover": {
+          "type": "string",
+          "format": "color-hex",
+          "description": "Scrollbar thumbs on hover (--scrollbar-hover)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "variants": {
+      "type": "object",
+      "description": "The other appearance (never the base one).",
+      "properties": {
+        "light": {
+          "type": "object",
+          "description": "The other appearance. Either JET's form ({ \"canvas\", \"accent\", \"colors\", \"jetPilot\" }) or T3's flat role map.",
+          "properties": {
+            "canvas": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+            },
+            "accent": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+            },
+            "colors": {
+              "type": "object",
+              "description": "T3 Code colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
+              "properties": {
+                "canvas": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+                },
+                "chrome": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+                },
+                "toolbar": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar background (T3 Code)."
+                },
+                "toolbarForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on the toolbar (T3 Code)."
+                },
+                "toolbarBorder": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar border (T3 Code)."
+                },
+                "toolbarControl": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar button background (T3 Code)."
+                },
+                "toolbarControlForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar button text (T3 Code)."
+                },
+                "toolbarControlHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar button background on hover (T3 Code)."
+                },
+                "surface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card)."
+                },
+                "surfaceRaised": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Raised surfaces; the placeholder text is checked against it."
+                },
+                "surfaceOverlay": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover)."
+                },
+                "text": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+                },
+                "textMuted": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+                },
+                "border": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it."
+                },
+                "input": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Input borders (--input)."
+                },
+                "focus": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Focus rings (--ring) and the editor's focus border."
+                },
+                "accent": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+                },
+                "accentForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on a solid accent fill."
+                },
+                "secondary": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Secondary buttons and controls (--secondary)."
+                },
+                "secondaryForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on secondary buttons (--secondary-foreground)."
+                },
+                "muted": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted backgrounds: skeletons, subtle fills (--muted)."
+                },
+                "mutedForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted text: descriptions, captions, table meta (--muted-foreground)."
+                },
+                "placeholder": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Input placeholder text."
+                },
+                "secondaryLabel": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Secondary labels (T3 Code)."
+                },
+                "iconMuted": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted icons (T3 Code)."
+                },
+                "error": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+                },
+                "errorForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Readable error text; becomes --destructive (also checked on the canvas)."
+                },
+                "errorSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Background of error alerts."
+                },
+                "warning": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Warning signal colour; editor find-match highlight."
+                },
+                "warningForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Readable warning text; becomes --warning (also checked on the canvas)."
+                },
+                "warningSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Background of warning alerts."
+                },
+                "update": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Update / info signal colour (T3 Code)."
+                },
+                "updateForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on update surfaces (T3 Code)."
+                },
+                "updateSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Background of update notices (T3 Code)."
+                },
+                "accentSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion."
+                },
+                "accentSurfaceForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on hovered / selected rows (--accent-foreground)."
+                },
+                "messageSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Message bubble background (T3 Code)."
+                },
+                "messageForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Message bubble text (T3 Code)."
+                },
+                "messageAction": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+                },
+                "messageActionForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on primary buttons (--primary-foreground)."
+                },
+                "messageActionHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Primary button hover (T3 Code)."
+                },
+                "codeBackground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Inline code background."
+                },
+                "codeForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Inline code text."
+                },
+                "sidebar": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar)."
+                },
+                "sidebarForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Navigation text (--sidebar-foreground)."
+                },
+                "sidebarMutedForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted navigation text."
+                },
+                "sidebarControlSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Controls in the sidebar (T3 Code)."
+                },
+                "sidebarRowHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Sidebar row on hover (T3 Code)."
+                },
+                "sidebarRowActive": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Active sidebar row (T3 Code)."
+                },
+                "sidebarRowSelected": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Selected sidebar row (T3 Code)."
+                },
+                "sidebarBorder": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Sidebar border (T3 Code)."
+                },
+                "terminalBackground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal background."
+                },
+                "terminalForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal text."
+                },
+                "terminalCursor": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal and editor cursor."
+                },
+                "terminalSelection": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal selection."
+                },
+                "terminalScrollbar": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Scrollbar thumbs (--scrollbar), also in the editor."
+                },
+                "terminalScrollbarHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Scrollbar thumbs on hover (--scrollbar-hover)."
+                }
+              },
+              "additionalProperties": false
+            },
+            "jetPilot": {
+              "type": "object",
+              "description": "JET Pilot extensions (T3 Code ignores this block).",
+              "properties": {
+                "colors": {
+                  "type": "object",
+                  "description": "JET Pilot's own colour roles.",
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+                    },
+                    "successForeground": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Text on a solid success fill (--success-foreground)."
+                    },
+                    "info": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+                    },
+                    "infoForeground": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Text on a solid info fill (--info-foreground)."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "terminal": {
+                  "type": "object",
+                  "description": "The terminal's 16 ANSI colours.",
+                  "properties": {
+                    "black": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI black (VS Code terminal.ansiBlack)."
+                    },
+                    "red": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI red (VS Code terminal.ansiRed)."
+                    },
+                    "green": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI green (VS Code terminal.ansiGreen)."
+                    },
+                    "yellow": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI yellow (VS Code terminal.ansiYellow)."
+                    },
+                    "blue": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI blue (VS Code terminal.ansiBlue)."
+                    },
+                    "magenta": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI magenta (VS Code terminal.ansiMagenta)."
+                    },
+                    "cyan": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI cyan (VS Code terminal.ansiCyan)."
+                    },
+                    "white": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI white (VS Code terminal.ansiWhite)."
+                    },
+                    "brightBlack": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright black (VS Code terminal.ansiBrightBlack)."
+                    },
+                    "brightRed": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright red (VS Code terminal.ansiBrightRed)."
+                    },
+                    "brightGreen": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright green (VS Code terminal.ansiBrightGreen)."
+                    },
+                    "brightYellow": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright yellow (VS Code terminal.ansiBrightYellow)."
+                    },
+                    "brightBlue": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright blue (VS Code terminal.ansiBrightBlue)."
+                    },
+                    "brightMagenta": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright magenta (VS Code terminal.ansiBrightMagenta)."
+                    },
+                    "brightCyan": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright cyan (VS Code terminal.ansiBrightCyan)."
+                    },
+                    "brightWhite": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright white (VS Code terminal.ansiBrightWhite)."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "syntax": {
+                  "type": "object",
+                  "description": "Syntax colours of the YAML / JSON editor.",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "YAML / JSON keys."
+                    },
+                    "string": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "String values."
+                    },
+                    "number": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Numbers."
+                    },
+                    "constant": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Booleans, null and keywords."
+                    },
+                    "comment": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Comments (italic)."
+                    },
+                    "punctuation": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Colons, dashes, brackets."
+                    },
+                    "text": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Plain text."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "editor": {
+                  "type": "object",
+                  "description": "Raw Monaco / VS Code colour keys, e.g. \"editor.lineHighlightBackground\". terminal.selectionBackground and terminalCursor.* go to the terminal.",
+                  "additionalProperties": {
+                    "type": "string",
+                    "format": "color-hex",
+                    "description": "A VS Code workbench colour."
+                  }
+                },
+                "tokens": {
+                  "type": "object",
+                  "description": "Exact CSS token values as HSL triplets (\"240 5% 6.5%\"); they win over the role mapping.",
+                  "properties": {
+                    "background": {
+                      "type": "string",
+                      "description": "--background",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "foreground": {
+                      "type": "string",
+                      "description": "--foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "surface-1": {
+                      "type": "string",
+                      "description": "--surface-1",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "surface-2": {
+                      "type": "string",
+                      "description": "--surface-2",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "surface-3": {
+                      "type": "string",
+                      "description": "--surface-3",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "muted": {
+                      "type": "string",
+                      "description": "--muted",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "muted-foreground": {
+                      "type": "string",
+                      "description": "--muted-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "accent": {
+                      "type": "string",
+                      "description": "--accent",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "accent-foreground": {
+                      "type": "string",
+                      "description": "--accent-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "secondary": {
+                      "type": "string",
+                      "description": "--secondary",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "secondary-foreground": {
+                      "type": "string",
+                      "description": "--secondary-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "sidebar-foreground": {
+                      "type": "string",
+                      "description": "--sidebar-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "border": {
+                      "type": "string",
+                      "description": "--border",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "border-subtle": {
+                      "type": "string",
+                      "description": "--border-subtle",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "border-strong": {
+                      "type": "string",
+                      "description": "--border-strong",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "input": {
+                      "type": "string",
+                      "description": "--input",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "ring": {
+                      "type": "string",
+                      "description": "--ring",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "primary": {
+                      "type": "string",
+                      "description": "--primary",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "primary-foreground": {
+                      "type": "string",
+                      "description": "--primary-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "link": {
+                      "type": "string",
+                      "description": "--link",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "success": {
+                      "type": "string",
+                      "description": "--success",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "success-foreground": {
+                      "type": "string",
+                      "description": "--success-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "warning": {
+                      "type": "string",
+                      "description": "--warning",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "warning-foreground": {
+                      "type": "string",
+                      "description": "--warning-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "destructive": {
+                      "type": "string",
+                      "description": "--destructive",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "destructive-foreground": {
+                      "type": "string",
+                      "description": "--destructive-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "info": {
+                      "type": "string",
+                      "description": "--info",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "info-foreground": {
+                      "type": "string",
+                      "description": "--info-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "tooltip": {
+                      "type": "string",
+                      "description": "--tooltip",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "tooltip-foreground": {
+                      "type": "string",
+                      "description": "--tooltip-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "overlay": {
+                      "type": "string",
+                      "description": "--overlay",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "selection": {
+                      "type": "string",
+                      "description": "--selection",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "scrollbar": {
+                      "type": "string",
+                      "description": "--scrollbar",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "scrollbar-hover": {
+                      "type": "string",
+                      "description": "--scrollbar-hover",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "chrome": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome. (T3 flat variant form)"
+            },
+            "toolbar": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar background (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on the toolbar (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarBorder": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar border (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarControl": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar button background (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarControlForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar button text (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarControlHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar button background on hover (T3 Code). (T3 flat variant form)"
+            },
+            "surface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card). (T3 flat variant form)"
+            },
+            "surfaceRaised": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Raised surfaces; the placeholder text is checked against it. (T3 flat variant form)"
+            },
+            "surfaceOverlay": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover). (T3 flat variant form)"
+            },
+            "text": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas. (T3 flat variant form)"
+            },
+            "textMuted": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`. (T3 flat variant form)"
+            },
+            "border": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it. (T3 flat variant form)"
+            },
+            "input": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Input borders (--input). (T3 flat variant form)"
+            },
+            "focus": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Focus rings (--ring) and the editor's focus border. (T3 flat variant form)"
+            },
+            "accentForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on a solid accent fill. (T3 flat variant form)"
+            },
+            "secondary": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Secondary buttons and controls (--secondary). (T3 flat variant form)"
+            },
+            "secondaryForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on secondary buttons (--secondary-foreground). (T3 flat variant form)"
+            },
+            "muted": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted backgrounds: skeletons, subtle fills (--muted). (T3 flat variant form)"
+            },
+            "mutedForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted text: descriptions, captions, table meta (--muted-foreground). (T3 flat variant form)"
+            },
+            "placeholder": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Input placeholder text. (T3 flat variant form)"
+            },
+            "secondaryLabel": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Secondary labels (T3 Code). (T3 flat variant form)"
+            },
+            "iconMuted": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted icons (T3 Code). (T3 flat variant form)"
+            },
+            "error": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`. (T3 flat variant form)"
+            },
+            "errorForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Readable error text; becomes --destructive (also checked on the canvas). (T3 flat variant form)"
+            },
+            "errorSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Background of error alerts. (T3 flat variant form)"
+            },
+            "warning": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Warning signal colour; editor find-match highlight. (T3 flat variant form)"
+            },
+            "warningForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Readable warning text; becomes --warning (also checked on the canvas). (T3 flat variant form)"
+            },
+            "warningSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Background of warning alerts. (T3 flat variant form)"
+            },
+            "update": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Update / info signal colour (T3 Code). (T3 flat variant form)"
+            },
+            "updateForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on update surfaces (T3 Code). (T3 flat variant form)"
+            },
+            "updateSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Background of update notices (T3 Code). (T3 flat variant form)"
+            },
+            "accentSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion. (T3 flat variant form)"
+            },
+            "accentSurfaceForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on hovered / selected rows (--accent-foreground). (T3 flat variant form)"
+            },
+            "messageSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Message bubble background (T3 Code). (T3 flat variant form)"
+            },
+            "messageForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Message bubble text (T3 Code). (T3 flat variant form)"
+            },
+            "messageAction": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. (T3 flat variant form)"
+            },
+            "messageActionForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on primary buttons (--primary-foreground). (T3 flat variant form)"
+            },
+            "messageActionHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Primary button hover (T3 Code). (T3 flat variant form)"
+            },
+            "codeBackground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Inline code background. (T3 flat variant form)"
+            },
+            "codeForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Inline code text. (T3 flat variant form)"
+            },
+            "sidebar": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar). (T3 flat variant form)"
+            },
+            "sidebarForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Navigation text (--sidebar-foreground). (T3 flat variant form)"
+            },
+            "sidebarMutedForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted navigation text. (T3 flat variant form)"
+            },
+            "sidebarControlSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Controls in the sidebar (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarRowHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Sidebar row on hover (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarRowActive": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Active sidebar row (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarRowSelected": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Selected sidebar row (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarBorder": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Sidebar border (T3 Code). (T3 flat variant form)"
+            },
+            "terminalBackground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal background. (T3 flat variant form)"
+            },
+            "terminalForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal text. (T3 flat variant form)"
+            },
+            "terminalCursor": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal and editor cursor. (T3 flat variant form)"
+            },
+            "terminalSelection": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal selection. (T3 flat variant form)"
+            },
+            "terminalScrollbar": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Scrollbar thumbs (--scrollbar), also in the editor. (T3 flat variant form)"
+            },
+            "terminalScrollbarHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Scrollbar thumbs on hover (--scrollbar-hover). (T3 flat variant form)"
+            }
+          },
+          "additionalProperties": false
+        },
+        "dark": {
+          "type": "object",
+          "description": "The other appearance. Either JET's form ({ \"canvas\", \"accent\", \"colors\", \"jetPilot\" }) or T3's flat role map.",
+          "properties": {
+            "canvas": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+            },
+            "accent": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+            },
+            "colors": {
+              "type": "object",
+              "description": "T3 Code colour roles (any CSS colour). Missing roles are derived from the canvas and accent.",
+              "properties": {
+                "canvas": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Main background behind content: tables, editor, terminal (--background). Seed of the derived palette."
+                },
+                "chrome": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome."
+                },
+                "toolbar": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar background (T3 Code)."
+                },
+                "toolbarForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on the toolbar (T3 Code)."
+                },
+                "toolbarBorder": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar border (T3 Code)."
+                },
+                "toolbarControl": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar button background (T3 Code)."
+                },
+                "toolbarControlForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar button text (T3 Code)."
+                },
+                "toolbarControlHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Toolbar button background on hover (T3 Code)."
+                },
+                "surface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card)."
+                },
+                "surfaceRaised": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Raised surfaces; the placeholder text is checked against it."
+                },
+                "surfaceOverlay": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover)."
+                },
+                "text": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas."
+                },
+                "textMuted": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`."
+                },
+                "border": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it."
+                },
+                "input": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Input borders (--input)."
+                },
+                "focus": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Focus rings (--ring) and the editor's focus border."
+                },
+                "accent": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Brand / accent colour: links (--link), text selection (--selection), editor selection. Seed of the derived palette."
+                },
+                "accentForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on a solid accent fill."
+                },
+                "secondary": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Secondary buttons and controls (--secondary)."
+                },
+                "secondaryForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on secondary buttons (--secondary-foreground)."
+                },
+                "muted": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted backgrounds: skeletons, subtle fills (--muted)."
+                },
+                "mutedForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted text: descriptions, captions, table meta (--muted-foreground)."
+                },
+                "placeholder": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Input placeholder text."
+                },
+                "secondaryLabel": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Secondary labels (T3 Code)."
+                },
+                "iconMuted": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted icons (T3 Code)."
+                },
+                "error": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`."
+                },
+                "errorForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Readable error text; becomes --destructive (also checked on the canvas)."
+                },
+                "errorSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Background of error alerts."
+                },
+                "warning": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Warning signal colour; editor find-match highlight."
+                },
+                "warningForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Readable warning text; becomes --warning (also checked on the canvas)."
+                },
+                "warningSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Background of warning alerts."
+                },
+                "update": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Update / info signal colour (T3 Code)."
+                },
+                "updateForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on update surfaces (T3 Code)."
+                },
+                "updateSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Background of update notices (T3 Code)."
+                },
+                "accentSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion."
+                },
+                "accentSurfaceForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on hovered / selected rows (--accent-foreground)."
+                },
+                "messageSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Message bubble background (T3 Code)."
+                },
+                "messageForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Message bubble text (T3 Code)."
+                },
+                "messageAction": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead."
+                },
+                "messageActionForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Text on primary buttons (--primary-foreground)."
+                },
+                "messageActionHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Primary button hover (T3 Code)."
+                },
+                "codeBackground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Inline code background."
+                },
+                "codeForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Inline code text."
+                },
+                "sidebar": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar)."
+                },
+                "sidebarForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Navigation text (--sidebar-foreground)."
+                },
+                "sidebarMutedForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Muted navigation text."
+                },
+                "sidebarControlSurface": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Controls in the sidebar (T3 Code)."
+                },
+                "sidebarRowHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Sidebar row on hover (T3 Code)."
+                },
+                "sidebarRowActive": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Active sidebar row (T3 Code)."
+                },
+                "sidebarRowSelected": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Selected sidebar row (T3 Code)."
+                },
+                "sidebarBorder": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Sidebar border (T3 Code)."
+                },
+                "terminalBackground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal background."
+                },
+                "terminalForeground": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal text."
+                },
+                "terminalCursor": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal and editor cursor."
+                },
+                "terminalSelection": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Terminal selection."
+                },
+                "terminalScrollbar": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Scrollbar thumbs (--scrollbar), also in the editor."
+                },
+                "terminalScrollbarHover": {
+                  "type": "string",
+                  "format": "color-hex",
+                  "description": "Scrollbar thumbs on hover (--scrollbar-hover)."
+                }
+              },
+              "additionalProperties": false
+            },
+            "jetPilot": {
+              "type": "object",
+              "description": "JET Pilot extensions (T3 Code ignores this block).",
+              "properties": {
+                "colors": {
+                  "type": "object",
+                  "description": "JET Pilot's own colour roles.",
+                  "properties": {
+                    "success": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+                    },
+                    "successForeground": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Text on a solid success fill (--success-foreground)."
+                    },
+                    "info": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+                    },
+                    "infoForeground": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Text on a solid info fill (--info-foreground)."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "terminal": {
+                  "type": "object",
+                  "description": "The terminal's 16 ANSI colours.",
+                  "properties": {
+                    "black": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI black (VS Code terminal.ansiBlack)."
+                    },
+                    "red": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI red (VS Code terminal.ansiRed)."
+                    },
+                    "green": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI green (VS Code terminal.ansiGreen)."
+                    },
+                    "yellow": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI yellow (VS Code terminal.ansiYellow)."
+                    },
+                    "blue": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI blue (VS Code terminal.ansiBlue)."
+                    },
+                    "magenta": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI magenta (VS Code terminal.ansiMagenta)."
+                    },
+                    "cyan": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI cyan (VS Code terminal.ansiCyan)."
+                    },
+                    "white": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI white (VS Code terminal.ansiWhite)."
+                    },
+                    "brightBlack": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright black (VS Code terminal.ansiBrightBlack)."
+                    },
+                    "brightRed": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright red (VS Code terminal.ansiBrightRed)."
+                    },
+                    "brightGreen": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright green (VS Code terminal.ansiBrightGreen)."
+                    },
+                    "brightYellow": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright yellow (VS Code terminal.ansiBrightYellow)."
+                    },
+                    "brightBlue": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright blue (VS Code terminal.ansiBrightBlue)."
+                    },
+                    "brightMagenta": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright magenta (VS Code terminal.ansiBrightMagenta)."
+                    },
+                    "brightCyan": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright cyan (VS Code terminal.ansiBrightCyan)."
+                    },
+                    "brightWhite": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "ANSI bright white (VS Code terminal.ansiBrightWhite)."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "syntax": {
+                  "type": "object",
+                  "description": "Syntax colours of the YAML / JSON editor.",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "YAML / JSON keys."
+                    },
+                    "string": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "String values."
+                    },
+                    "number": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Numbers."
+                    },
+                    "constant": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Booleans, null and keywords."
+                    },
+                    "comment": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Comments (italic)."
+                    },
+                    "punctuation": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Colons, dashes, brackets."
+                    },
+                    "text": {
+                      "type": "string",
+                      "format": "color-hex",
+                      "description": "Plain text."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "editor": {
+                  "type": "object",
+                  "description": "Raw Monaco / VS Code colour keys, e.g. \"editor.lineHighlightBackground\". terminal.selectionBackground and terminalCursor.* go to the terminal.",
+                  "additionalProperties": {
+                    "type": "string",
+                    "format": "color-hex",
+                    "description": "A VS Code workbench colour."
+                  }
+                },
+                "tokens": {
+                  "type": "object",
+                  "description": "Exact CSS token values as HSL triplets (\"240 5% 6.5%\"); they win over the role mapping.",
+                  "properties": {
+                    "background": {
+                      "type": "string",
+                      "description": "--background",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "foreground": {
+                      "type": "string",
+                      "description": "--foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "surface-1": {
+                      "type": "string",
+                      "description": "--surface-1",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "surface-2": {
+                      "type": "string",
+                      "description": "--surface-2",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "surface-3": {
+                      "type": "string",
+                      "description": "--surface-3",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "muted": {
+                      "type": "string",
+                      "description": "--muted",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "muted-foreground": {
+                      "type": "string",
+                      "description": "--muted-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "accent": {
+                      "type": "string",
+                      "description": "--accent",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "accent-foreground": {
+                      "type": "string",
+                      "description": "--accent-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "secondary": {
+                      "type": "string",
+                      "description": "--secondary",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "secondary-foreground": {
+                      "type": "string",
+                      "description": "--secondary-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "sidebar-foreground": {
+                      "type": "string",
+                      "description": "--sidebar-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "border": {
+                      "type": "string",
+                      "description": "--border",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "border-subtle": {
+                      "type": "string",
+                      "description": "--border-subtle",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "border-strong": {
+                      "type": "string",
+                      "description": "--border-strong",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "input": {
+                      "type": "string",
+                      "description": "--input",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "ring": {
+                      "type": "string",
+                      "description": "--ring",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "primary": {
+                      "type": "string",
+                      "description": "--primary",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "primary-foreground": {
+                      "type": "string",
+                      "description": "--primary-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "link": {
+                      "type": "string",
+                      "description": "--link",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "success": {
+                      "type": "string",
+                      "description": "--success",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "success-foreground": {
+                      "type": "string",
+                      "description": "--success-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "warning": {
+                      "type": "string",
+                      "description": "--warning",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "warning-foreground": {
+                      "type": "string",
+                      "description": "--warning-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "destructive": {
+                      "type": "string",
+                      "description": "--destructive",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "destructive-foreground": {
+                      "type": "string",
+                      "description": "--destructive-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "info": {
+                      "type": "string",
+                      "description": "--info",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "info-foreground": {
+                      "type": "string",
+                      "description": "--info-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "tooltip": {
+                      "type": "string",
+                      "description": "--tooltip",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "tooltip-foreground": {
+                      "type": "string",
+                      "description": "--tooltip-foreground",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "overlay": {
+                      "type": "string",
+                      "description": "--overlay",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "selection": {
+                      "type": "string",
+                      "description": "--selection",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "scrollbar": {
+                      "type": "string",
+                      "description": "--scrollbar",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    },
+                    "scrollbar-hover": {
+                      "type": "string",
+                      "description": "--scrollbar-hover",
+                      "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "chrome": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Window chrome background (T3 Code). JET Pilot uses `sidebar` for its chrome. (T3 flat variant form)"
+            },
+            "toolbar": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar background (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on the toolbar (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarBorder": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar border (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarControl": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar button background (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarControlForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar button text (T3 Code). (T3 flat variant form)"
+            },
+            "toolbarControlHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Toolbar button background on hover (T3 Code). (T3 flat variant form)"
+            },
+            "surface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Panels and cards: side panel, grouped settings (--surface-2 / --card). (T3 flat variant form)"
+            },
+            "surfaceRaised": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Raised surfaces; the placeholder text is checked against it. (T3 flat variant form)"
+            },
+            "surfaceOverlay": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Popovers, menus, dialogs, command palette and editor widgets (--surface-3 / --popover). (T3 flat variant form)"
+            },
+            "text": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Primary text (--foreground). Kept at 7:1 contrast on the canvas. (T3 flat variant form)"
+            },
+            "textMuted": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Secondary text (T3 Code). JET Pilot's muted text is `mutedForeground`. (T3 flat variant form)"
+            },
+            "border": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Hairline borders (--border); --border-subtle and --border-strong are mixed from it. (T3 flat variant form)"
+            },
+            "input": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Input borders (--input). (T3 flat variant form)"
+            },
+            "focus": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Focus rings (--ring) and the editor's focus border. (T3 flat variant form)"
+            },
+            "accentForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on a solid accent fill. (T3 flat variant form)"
+            },
+            "secondary": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Secondary buttons and controls (--secondary). (T3 flat variant form)"
+            },
+            "secondaryForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on secondary buttons (--secondary-foreground). (T3 flat variant form)"
+            },
+            "muted": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted backgrounds: skeletons, subtle fills (--muted). (T3 flat variant form)"
+            },
+            "mutedForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted text: descriptions, captions, table meta (--muted-foreground). (T3 flat variant form)"
+            },
+            "placeholder": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Input placeholder text. (T3 flat variant form)"
+            },
+            "secondaryLabel": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Secondary labels (T3 Code). (T3 flat variant form)"
+            },
+            "iconMuted": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted icons (T3 Code). (T3 flat variant form)"
+            },
+            "error": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Error signal colour (T3 Code). The editor's find highlights use `warning`. (T3 flat variant form)"
+            },
+            "errorForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Readable error text; becomes --destructive (also checked on the canvas). (T3 flat variant form)"
+            },
+            "errorSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Background of error alerts. (T3 flat variant form)"
+            },
+            "warning": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Warning signal colour; editor find-match highlight. (T3 flat variant form)"
+            },
+            "warningForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Readable warning text; becomes --warning (also checked on the canvas). (T3 flat variant form)"
+            },
+            "warningSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Background of warning alerts. (T3 flat variant form)"
+            },
+            "update": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Update / info signal colour (T3 Code). (T3 flat variant form)"
+            },
+            "updateForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on update surfaces (T3 Code). (T3 flat variant form)"
+            },
+            "updateSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Background of update notices (T3 Code). (T3 flat variant form)"
+            },
+            "accentSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Hover and selected rows, menu highlight (--accent) and the editor's selected suggestion. (T3 flat variant form)"
+            },
+            "accentSurfaceForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on hovered / selected rows (--accent-foreground). (T3 flat variant form)"
+            },
+            "messageSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Message bubble background (T3 Code). (T3 flat variant form)"
+            },
+            "messageForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Message bubble text (T3 Code). (T3 flat variant form)"
+            },
+            "messageAction": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Primary buttons, switches, the active nav indicator (--primary). When it is not a vivid colour (3:1 on the canvas, apart from accentSurface), the accent / focus colour is used instead. (T3 flat variant form)"
+            },
+            "messageActionForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on primary buttons (--primary-foreground). (T3 flat variant form)"
+            },
+            "messageActionHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Primary button hover (T3 Code). (T3 flat variant form)"
+            },
+            "codeBackground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Inline code background. (T3 flat variant form)"
+            },
+            "codeForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Inline code text. (T3 flat variant form)"
+            },
+            "sidebar": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "App chrome: navigation, tab bar, toolbars (--surface-1 / --sidebar). (T3 flat variant form)"
+            },
+            "sidebarForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Navigation text (--sidebar-foreground). (T3 flat variant form)"
+            },
+            "sidebarMutedForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Muted navigation text. (T3 flat variant form)"
+            },
+            "sidebarControlSurface": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Controls in the sidebar (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarRowHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Sidebar row on hover (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarRowActive": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Active sidebar row (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarRowSelected": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Selected sidebar row (T3 Code). (T3 flat variant form)"
+            },
+            "sidebarBorder": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Sidebar border (T3 Code). (T3 flat variant form)"
+            },
+            "terminalBackground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal background. (T3 flat variant form)"
+            },
+            "terminalForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal text. (T3 flat variant form)"
+            },
+            "terminalCursor": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal and editor cursor. (T3 flat variant form)"
+            },
+            "terminalSelection": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Terminal selection. (T3 flat variant form)"
+            },
+            "terminalScrollbar": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Scrollbar thumbs (--scrollbar), also in the editor. (T3 flat variant form)"
+            },
+            "terminalScrollbarHover": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Scrollbar thumbs on hover (--scrollbar-hover). (T3 flat variant form)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "jetPilot": {
+      "type": "object",
+      "description": "JET Pilot extensions (T3 Code ignores this block).",
+      "properties": {
+        "colors": {
+          "type": "object",
+          "description": "JET Pilot's own colour roles.",
+          "properties": {
+            "success": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Success colour, text-grade on the canvas (--success): ready pods, healthy status. Derived as a green when missing."
+            },
+            "successForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on a solid success fill (--success-foreground)."
+            },
+            "info": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Info colour, text-grade on the canvas (--info). Derived as a blue when missing."
+            },
+            "infoForeground": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Text on a solid info fill (--info-foreground)."
+            }
+          },
+          "additionalProperties": false
+        },
+        "terminal": {
+          "type": "object",
+          "description": "The terminal's 16 ANSI colours.",
+          "properties": {
+            "black": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI black (VS Code terminal.ansiBlack)."
+            },
+            "red": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI red (VS Code terminal.ansiRed)."
+            },
+            "green": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI green (VS Code terminal.ansiGreen)."
+            },
+            "yellow": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI yellow (VS Code terminal.ansiYellow)."
+            },
+            "blue": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI blue (VS Code terminal.ansiBlue)."
+            },
+            "magenta": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI magenta (VS Code terminal.ansiMagenta)."
+            },
+            "cyan": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI cyan (VS Code terminal.ansiCyan)."
+            },
+            "white": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI white (VS Code terminal.ansiWhite)."
+            },
+            "brightBlack": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright black (VS Code terminal.ansiBrightBlack)."
+            },
+            "brightRed": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright red (VS Code terminal.ansiBrightRed)."
+            },
+            "brightGreen": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright green (VS Code terminal.ansiBrightGreen)."
+            },
+            "brightYellow": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright yellow (VS Code terminal.ansiBrightYellow)."
+            },
+            "brightBlue": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright blue (VS Code terminal.ansiBrightBlue)."
+            },
+            "brightMagenta": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright magenta (VS Code terminal.ansiBrightMagenta)."
+            },
+            "brightCyan": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright cyan (VS Code terminal.ansiBrightCyan)."
+            },
+            "brightWhite": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "ANSI bright white (VS Code terminal.ansiBrightWhite)."
+            }
+          },
+          "additionalProperties": false
+        },
+        "syntax": {
+          "type": "object",
+          "description": "Syntax colours of the YAML / JSON editor.",
+          "properties": {
+            "key": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "YAML / JSON keys."
+            },
+            "string": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "String values."
+            },
+            "number": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Numbers."
+            },
+            "constant": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Booleans, null and keywords."
+            },
+            "comment": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Comments (italic)."
+            },
+            "punctuation": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Colons, dashes, brackets."
+            },
+            "text": {
+              "type": "string",
+              "format": "color-hex",
+              "description": "Plain text."
+            }
+          },
+          "additionalProperties": false
+        },
+        "editor": {
+          "type": "object",
+          "description": "Raw Monaco / VS Code colour keys, e.g. \"editor.lineHighlightBackground\". terminal.selectionBackground and terminalCursor.* go to the terminal.",
+          "additionalProperties": {
+            "type": "string",
+            "format": "color-hex",
+            "description": "A VS Code workbench colour."
+          }
+        },
+        "tokens": {
+          "type": "object",
+          "description": "Exact CSS token values as HSL triplets (\"240 5% 6.5%\"); they win over the role mapping.",
+          "properties": {
+            "background": {
+              "type": "string",
+              "description": "--background",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "foreground": {
+              "type": "string",
+              "description": "--foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "surface-1": {
+              "type": "string",
+              "description": "--surface-1",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "surface-2": {
+              "type": "string",
+              "description": "--surface-2",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "surface-3": {
+              "type": "string",
+              "description": "--surface-3",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "muted": {
+              "type": "string",
+              "description": "--muted",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "muted-foreground": {
+              "type": "string",
+              "description": "--muted-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "accent": {
+              "type": "string",
+              "description": "--accent",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "accent-foreground": {
+              "type": "string",
+              "description": "--accent-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "secondary": {
+              "type": "string",
+              "description": "--secondary",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "secondary-foreground": {
+              "type": "string",
+              "description": "--secondary-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "sidebar-foreground": {
+              "type": "string",
+              "description": "--sidebar-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "border": {
+              "type": "string",
+              "description": "--border",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "border-subtle": {
+              "type": "string",
+              "description": "--border-subtle",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "border-strong": {
+              "type": "string",
+              "description": "--border-strong",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "input": {
+              "type": "string",
+              "description": "--input",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "ring": {
+              "type": "string",
+              "description": "--ring",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "primary": {
+              "type": "string",
+              "description": "--primary",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "primary-foreground": {
+              "type": "string",
+              "description": "--primary-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "link": {
+              "type": "string",
+              "description": "--link",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "success": {
+              "type": "string",
+              "description": "--success",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "success-foreground": {
+              "type": "string",
+              "description": "--success-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "warning": {
+              "type": "string",
+              "description": "--warning",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "warning-foreground": {
+              "type": "string",
+              "description": "--warning-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "destructive": {
+              "type": "string",
+              "description": "--destructive",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "destructive-foreground": {
+              "type": "string",
+              "description": "--destructive-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "info": {
+              "type": "string",
+              "description": "--info",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "info-foreground": {
+              "type": "string",
+              "description": "--info-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "tooltip": {
+              "type": "string",
+              "description": "--tooltip",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "tooltip-foreground": {
+              "type": "string",
+              "description": "--tooltip-foreground",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "overlay": {
+              "type": "string",
+              "description": "--overlay",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "selection": {
+              "type": "string",
+              "description": "--selection",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "scrollbar": {
+              "type": "string",
+              "description": "--scrollbar",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            },
+            "scrollbar-hover": {
+              "type": "string",
+              "description": "--scrollbar-hover",
+              "pattern": "^\\d+(\\.\\d+)? \\d+(\\.\\d+)?% \\d+(\\.\\d+)?%$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "collection": {
+      "type": "object",
+      "description": "Groups variants imported together.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ]
+    },
+    "managed": {
+      "type": "boolean"
+    },
+    "origin": {
+      "type": "object",
+      "description": "Where the theme came from (JET Pilot; T3 Code ignores it).",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "E.g. \"Open VSX\", \"VS Code\", \"T3 Code\"."
+        },
+        "url": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "label"
+      ]
+    }
+  }
+}

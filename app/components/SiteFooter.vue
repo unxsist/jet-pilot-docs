@@ -2,15 +2,17 @@
 import { REPO_URL, RELEASES_URL } from "~/composables/useGitHub";
 
 const { primary } = useDownloads();
+const { onHome, href } = useSiteHref();
 
-const columns = [
+const columns = computed(() => [
   {
     title: "Product",
     links: [
-      { label: "Features", href: "#features" },
-      { label: "What's new", href: "#whats-new" },
-      { label: "Download", href: "#download" },
-      { label: "FAQ", href: "#faq" },
+      { label: "Features", href: href("#features") },
+      { label: "Themes", href: "/themes/" },
+      { label: "What's new", href: href("#whats-new") },
+      { label: "Download", href: href("#download") },
+      { label: "FAQ", href: href("#faq") },
     ],
   },
   {
@@ -22,7 +24,7 @@ const columns = [
       { label: "MIT licence", href: `${REPO_URL}/blob/main/LICENSE` },
     ],
   },
-];
+]);
 </script>
 
 <template>
@@ -47,7 +49,7 @@ const columns = [
     <div class="border-t border-line">
       <div class="container-x flex flex-col gap-10 py-12 sm:flex-row sm:justify-between">
         <div class="max-w-xs">
-          <a href="#top" class="flex items-center gap-2.5">
+          <a :href="onHome ? '#top' : '/'" class="flex items-center gap-2.5">
             <img src="/images/icon-64.webp" alt="" width="28" height="28" loading="lazy" class="size-7 rounded-[7px]" />
             <span class="font-semibold tracking-tight">JET Pilot</span>
           </a>

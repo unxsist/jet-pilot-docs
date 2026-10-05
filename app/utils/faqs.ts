@@ -6,7 +6,7 @@ export const faqs = [
   },
   {
     q: "macOS says JET Pilot is “damaged” or can’t be opened. What now?",
-    a: `Nothing is wrong with the app: JET Pilot isn’t notarized by Apple, so macOS quarantines it after download. Open Terminal and run <code>xattr -dr com.apple.quarantine "/Applications/JET Pilot.app"</code> once — also after installing with Homebrew. Auto-updates keep working afterwards.`,
+    a: `Nothing is wrong with the app: JET Pilot isn’t notarized by Apple, so macOS quarantines it after download. Open Terminal and run <code>xattr -dr com.apple.quarantine "/Applications/JET Pilot.app"</code> once. Auto-updates keep working afterwards. Installing with Homebrew (<code>brew install --cask unxsist/tap/jet-pilot</code>) takes care of this for you.`,
   },
   {
     q: "Windows SmartScreen warns me about the installer.",
@@ -29,6 +29,14 @@ export const faqs = [
     a: `From v1.37, lists stream changes from the Kubernetes API through watches instead of polling <code>kubectl</code>. Changes show up in a fraction of a second — about 200 ms from scaling a Deployment to the update on screen in our tests against a real kube-apiserver — and coming back to a view is instant.`,
   },
   {
+    q: "Can I use my VS Code theme?",
+    a: `Yes. From v1.38, JET Pilot imports VS Code colour themes (JSONC and <code>include</code> chains too), Sublime Text <code>.sublime-color-scheme</code> files, TextMate <code>.tmTheme</code> files and T3 Code themes. Drop the file on Settings › Appearance, or install a theme from the Open VSX gallery inside the app. The workbench colours become JET Pilot’s palette, <code>tokenColors</code> colour the YAML editor and <code>terminal.ansi*</code> the terminal. Want to see it first? <a href="/themes/#try">Preview your theme on the website</a> — it’s converted in your browser.`,
+  },
+  {
+    q: "Why only MIT-licensed themes from Open VSX?",
+    a: `JET Pilot is MIT licensed, and we want everything it downloads and installs for you to fit that licence without reviewing extensions one by one. So the gallery only installs extensions whose licence is MIT, or allows MIT (such as <code>MIT OR Apache-2.0</code>). That still covers most popular themes — Catppuccin, Dracula, GitHub, Tokyo Night and many more. A theme under another licence isn’t blocked: you can import a file you already have yourself.`,
+  },
+  {
     q: "Does JET Pilot modify my kubeconfig?",
     a: `No. It reads your kubeconfig files. The built-in terminal uses a temporary, owner-only kubeconfig that contains just the current context, so your own files are never touched.`,
   },
@@ -38,7 +46,7 @@ export const faqs = [
   },
   {
     q: "How do updates work?",
-    a: `JET Pilot has a built-in updater that checks for new versions and installs them for you. Homebrew users can also run <code>brew upgrade --cask jet-pilot</code>.`,
+    a: `JET Pilot has a built-in updater that checks for new versions and installs them for you. Homebrew users can also run <code>brew upgrade --cask unxsist/tap/jet-pilot</code>.`,
   },
   {
     q: "What is it built with?",

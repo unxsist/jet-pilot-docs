@@ -14,6 +14,9 @@ export const LAST_LEGACY_VERSION = "1.35.0";
 /** First version with live data, the reimagined resource graph and workspaces. */
 export const LIVE_RELEASE_VERSION = "1.37.0";
 
+/** First version with custom themes (T3 Code / VS Code / Sublime / TextMate, Open VSX). */
+export const THEMES_RELEASE_VERSION = "1.38.0";
+
 export interface ReleaseAsset {
   name: string;
   size: number;

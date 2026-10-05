@@ -50,6 +50,15 @@ import { faqs } from "~/utils/faqs";
   color: var(--fg);
   word-break: break-word;
 }
+.faq-answer :deep(a) {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+}
+.faq-answer :deep(a:hover) {
+  text-decoration-color: var(--fg);
+}
 .faq-answer :deep(strong) {
   color: var(--fg);
   font-weight: 500;
