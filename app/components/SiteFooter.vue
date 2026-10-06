@@ -29,19 +29,21 @@ const columns = computed(() => [
 <template>
   <footer class="relative cv-auto overflow-hidden border-t border-line">
     <!-- closing CTA -->
-    <div class="container-x py-20 text-center sm:py-28">
-      <img src="/images/icon-256.webp" alt="" width="96" height="96" loading="lazy" class="mx-auto size-20 sm:size-24" />
-      <h2 class="mx-auto mt-8 max-w-2xl text-balance text-4xl font-semibold tracking-[-0.04em] sm:text-6xl sm:leading-[1.02]">
-        <span class="text-shine">Your clusters deserve better.</span>
-      </h2>
-      <p class="mx-auto mt-4 max-w-md text-muted">Free, open source and yours in a few clicks.</p>
-      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a :href="primary.href" class="inline-flex h-12 items-center gap-2.5 rounded-xl bg-fg px-5 text-[0.95rem] font-semibold text-bg transition-transform hover:-translate-y-px">
-          <Icon name="download" :size="17" /> {{ primary.label }}
-        </a>
-        <a :href="REPO_URL" class="inline-flex h-12 items-center gap-2.5 rounded-xl border border-line-strong px-5 text-[0.95rem] font-semibold transition-colors hover:bg-fg/5">
-          <Icon name="github" :size="17" /> View on GitHub
-        </a>
+    <div class="container-x grid gap-x-10 gap-y-8 py-24 sm:py-32 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-8">
+        <img src="/images/icon-256.webp" alt="" width="96" height="96" loading="lazy" class="size-16 sm:size-20" />
+        <h2 class="display mt-8 text-[2.8rem] sm:text-[4.5rem] lg:text-[5.5rem]">Your clusters<br />deserve better.</h2>
+      </div>
+      <div class="lg:col-span-4 lg:pb-3">
+        <p class="text-[1.06rem] text-muted">Free, open source and yours in a few clicks.</p>
+        <div class="mt-6 flex flex-col gap-2.5 sm:flex-row">
+          <a :href="primary.href" class="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-fg px-5 text-[0.95rem] font-semibold text-bg transition-opacity hover:opacity-90">
+            <Icon name="download" :size="17" /> {{ primary.label }}
+          </a>
+          <a :href="REPO_URL" class="inline-flex h-12 items-center justify-center gap-2.5 rounded-full border border-line-strong px-5 text-[0.95rem] font-semibold transition-colors hover:bg-fg/5">
+            <Icon name="github" :size="17" /> GitHub
+          </a>
+        </div>
       </div>
     </div>
 

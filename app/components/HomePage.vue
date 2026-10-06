@@ -1,10 +1,8 @@
 <template>
   <main id="main">
     <HeroSection />
-    <LazyWhyJetPilot hydrate-never />
-    <LazyClusterStrip hydrate-never />
-    <LazyFeatureTour hydrate-on-visible />
-    <LazyFeatureGrid hydrate-never />
+    <LazyFeatureShowcase hydrate-never />
+    <LazyContactSheet hydrate-never />
     <LazyThemesTeaser hydrate-never />
     <LazyDownloadSection hydrate-on-visible />
     <LazyOpenSource hydrate-on-visible />

@@ -5,14 +5,15 @@ const { primary, platforms } = useDownloads();
 const { stars } = useGitHub();
 const clustersShipped = useReleaseAtLeast(CLUSTERS_RELEASE_VERSION);
 
-/* This deploys once 2.0 is out, so 2.0 is the pill unless the latest release says otherwise. */
-const pill = computed<{ tag: string; text: string; short: string; href: string }>(() =>
+/* This deploys once 2.0 is out, so 2.0 is the note unless the latest release says otherwise. */
+const note = computed<{ tag: string; text: string; href: string }>(() =>
   clustersShipped.value === false
-    ? { tag: "Coming soon", text: "JET Pilot 2.0: every cluster, every cloud", short: "JET Pilot 2.0", href: "#features" }
-    : { tag: "New in 2.0", text: "Every cluster, every cloud, in one calm hub", short: "Every cluster, every cloud", href: "#clusters" }
+    ? { tag: "Coming soon", text: "JET Pilot 2.0: every cluster, every cloud", href: "#features" }
+    : { tag: "2.0", text: "Every cluster, every cloud, in one calm hub", href: "#clusters" }
 );
 
-// The hero shot is the LCP element: start fetching it with the HTML.
+/* The hero shot is the LCP element: start fetching it with the HTML. Keep in step with the AppShot below. */
+const sizes = "(min-width: 1024px) 125vw, (min-width: 768px) 125vw, 250vw";
 useHead({
   link: [
     {
@@ -20,7 +21,7 @@ useHead({
       as: "image",
       type: "image/avif",
       imagesrcset: "/images/app/pods-dark-1280.avif 1280w, /images/app/pods-dark-2400.avif 2400w",
-      imagesizes: "(min-width: 1280px) 1200px, (min-width: 640px) 94vw, 100vw",
+      imagesizes: sizes,
       fetchpriority: "high",
     },
   ],
@@ -30,108 +31,113 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
 </script>
 
 <template>
-  <section id="top" class="relative isolate overflow-hidden pt-28 sm:pt-36">
-    <!-- backdrop -->
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-      <div class="bg-grid absolute inset-0 opacity-70 dark:opacity-100" />
-      <div
-        class="absolute left-1/2 top-[-18rem] h-[42rem] w-[70rem] -translate-x-1/2 rounded-full opacity-60 dark:opacity-50"
-        style="background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent), transparent)"
-      />
-    </div>
+  <section id="top" class="relative overflow-x-clip pt-28 sm:pt-36 lg:pt-40">
+    <div class="container-x">
+      <div class="grid gap-y-10 lg:grid-cols-12 lg:gap-x-10">
+        <div class="lg:col-span-8">
+          <a :href="note.href" class="group inline-flex items-center gap-2.5 text-[0.85rem] text-muted transition-colors hover:text-fg">
+            <span class="font-mono text-[0.75rem] font-medium text-accent-text">{{ note.tag }}</span>
+            <span class="h-3 w-px bg-line-strong" aria-hidden="true" />
+            <span>{{ note.text }}</span>
+            <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <h1 class="display mt-6 text-[3.4rem] sm:mt-8 sm:text-[6rem] lg:text-[8.25rem]">
+            Kubernetes,<br />beautifully.
+          </h1>
+        </div>
 
-    <div class="container-x text-center">
-      <a
-        :href="pill.href"
-        class="group inline-flex max-w-full items-center gap-2 rounded-full border border-line bg-surface/70 py-1 pl-1 pr-3 text-[0.8rem] text-muted shadow-card backdrop-blur transition-colors hover:border-line-strong hover:text-fg"
-      >
-        <span class="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.72rem] font-semibold text-white">{{ pill.tag }}</span>
-        <span class="truncate sm:hidden">{{ pill.short }}</span>
-        <span class="truncate max-sm:hidden">{{ pill.text }}</span>
-        <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
-      </a>
-
-      <h1
-        class="mx-auto mt-7 max-w-4xl text-balance text-[2.9rem] font-semibold leading-[1.02] tracking-[-0.045em] sm:text-7xl lg:text-[5.5rem]"
-        style="--delay: 60ms"
-      >
-        <span class="text-shine">Kubernetes,</span>{{ " " }}<span class="text-accent-shine pb-1">beautifully.</span>
-      </h1>
-
-      <p
-        class="mx-auto mt-6 max-w-2xl text-[1.075rem] leading-relaxed text-muted sm:text-xl sm:leading-relaxed"
-        style="--delay: 120ms"
-      >
-        JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster, from your kubeconfig or
-        your cloud, in one calm interface that updates live — with a resource graph, logs across pods and a built-in
-        terminal.
-      </p>
-
-      <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" style="--delay: 180ms">
-        <a
-          :href="primary.href"
-          class="group relative inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-fg px-5 text-[0.95rem] font-semibold text-bg shadow-[0_8px_30px_-8px_color-mix(in_srgb,var(--accent)_60%,transparent)] transition-transform hover:-translate-y-px active:translate-y-0 sm:w-auto"
-        >
-          <Icon v-if="primary.os === 'macos'" name="apple" :size="17" />
-          <Icon v-else-if="primary.os === 'windows'" name="windows" :size="16" />
-          <Icon v-else name="download" :size="17" />
-          <span>{{ primary.label }}</span>
-          <span v-if="primary.version" class="rounded-md bg-bg/15 px-1.5 py-0.5 font-mono text-[0.7rem] font-medium tabular-nums opacity-80">{{ primary.version }}</span>
-        </a>
-        <a
-          :href="REPO_URL"
-          class="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-surface/70 px-5 text-[0.95rem] font-semibold shadow-card backdrop-blur transition-colors hover:bg-surface-2 sm:w-auto"
-        >
-          <Icon name="github" :size="17" />
-          Star on GitHub
-          <span v-if="stars !== null" class="flex items-center gap-1 text-sm font-medium tabular-nums text-muted">
-            <Icon name="star" :size="13" class="text-warning" />{{ stars }}
-          </span>
-        </a>
-      </div>
-
-      <div class="mt-5 space-y-1.5 text-[0.8rem] text-faint" style="--delay: 240ms">
-        <p class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-          <span>Free &amp; open source</span><span aria-hidden="true">·</span><span>MIT</span><span aria-hidden="true">·</span>
-          <span>macOS · Windows · Linux {{ linuxArm ? "(x64 & ARM64)" : "(x64)" }}</span>
-        </p>
-        <p v-if="primary.os === 'macos'" class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-          <span>{{ primary.sub }} build</span>
-          <template v-if="primary.alt">
-            <span aria-hidden="true">·</span>
-            <a :href="primary.alt.href" class="underline decoration-line-strong underline-offset-4 hover:text-fg">{{ primary.alt.label }}</a>
-          </template>
-          <span aria-hidden="true">·</span>
-          <a href="#macos-note" class="underline decoration-line-strong underline-offset-4 hover:text-fg">One extra step on first launch</a>
-        </p>
+        <div class="lg:col-span-4 lg:self-end lg:pb-3">
+          <p class="max-w-md text-[1.075rem] leading-relaxed text-muted">
+            JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster, from your kubeconfig
+            or your cloud, in one calm app that updates live.
+          </p>
+          <div class="mt-7 flex flex-col gap-2.5 sm:flex-row lg:flex-col xl:flex-row">
+            <a
+              :href="primary.href"
+              class="inline-flex h-12 items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-fg px-5 text-[0.95rem] font-semibold text-bg transition-opacity hover:opacity-90"
+            >
+              <Icon v-if="primary.os === 'macos'" name="apple" :size="17" />
+              <Icon v-else-if="primary.os === 'windows'" name="windows" :size="16" />
+              <Icon v-else name="download" :size="17" />
+              <span>{{ primary.label }}</span>
+            </a>
+            <a
+              :href="REPO_URL"
+              class="inline-flex h-12 items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-line-strong px-5 text-[0.95rem] font-semibold transition-colors hover:bg-fg/5"
+            >
+              <Icon name="github" :size="17" />
+              GitHub
+              <span v-if="stars !== null" class="flex items-center gap-1 text-sm font-medium tabular-nums text-muted">
+                <Icon name="star" :size="13" />{{ stars }}
+              </span>
+            </a>
+          </div>
+          <p class="mt-5 text-[0.8rem] leading-relaxed text-faint">
+            Free and MIT licensed<span v-if="primary.version"> · {{ primary.version }}</span> · macOS, Windows and Linux{{ linuxArm ? " (x64 and ARM64)" : "" }}
+          </p>
+          <p v-if="primary.os === 'macos'" class="mt-1 text-[0.8rem] text-faint">
+            {{ primary.sub }} build<template v-if="primary.alt"> · <a :href="primary.alt.href" class="underline decoration-line-strong underline-offset-4 hover:text-fg">{{ primary.alt.label }}</a></template>
+            · <a href="#macos-note" class="underline decoration-line-strong underline-offset-4 hover:text-fg">One extra step on first launch</a>
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- product shot -->
-    <div class="container-x relative mt-14 sm:mt-20">
-      <div class="animate-rise relative mx-auto max-w-[75rem]">
-        <div
-          aria-hidden="true"
-          class="absolute -inset-x-10 -top-10 bottom-1/3 -z-10 rounded-[3rem] opacity-70"
-          style="background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 40%, transparent), transparent)"
-        />
-        <div
-          class="rounded-[14px] p-px shadow-float sm:rounded-[18px]"
-          style="background: linear-gradient(180deg, var(--line-strong), var(--line) 40%, transparent)"
-        >
-          <div class="overflow-hidden rounded-[13px] bg-surface ring-1 ring-black/5 sm:rounded-[17px] dark:ring-white/5">
-            <div class="origin-top-left max-sm:scale-[1.65]">
+    <!-- the app, big: from the text's left edge, out past the right edge of the page -->
+    <div class="container-x mt-14 sm:mt-20">
+      <div class="hero-shot animate-rise">
+        <div class="hero-frame">
+          <div class="hero-img">
             <AppShot
               name="pods"
               priority
               alt="JET Pilot showing pods from two clusters, prod-eu-west-1 and staging-us-east-2, in one table with Context and Namespace columns, live CPU and memory sparklines and colour-coded statuses"
-              sizes="(min-width: 1280px) 1200px, (min-width: 640px) 94vw, 100vw"
+              :sizes="sizes"
             />
-            </div>
           </div>
         </div>
       </div>
-      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero-frame {
+  position: relative;
+  overflow: clip;
+  border-radius: 14px;
+  box-shadow:
+    0 0 0 1px var(--line-strong),
+    var(--shadow-float);
+  /* Phones: a tall crop of the sidebar and the first columns, at a readable size. */
+  height: 118vw;
+  width: calc(100vw - 1.25rem);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.hero-img {
+  width: 250vw;
+}
+/* The fold of the window fades into the page. */
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  .hero-frame {
+    height: auto;
+    width: 125%;
+    border-radius: 18px;
+  }
+  .hero-img {
+    width: 100%;
+  }
+  .hero-frame::after {
+    height: 22%;
+  }
+}
+</style>

@@ -56,6 +56,9 @@
   --shadow-float: 0 2px 4px -1px rgb(15 15 20 / 0.05), 0 24px 64px -16px rgb(15 15 20 / 0.22);
   --highlight: inset 0 1px 0 0 rgb(255 255 255 / 0.9);
   --accent-gradient: linear-gradient(100deg, #4f46e5 0%, #6d28d9 55%, #4338ca 100%);
+  /* The strip a close-up sits on: a pale studio plate with hairline edges in light mode. */
+  --plate: #f4f4f6;
+  --plate-line: rgb(9 9 11 / 0.07);
 }
 
 .dark {
@@ -80,6 +83,9 @@
   --shadow-float: 0 2px 6px rgb(0 0 0 / 0.4), 0 40px 100px -20px rgb(0 0 0 / 0.7);
   --highlight: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
   --accent-gradient: linear-gradient(100deg, #9690ff 0%, #6f68f2 45%, #c3b8ff 100%);
+  /* In the dark the picture simply dissolves into the page. */
+  --plate: var(--bg);
+  --plate-line: transparent;
 }
 
 @theme inline {
@@ -212,6 +218,14 @@
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+}
+
+/* Display type: big, tight, neutral. */
+@utility display {
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-wrap: balance;
 }
 
 @utility eyebrow {

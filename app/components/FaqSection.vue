@@ -4,12 +4,11 @@ import { faqs } from "~/utils/faqs";
 </script>
 
 <template>
-  <section id="faq" class="relative cv-auto py-20 sm:py-28" aria-labelledby="faq-title">
+  <section id="faq" class="relative cv-auto border-t border-line py-24 sm:py-32" aria-labelledby="faq-title">
     <div class="container-x grid gap-12 lg:grid-cols-12">
-      <div data-reveal class="lg:col-span-4">
-        <span class="eyebrow">FAQ</span>
-        <h2 id="faq-title" class="mt-4 text-balance text-3xl font-semibold tracking-[-0.03em] sm:text-5xl sm:leading-[1.05]">Questions, answered.</h2>
-        <p class="mt-4 leading-relaxed text-muted">
+      <div class="lg:col-span-4">
+        <h2 id="faq-title" class="display text-[2.6rem] sm:text-[4rem] lg:text-[4.25rem]">Questions, answered.</h2>
+        <p class="mt-5 max-w-xs leading-relaxed text-muted">
           Something else? Open a
           <a :href="`${REPO_URL}/issues`" class="text-fg underline decoration-line-strong underline-offset-4 hover:decoration-fg">GitHub issue</a>
           and we’ll take a look.
@@ -24,7 +23,7 @@ import { faqs } from "~/utils/faqs";
           :open="i === 1"
         >
           <summary
-            class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left text-[1.02rem] font-medium tracking-tight transition-colors hover:text-accent-text [&::-webkit-details-marker]:hidden"
+            class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left text-[1.02rem] font-medium tracking-tight transition-colors hover:text-muted [&::-webkit-details-marker]:hidden"
           >
             {{ item.q }}
             <span class="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-line text-muted transition-transform duration-300 group-open:rotate-180">
