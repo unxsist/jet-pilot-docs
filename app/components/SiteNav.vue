@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { REPO_URL } from "~/composables/useGitHub";
 
+const asset = useAsset();
+
 const { stars } = useGitHub();
 const { onHome, href } = useSiteHref();
 const route = useRoute();
@@ -37,7 +39,7 @@ const starLabel = computed(() =>
   >
     <nav class="container-x flex h-16 items-center gap-6" aria-label="Main">
       <a :href="onHome ? '#top' : '/'" class="group flex items-center gap-2.5 rounded-lg" aria-label="JET Pilot home">
-        <img src="/images/icon-64.webp" alt="" width="28" height="28" class="size-7 rounded-[7px]" />
+        <img :src="asset('images/icon-64.webp')" alt="" width="28" height="28" class="size-7 rounded-[7px]" />
         <span class="text-[0.95rem] font-semibold tracking-tight">JET Pilot</span>
       </a>
 

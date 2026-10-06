@@ -8,6 +8,8 @@ const description =
 // as a preview under a subfolder of the live site, kept out of search results.
 // Its links to other pages (/themes/) lead to the live site.
 const preview = process.env.SITE_PREVIEW === "1";
+/** public/ files linked from the head, under the base URL. */
+const asset = (path: string) => `${(process.env.NUXT_APP_BASE_URL || "/").replace(/\/$/, "")}/${path}`;
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -44,11 +46,11 @@ export default defineNuxtConfig({
         { name: "theme-color", content: "#ffffff", media: "(prefers-color-scheme: light)" },
       ],
       link: [
-        { rel: "icon", type: "image/png", href: "/favicon.png" },
-        { rel: "apple-touch-icon", href: "/favicon.png" },
+        { rel: "icon", type: "image/png", href: asset("favicon.png") },
+        { rel: "apple-touch-icon", href: asset("favicon.png") },
         {
           rel: "preload",
-          href: "/fonts/inter-var.woff2",
+          href: asset("fonts/inter-var.woff2"),
           as: "font",
           type: "font/woff2",
           crossorigin: "",

@@ -14,13 +14,14 @@ const note = computed<{ tag: string; text: string; href: string }>(() =>
 
 /* The hero shot is the LCP element: start fetching it with the HTML. Keep in step with the AppShot below. */
 const sizes = "(min-width: 768px) min(96vw, 1280px), 250vw";
+const asset = useAsset();
 useHead({
   link: [
     {
       rel: "preload",
       as: "image",
       type: "image/avif",
-      imagesrcset: [1280, 2400, 3600].map((w) => `/images/app/pods-dark-${w}.avif ${w}w`).join(", "),
+      imagesrcset: [1280, 2400, 3600].map((w) => `${asset(`images/app/pods-dark-${w}.avif`)} ${w}w`).join(", "),
       imagesizes: sizes,
       fetchpriority: "high",
     },

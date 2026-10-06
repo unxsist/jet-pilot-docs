@@ -15,8 +15,9 @@ const props = withDefaults(
   { sizes: "(min-width: 1280px) 1200px, 94vw", priority: false, imgClass: "" }
 );
 
+const asset = useAsset();
 const src = (theme: string, ext: string) =>
-  [1280, 2400, 3600].map((w) => `/images/app/${props.name}-${theme}-${w}.${ext} ${w}w`).join(", ");
+  [1280, 2400, 3600].map((w) => `${asset(`images/app/${props.name}-${theme}-${w}.${ext}`)} ${w}w`).join(", ");
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const src = (theme: string, ext: string) =>
     <source type="image/avif" :srcset="src('light', 'avif')" :sizes="sizes" />
     <source type="image/webp" :srcset="src('light', 'webp')" :sizes="sizes" />
     <img
-      :src="`/images/app/${name}-light-1280.webp`"
+      :src="asset(`images/app/${name}-light-1280.webp`)"
       :alt="alt"
       width="1440"
       height="900"
@@ -37,7 +38,7 @@ const src = (theme: string, ext: string) =>
     <source type="image/avif" :srcset="src('dark', 'avif')" :sizes="sizes" />
     <source type="image/webp" :srcset="src('dark', 'webp')" :sizes="sizes" />
     <img
-      :src="`/images/app/${name}-dark-1280.webp`"
+      :src="asset(`images/app/${name}-dark-1280.webp`)"
       :alt="alt"
       width="1440"
       height="900"
