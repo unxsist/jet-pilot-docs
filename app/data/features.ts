@@ -97,7 +97,7 @@ export const features: Feature[] = [
     lead: "Device codes and browser sign-ins for kubelogin, gcloud, az, AWS and OIDC plugins appear right in JET Pilot.",
     points: ["Lists, logs and port forwards reconnect", "Nothing opens a browser on its own"],
     shot: "sign-in",
-    crop: { zoom: 2.1, focus: [0.5, 0.55], mobile: { zoom: 2.6, focus: [0.5, 0.49] } },
+    crop: { zoom: 2.2, focus: [0.5, 0.515], mobile: { zoom: 2.6, focus: [0.5, 0.49] } },
     alt: "Signing in to AWS inside JET Pilot: the device code QXRW-PLMK, the verification address device.sso.eu-west-1.amazonaws.com and an Open browser button",
     tier: "showcase",
     since: "2.0.0",

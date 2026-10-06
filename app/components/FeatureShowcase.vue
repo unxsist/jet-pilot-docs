@@ -190,12 +190,12 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
   .macro-left .macro-shot {
     mask-image:
       linear-gradient(to right, transparent 0, transparent var(--clear-from, 47%), #000 var(--clear-to, 55%), #000 96%, transparent),
-      linear-gradient(to bottom, transparent 0, transparent 3%, #000 19%, #000 82%, transparent 97%);
+      linear-gradient(to bottom, transparent 0, transparent 8%, #000 22%, #000 80%, transparent 95%);
   }
   .macro-right .macro-shot {
     mask-image:
       linear-gradient(to left, transparent 0, transparent var(--clear-from, 47%), #000 var(--clear-to, 55%), #000 96%, transparent),
-      linear-gradient(to bottom, transparent 0, transparent 3%, #000 19%, #000 82%, transparent 97%);
+      linear-gradient(to bottom, transparent 0, transparent 8%, #000 22%, #000 80%, transparent 95%);
   }
   .macro-words {
     display: flex;
