@@ -178,7 +178,8 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
 
 @media (min-width: 1024px) {
   .macro-band {
-    height: clamp(34rem, 84svh, 52rem);
+    /* In step with the frame width, so the crop holds at any window height. */
+    height: clamp(34rem, 52vw, 52rem);
     --crop-ax: initial;
     --crop-ay: initial;
   }
