@@ -20,7 +20,7 @@ const items = (() => {
 const anchor = (side: string | null): [number, number] => (side === "left" ? [0.66, 0.5] : side === "right" ? [0.34, 0.5] : [0.5, 0.5]);
 
 const macroSizes = (zoom: number, mobileZoom: number) =>
-  `(min-width: 768px) ${Math.round(zoom * 100)}vw, ${Math.round(mobileZoom * 100)}vw`;
+  `(min-width: 1600px) ${Math.round(zoom * 1600)}px, (min-width: 1024px) ${Math.round(zoom * 100)}vw, ${Math.round(mobileZoom * 100)}vw`;
 </script>
 
 <template>
@@ -37,6 +37,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
             :mobile="feature.crop!.mobile"
             :anchor="anchor(side)"
             :sizes="macroSizes(feature.crop!.zoom, feature.crop!.mobile?.zoom ?? feature.crop!.zoom)"
+            wide-from="lg"
             drift
           />
           <div class="macro-dof" aria-hidden="true" />
@@ -118,7 +119,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
 .macro-dof {
   display: none;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .macro-dof {
     display: block;
     position: absolute;
@@ -144,7 +145,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
   background: linear-gradient(to bottom, var(--plate), transparent 16%, transparent 84%, var(--plate));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .macro {
     display: block;
   }
@@ -153,8 +154,18 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
   }
   .macro-fade {
     background:
-      linear-gradient(var(--fade-dir), var(--plate) 0%, var(--plate) 38%, color-mix(in srgb, var(--plate) 65%, transparent) 48%, transparent 62%),
+      linear-gradient(
+        var(--fade-dir),
+        var(--plate) 0,
+        var(--plate) calc(var(--words-end) - 2rem),
+        color-mix(in srgb, var(--plate) 65%, transparent) calc(var(--words-end) + 4rem),
+        transparent calc(var(--words-end) + 14rem)
+      ),
       linear-gradient(to bottom, var(--plate), transparent 13%, transparent 85%, var(--plate));
+  }
+  /* Where the words end, measured from their side: the container's inner edge plus the column. */
+  .macro-fade {
+    --words-end: calc(max(2rem, 50% - 36rem) + 30rem);
   }
   .macro-left .macro-fade {
     --fade-dir: to right;

@@ -5,7 +5,7 @@
  * clamped so the frame never shows past the screenshot's edge. All CSS
  * (container query units), so it holds at any frame size without JavaScript.
  * The frame (this element) needs a definite width and height from its parent.
- * Below 768 px the `mobile` crop and anchor apply.
+ * Below 768 px (1024 px with `wideFrom="lg"`) the `mobile` crop and anchor apply.
  */
 import type { Crop } from "~/data/features";
 
@@ -20,8 +20,10 @@ const props = withDefaults(
     sizes: string;
     /** Slow scroll-linked drift towards the focus point (never with reduced motion). */
     drift?: boolean;
+    /** Where the wide-screen crop takes over. */
+    wideFrom?: "md" | "lg";
   }>(),
-  { anchor: () => [0.5, 0.5], mobileAnchor: () => [0.5, 0.5], drift: false, mobile: undefined }
+  { anchor: () => [0.5, 0.5], mobileAnchor: () => [0.5, 0.5], drift: false, mobile: undefined, wideFrom: "md" }
 );
 
 const style = computed(() => {
@@ -42,7 +44,7 @@ const style = computed(() => {
 </script>
 
 <template>
-  <div class="shot-crop" :style="style">
+  <div class="shot-crop" :class="`from-${wideFrom}`" :style="style">
     <div class="shot-crop-img" :class="{ 'shot-crop-drift': drift }">
       <AppShot :name="name" :alt="alt" :sizes="sizes" />
     </div>
@@ -67,7 +69,16 @@ const style = computed(() => {
   }
 }
 @media (min-width: 768px) {
-  .shot-crop {
+  .shot-crop.from-md {
+    --zoom: var(--z);
+    --focus-x: var(--fx);
+    --focus-y: var(--fy);
+    --anchor-x: var(--ax);
+    --anchor-y: var(--ay);
+  }
+}
+@media (min-width: 1024px) {
+  .shot-crop.from-lg {
     --zoom: var(--z);
     --focus-x: var(--fx);
     --focus-y: var(--fy);
@@ -76,7 +87,8 @@ const style = computed(() => {
   }
 }
 .shot-crop-img {
-  --w: calc(var(--zoom) * 100cqw);
+  /* Past 1600 px the close-up stops growing, so the 2400 px source stays sharp. */
+  --w: calc(var(--zoom) * min(100cqw, 1600px));
   --h: calc(var(--w) * 0.625);
   position: absolute;
   width: var(--w);
