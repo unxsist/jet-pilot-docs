@@ -14,6 +14,11 @@ permissions:
   pages: write
   id-token: write
 
+# A branch to publish as a preview of the homepage at /preview/ (not indexed).
+# Leave empty when there is nothing to preview.
+env:
+  PREVIEW_REF: site/option-c
+
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
@@ -49,6 +54,24 @@ jobs:
         run: node scripts/patch-update-manifest.mjs
       - name: Static HTML export with Nuxt
         run: npx nuxt build --preset github_pages
+      - name: Checkout the homepage preview
+        if: env.PREVIEW_REF != ''
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.PREVIEW_REF }}
+          path: preview-src
+      - name: Build the homepage preview into /preview/
+        if: env.PREVIEW_REF != ''
+        working-directory: preview-src
+        env:
+          SITE_PREVIEW: "1"
+          NUXT_APP_BASE_URL: /preview/
+        run: |
+          npm ci
+          npx nuxt build --preset github_pages
+          rm -rf .output/public/sitemap.xml .output/public/__sitemap__
+          mkdir -p ../dist/preview
+          cp -r .output/public/. ../dist/preview/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
