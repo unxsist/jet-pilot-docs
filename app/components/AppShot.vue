@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /*
- * A real JET Pilot screenshot (2x, macOS) in dark and light. Only the
+ * A real JET Pilot screenshot (macOS; 1280, 2400 and 3600 px wide) in dark and light. Only the
  * variant matching the active theme is displayed; the hidden one is lazy
  * so it is never fetched. `priority` is for the hero (LCP) image.
  */
@@ -15,8 +15,9 @@ const props = withDefaults(
   { sizes: "(min-width: 1280px) 1200px, 94vw", priority: false, imgClass: "" }
 );
 
+const asset = useAsset();
 const src = (theme: string, ext: string) =>
-  `/images/app/${props.name}-${theme}-1280.${ext} 1280w, /images/app/${props.name}-${theme}-2400.${ext} 2400w`;
+  [1280, 2400, 3600].map((w) => `${asset(`images/app/${props.name}-${theme}-${w}.${ext}`)} ${w}w`).join(", ");
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const src = (theme: string, ext: string) =>
     <source type="image/avif" :srcset="src('light', 'avif')" :sizes="sizes" />
     <source type="image/webp" :srcset="src('light', 'webp')" :sizes="sizes" />
     <img
-      :src="`/images/app/${name}-light-1280.webp`"
+      :src="asset(`images/app/${name}-light-1280.webp`)"
       :alt="alt"
       width="1440"
       height="900"
@@ -37,7 +38,7 @@ const src = (theme: string, ext: string) =>
     <source type="image/avif" :srcset="src('dark', 'avif')" :sizes="sizes" />
     <source type="image/webp" :srcset="src('dark', 'webp')" :sizes="sizes" />
     <img
-      :src="`/images/app/${name}-dark-1280.webp`"
+      :src="asset(`images/app/${name}-dark-1280.webp`)"
       :alt="alt"
       width="1440"
       height="900"

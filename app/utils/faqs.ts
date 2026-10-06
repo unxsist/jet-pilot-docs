@@ -33,12 +33,12 @@ export const faqs = [
     a: `From v1.37, lists stream changes from the Kubernetes API through watches instead of polling <code>kubectl</code>. Changes show up in a fraction of a second — about 200 ms from scaling a Deployment to the update on screen in our tests against a real kube-apiserver — and coming back to a view is instant.`,
   },
   {
-    q: "Can I use my VS Code theme?",
-    a: `Yes. From v1.38, JET Pilot imports VS Code colour themes (JSONC and <code>include</code> chains too), Sublime Text <code>.sublime-color-scheme</code> files and TextMate <code>.tmTheme</code> files. Drop the file on Settings › Appearance, or install a theme from the Open VSX gallery inside the app. The workbench colours become JET Pilot’s palette, <code>tokenColors</code> colour the YAML editor and <code>terminal.ansi*</code> the terminal. Want to see it first? <a href="/themes/#try">Preview your theme on the website</a> — it’s converted in your browser.`,
+    q: "Can I use the theme from my editor?",
+    a: `Yes. From v1.38, JET Pilot imports the colour theme formats editors commonly use: JSON colour themes (JSONC and <code>include</code> chains too) and <code>.tmTheme</code>-style colour schemes. Drop the file on Settings › Appearance, or install a theme from an open theme gallery inside the app. The theme’s interface colours become JET Pilot’s palette, its syntax colours the YAML editor and its terminal colours the terminal. Want to see it first? <a href="/themes/#try">Preview your theme on the website</a>: it’s converted in your browser.`,
   },
   {
-    q: "Why only MIT-licensed themes from Open VSX?",
-    a: `JET Pilot is MIT licensed, and we want everything it downloads and installs for you to fit that licence without reviewing extensions one by one. So the gallery only installs extensions whose licence is MIT, or allows MIT (such as <code>MIT OR Apache-2.0</code>). That still covers most popular themes — Catppuccin, Dracula, GitHub, Tokyo Night and many more. A theme under another licence isn’t blocked: you can import a file you already have yourself.`,
+    q: "Why does the gallery only install MIT-licensed themes?",
+    a: `JET Pilot is MIT licensed, and we want everything it downloads and installs for you to fit that licence without reviewing extensions one by one. So the gallery only installs themes whose licence is MIT, or allows MIT (such as <code>MIT OR Apache-2.0</code>). That still covers most popular themes. A theme under another licence isn’t blocked: you can import a file you already have yourself.`,
   },
   {
     q: "Does JET Pilot modify my kubeconfig?",
