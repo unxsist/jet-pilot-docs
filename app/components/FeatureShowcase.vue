@@ -16,9 +16,14 @@ const items = (() => {
   });
 })();
 
-/* Where the focus point goes: in the open part of the frame, beside the words. */
-const anchor = (side: string | null): [number, number] => (side === "left" ? [0.66, 0.5] : side === "right" ? [0.34, 0.5] : [0.5, 0.5]);
+/* Where the focus point goes on wide screens: the middle of the open half, beside the words. */
+const anchor = (side: string | null): [number, number] => (side === "left" ? [0.75, 0.5] : [0.25, 0.5]);
 
+/* Where the picture comes in from the words' side (wide screens). */
+const clearStyle = (clear?: [number, number]) =>
+  clear ? { "--clear-from": `${clear[0] * 100}%`, "--clear-to": `${clear[1] * 100}%` } : undefined;
+
+/* The frame is the viewport, up to 1600 px. */
 const macroSizes = (zoom: number, mobileZoom: number) =>
   `(min-width: 1600px) ${Math.round(zoom * 1600)}px, (min-width: 1024px) ${Math.round(zoom * 100)}vw, ${Math.round(mobileZoom * 100)}vw`;
 </script>
@@ -30,28 +35,31 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
       <article v-if="side" :id="feature.id" class="macro" :class="`macro-${side}`" :aria-labelledby="`${feature.id}-title`">
         <div class="macro-band">
           <ShotCrop
-            class="absolute inset-0"
+            class="macro-shot"
+            :style="clearStyle(feature.crop!.clear)"
             :name="feature.shot!"
             :alt="feature.alt ?? feature.title"
             :crop="feature.crop!"
             :mobile="feature.crop!.mobile"
+            :tablet="feature.crop!.tablet"
             :anchor="anchor(side)"
+            :mobile-anchor="[0.5, 0.42]"
             :sizes="macroSizes(feature.crop!.zoom, feature.crop!.mobile?.zoom ?? feature.crop!.zoom)"
             wide-from="lg"
             drift
           />
-          <div class="macro-dof" aria-hidden="true" />
-          <div class="macro-fade" aria-hidden="true" />
         </div>
         <div class="macro-words">
           <div class="container-x">
             <div class="macro-copy">
               <p v-if="fresh" class="new-tag">New in {{ currentMajor }}.0</p>
-              <h2 :id="`${feature.id}-title`" class="display text-[2.6rem] sm:text-[4rem] lg:text-[4.75rem]">{{ feature.title }}</h2>
-              <p class="mt-5 max-w-[27rem] text-[1.06rem] leading-relaxed text-muted sm:text-[1.125rem]">{{ feature.lead }}</p>
-              <ul class="facts mt-7">
-                <li v-for="point in feature.points ?? []" :key="point" v-html="point" />
-              </ul>
+              <h2 :id="`${feature.id}-title`" class="macro-title display">{{ feature.title }}</h2>
+              <div class="macro-text">
+                <p class="text-[1.06rem] leading-relaxed text-muted sm:text-[1.125rem]">{{ feature.lead }}</p>
+                <ul class="facts mt-7">
+                  <li v-for="point in feature.points ?? []" :key="point" v-html="point" />
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -99,6 +107,12 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
 
 /* ------------------------------------------------------------- macro -- */
 
+/*
+ * Phones: the words, then a tall crop. Tablets: the words over the top of a
+ * square-ish crop. Wide screens: the words on one side of a close-up that
+ * fills the viewport. The picture fades into the page with mask gradients
+ * (cheap: no filters), onto a pale plate in light mode.
+ */
 .macro {
   position: relative;
   display: flex;
@@ -111,81 +125,95 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
   background: var(--plate);
   border-block: 1px solid var(--plate-line);
 }
-.macro-band > :first-child {
+.macro-shot {
   position: absolute;
   inset: 0;
+  margin-inline: auto;
+  max-width: 1600px;
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
 }
-/* Shallow depth of field on wide screens: sharp around the focus point, soft towards the words and edges. */
-.macro-dof {
-  display: none;
+.macro-title {
+  font-size: 2.6rem;
 }
-@media (min-width: 1024px) {
-  .macro-dof {
-    display: block;
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    mask-image: radial-gradient(ellipse 36% 68% at var(--dof-x) 50%, transparent 62%, #000 100%);
-  }
-  .macro-left .macro-dof {
-    --dof-x: 66%;
-  }
-  .macro-right .macro-dof {
-    --dof-x: 34%;
-  }
+.macro-text {
+  margin-top: 1.25rem;
+  max-width: 27rem;
 }
 
-/* The picture dissolves into the page: top and bottom here, plus the words' side on wide screens. */
-.macro-fade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, var(--plate), transparent 16%, transparent 84%, var(--plate));
-}
-
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .macro {
     display: block;
   }
   .macro-band {
-    height: clamp(34rem, 84svh, 52rem);
+    height: 54rem;
+    /* The focus point sits low, under the words. */
+    --crop-ax: 0.5;
+    --crop-ay: 0.72;
   }
-  .macro-fade {
-    background:
-      linear-gradient(
-        var(--fade-dir),
-        var(--plate) 0,
-        var(--plate) calc(var(--words-end) - 2rem),
-        color-mix(in srgb, var(--plate) 65%, transparent) calc(var(--words-end) + 4rem),
-        transparent calc(var(--words-end) + 14rem)
-      ),
-      linear-gradient(to bottom, var(--plate), transparent 13%, transparent 85%, var(--plate));
-  }
-  /* Where the words end, measured from their side: the container's inner edge plus the column. */
-  .macro-fade {
-    --words-end: calc(max(2rem, 50% - 36rem) + 30rem);
-  }
-  .macro-left .macro-fade {
-    --fade-dir: to right;
-  }
-  .macro-right .macro-fade {
-    --fade-dir: to left;
+  .macro-shot {
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 40%, #000 60%, #000 88%, transparent);
   }
   .macro-words {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
+    padding-top: 3.5rem;
     pointer-events: none;
   }
   .macro-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 2.5rem;
     pointer-events: auto;
-    max-width: 30rem;
+  }
+  .macro-copy .new-tag {
+    grid-column: 1 / -1;
+  }
+  .macro-title {
+    font-size: 3.5rem;
+  }
+  .macro-text {
+    margin-top: 0.35rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .macro-band {
+    height: clamp(34rem, 84svh, 52rem);
+    --crop-ax: initial;
+    --crop-ay: initial;
+  }
+  .macro-shot {
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+  /* Clear on the words' side, the far edge softened. */
+  .macro-left .macro-shot {
+    mask-image:
+      linear-gradient(to right, transparent 0, transparent var(--clear-from, 47%), #000 var(--clear-to, 55%), #000 96%, transparent),
+      linear-gradient(to bottom, transparent 0, transparent 3%, #000 19%, #000 82%, transparent 97%);
+  }
+  .macro-right .macro-shot {
+    mask-image:
+      linear-gradient(to left, transparent 0, transparent var(--clear-from, 47%), #000 var(--clear-to, 55%), #000 96%, transparent),
+      linear-gradient(to bottom, transparent 0, transparent 3%, #000 19%, #000 82%, transparent 97%);
+  }
+  .macro-words {
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+  }
+  .macro-copy {
+    display: block;
+    max-width: min(30rem, 40vw);
   }
   .macro-right .macro-copy {
     margin-left: auto;
+  }
+  .macro-title {
+    font-size: clamp(3.25rem, 5vw, 4.75rem);
+  }
+  .macro-text {
+    margin-top: 1.25rem;
   }
 }
 

@@ -26,6 +26,12 @@
 export interface Crop {
   zoom: number;
   focus: [x: number, y: number];
+  /**
+   * Showcase macros on wide screens: where the picture fades in from the
+   * words' side, as fractions of the frame measured from that side (default
+   * [0.47, 0.55]). Tighten it to cut a stray element close to the subject.
+   */
+  clear?: [from: number, to: number];
 }
 
 export interface Feature {
@@ -44,6 +50,8 @@ export interface Feature {
   crop?: Crop & {
     /** Showcase, below 768 px: the tall crop that fills a phone's width. */
     mobile?: Crop;
+    /** Showcase macros, 768–1023 px, under the words: defaults to `mobile`. */
+    tablet?: Crop;
   };
   /** Showcase only: pull back and show the whole window (phones still get the crop). */
   wide?: boolean;
@@ -62,7 +70,7 @@ export const features: Feature[] = [
     lead: "Every cluster from every kubeconfig and cloud account, named, sorted and checked, a keystroke away.",
     points: ["Names, colours, folders and tags", "Status, version and sign-in at a click", "Open it with <kbd>⌘O</kbd> or <kbd>Ctrl+O</kbd>"],
     shot: "clusters-hub",
-    crop: { zoom: 1.45, focus: [0.82, 0.52], mobile: { zoom: 3, focus: [0.83, 0.55] } },
+    crop: { zoom: 1.75, focus: [0.81, 0.446], clear: [0.54, 0.56], mobile: { zoom: 3.6, focus: [0.83, 0.42] }, tablet: { zoom: 3, focus: [0.83, 0.36] } },
     alt: "The Clusters hub: clusters in favourites and folders with environment badges, versions and statuses, and the details panel of Checkout, a protected production GKE cluster",
     tier: "showcase",
     since: "2.0.0",
@@ -89,7 +97,7 @@ export const features: Feature[] = [
     lead: "Device codes and browser sign-ins for kubelogin, gcloud, az, AWS and OIDC plugins appear right in JET Pilot.",
     points: ["Lists, logs and port forwards reconnect", "Nothing opens a browser on its own"],
     shot: "sign-in",
-    crop: { zoom: 1.9, focus: [0.5, 0.46], mobile: { zoom: 2.6, focus: [0.5, 0.49] } },
+    crop: { zoom: 2.1, focus: [0.5, 0.55], mobile: { zoom: 2.6, focus: [0.5, 0.49] } },
     alt: "Signing in to AWS inside JET Pilot: the device code QXRW-PLMK, the verification address device.sso.eu-west-1.amazonaws.com and an Open browser button",
     tier: "showcase",
     since: "2.0.0",
@@ -100,7 +108,7 @@ export const features: Feature[] = [
     lead: "Tables stream changes straight from the API server, so a scale lands on screen in about 200\u00a0ms.",
     points: ["CPU and memory sparklines for every pod", "A 2,000-pod snapshot in about 0.7\u00a0s"],
     shot: "live",
-    crop: { zoom: 2, focus: [0.69, 0.42], mobile: { zoom: 2.7, focus: [0.7, 0.42] } },
+    crop: { zoom: 2, focus: [0.765, 0.42], clear: [0.5, 0.53], mobile: { zoom: 2.7, focus: [0.7, 0.42] } },
     alt: "The pods table with CPU and memory sparkline columns next to each pod's status",
     tier: "showcase",
     since: "1.37.0",
@@ -123,7 +131,7 @@ export const features: Feature[] = [
     lead: "Every app gets its own lane, from Ingress to Service to Pods, and health rolls up from pods to apps.",
     points: ["Missing references as red dashed nodes", "<kbd>P</kbd> shows only the problems"],
     shot: "graph",
-    crop: { zoom: 1.75, focus: [0.42, 0.56], mobile: { zoom: 3, focus: [0.38, 0.57] } },
+    crop: { zoom: 1.45, focus: [0.385, 0.56], mobile: { zoom: 3, focus: [0.38, 0.57] } },
     alt: "The resource graph with the checkout-api Deployment selected: its Service, PodDisruptionBudget and ConfigMap highlighted along the path, and a side panel listing its pods, relationships and replica status",
     tier: "showcase",
     since: "1.37.0",
@@ -135,7 +143,7 @@ export const features: Feature[] = [
     title: "Command palette",
     lead: "⌘K or Ctrl+K for resources, settings and clusters, and k9s-style keys for the rest.",
     shot: "command-palette",
-    crop: { zoom: 2.4, focus: [0.42, 0.33] },
+    crop: { zoom: 3.3, focus: [0.43, 0.3] },
     alt: "The command palette open over the pods table, listing actions such as Switch workspace, Open terminal, Switch context, Change a setting and Add cluster",
     tier: "more",
     since: "1.2.0",
@@ -145,7 +153,7 @@ export const features: Feature[] = [
     title: "Several clusters, one table",
     lead: "Pick contexts and namespaces from one switcher; tables merge them, with a Context column.",
     shot: "context-switcher",
-    crop: { zoom: 2.6, focus: [0.3, 0.22] },
+    crop: { zoom: 3.4, focus: [0.33, 0.2] },
     alt: "The context switcher open with two active contexts, prod-eu-west-1 and staging-us-east-2, each with the payments and checkout namespaces selected",
     tier: "more",
     since: "1.36.0",
@@ -155,7 +163,7 @@ export const features: Feature[] = [
     title: "Workspaces",
     lead: "Save contexts, tabs and port forwards, switch in one keystroke, and split two tabs side by side.",
     shot: "workspaces",
-    crop: { zoom: 2.6, focus: [0.25, 0.27] },
+    crop: { zoom: 3.3, focus: [0.27, 0.27] },
     alt: "The workspace switcher listing Payments on-call, Checkout incident, Staging rollout and Platform & ingress with their shortcuts",
     tier: "more",
     since: "1.37.0",
@@ -165,7 +173,7 @@ export const features: Feature[] = [
     title: "Review before you apply",
     lead: "YAML with your cluster’s own schemas, then a diff and a server-side dry run.",
     shot: "editor",
-    crop: { zoom: 2.6, focus: [0.72, 0.5] },
+    crop: { zoom: 4.4, focus: [0.89, 0.31] },
     alt: "Reviewing changes to the payments-api Deployment: a side-by-side diff with replicas changed from 4 to 6, and a “Server dry run passed” status next to the Apply button",
     tier: "more",
     since: "1.37.0",
@@ -175,7 +183,7 @@ export const features: Feature[] = [
     title: "Roll out, roll back",
     lead: "Rollout history with a diff per revision, pause, restart and a safe rollback.",
     shot: "rollouts",
-    crop: { zoom: 2.4, focus: [0.68, 0.36] },
+    crop: { zoom: 4.4, focus: [0.268, 0.42] },
     alt: "Rollout history for the payments-api Deployment: revisions with their change causes, and a diff between the current revision and r6 with a “Roll back to r6” button",
     tier: "more",
     since: "1.37.0",
@@ -185,7 +193,7 @@ export const features: Feature[] = [
     title: "Details at a click",
     lead: "Containers, conditions, labels and events in a side panel, or the full describe.",
     shot: "side-panel",
-    crop: { zoom: 2.8, focus: [0.86, 0.26] },
+    crop: { zoom: 3.6, focus: [0.87, 0.225] },
     alt: "The side panel open on a crash-looping pod: its container, conditions and labels",
     tier: "more",
     since: "1.36.0",
@@ -195,7 +203,7 @@ export const features: Feature[] = [
     title: "Built-in terminal",
     lead: "Ctrl+` opens kubectl on the current context, without touching your kubeconfig.",
     shot: "terminal",
-    crop: { zoom: 2.6, focus: [0.3, 0.88] },
+    crop: { zoom: 3.2, focus: [0.3, 0.73] },
     alt: "The built-in terminal panel below the pods table, opened for prod-eu-west-1 with a note that KUBECONFIG points to a temporary copy",
     tier: "more",
     since: "1.36.0",

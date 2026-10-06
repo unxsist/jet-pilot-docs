@@ -6,6 +6,8 @@
  * (container query units), so it holds at any frame size without JavaScript.
  * The frame (this element) needs a definite width and height from its parent.
  * Below 768 px (1024 px with `wideFrom="lg"`) the `mobile` crop and anchor apply.
+ * The screenshot is `zoom` times the frame's width: cap the frame (not the
+ * zoom) to keep the 2400 px source from being stretched on very wide screens.
  */
 import type { Crop } from "~/data/features";
 
@@ -15,6 +17,8 @@ const props = withDefaults(
     alt: string;
     crop: Crop;
     mobile?: Crop;
+    /** With `wideFrom="lg"`: the crop for 768–1023 px (defaults to `mobile`). */
+    tablet?: Crop;
     anchor?: [number, number];
     mobileAnchor?: [number, number];
     sizes: string;
@@ -23,12 +27,16 @@ const props = withDefaults(
     /** Where the wide-screen crop takes over. */
     wideFrom?: "md" | "lg";
   }>(),
-  { anchor: () => [0.5, 0.5], mobileAnchor: () => [0.5, 0.5], drift: false, mobile: undefined, wideFrom: "md" }
+  { anchor: () => [0.5, 0.5], mobileAnchor: () => [0.5, 0.5], drift: false, mobile: undefined, tablet: undefined, wideFrom: "md" }
 );
 
 const style = computed(() => {
   const m = props.mobile ?? props.crop;
+  const t = props.tablet ?? m;
   return {
+    "--tz": t.zoom,
+    "--tfx": t.focus[0],
+    "--tfy": t.focus[1],
     "--z": props.crop.zoom,
     "--fx": props.crop.focus[0],
     "--fy": props.crop.focus[1],
@@ -52,12 +60,16 @@ const style = computed(() => {
 </template>
 
 <style scoped>
+/*
+ * --crop-ax / --crop-ay, when an ancestor sets them, move the focus point
+ * elsewhere (custom properties inherit), e.g. lower in the frame on tablets.
+ */
 .shot-crop {
   --zoom: var(--mz);
   --focus-x: var(--mfx);
   --focus-y: var(--mfy);
-  --anchor-x: var(--max);
-  --anchor-y: var(--may);
+  --anchor-x: var(--crop-ax, var(--max));
+  --anchor-y: var(--crop-ay, var(--may));
   overflow: clip;
   container-type: size;
   view-timeline: --shot-crop block;
@@ -73,8 +85,15 @@ const style = computed(() => {
     --zoom: var(--z);
     --focus-x: var(--fx);
     --focus-y: var(--fy);
-    --anchor-x: var(--ax);
-    --anchor-y: var(--ay);
+    --anchor-x: var(--crop-ax, var(--ax));
+    --anchor-y: var(--crop-ay, var(--ay));
+  }
+}
+@media (min-width: 768px) {
+  .shot-crop.from-lg {
+    --zoom: var(--tz);
+    --focus-x: var(--tfx);
+    --focus-y: var(--tfy);
   }
 }
 @media (min-width: 1024px) {
@@ -82,13 +101,12 @@ const style = computed(() => {
     --zoom: var(--z);
     --focus-x: var(--fx);
     --focus-y: var(--fy);
-    --anchor-x: var(--ax);
-    --anchor-y: var(--ay);
+    --anchor-x: var(--crop-ax, var(--ax));
+    --anchor-y: var(--crop-ay, var(--ay));
   }
 }
 .shot-crop-img {
-  /* Past 1600 px the close-up stops growing, so the 2400 px source stays sharp. */
-  --w: calc(var(--zoom) * min(100cqw, 1600px));
+  --w: calc(var(--zoom) * 100cqw);
   --h: calc(var(--w) * 0.625);
   position: absolute;
   width: var(--w);
@@ -97,22 +115,28 @@ const style = computed(() => {
   transform-origin: calc(var(--focus-x) * 100%) calc(var(--focus-y) * 100%);
 }
 
-/* A slow push in as the frame crosses the viewport; static without support or with reduced motion. */
+/*
+ * A slow push in towards the focus point while the frame comes up to the
+ * middle of the viewport, then it holds. It ends at the resting crop (scale 1),
+ * so the motion never enlarges the screenshot past its static size; the
+ * frame's edge masks cover the few pixels the smaller start leaves open.
+ * Transform only (compositor); static without support or with reduced motion.
+ */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .shot-crop-drift {
       animation: shot-drift linear both;
       animation-timeline: --shot-crop;
-      animation-range: cover 0% cover 100%;
+      animation-range: cover 0% cover 50%;
     }
   }
 }
 @keyframes shot-drift {
   from {
-    transform: scale(1);
+    transform: scale(0.93);
   }
   to {
-    transform: scale(1.08);
+    transform: scale(1);
   }
 }
 </style>

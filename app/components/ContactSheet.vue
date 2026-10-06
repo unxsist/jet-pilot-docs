@@ -5,23 +5,28 @@
  * then an index of the rest. Static: rendered without hydrating.
  */
 import { framedFeatures, indexFeatures, isNew } from "~/data/features";
+
+/* A thumbnail is about 270 px wide on desktop, 45vw on tablets and 78vw in the phone strip. */
+const thumbSizes = (zoom: number) =>
+  `(min-width: 1024px) ${Math.round(zoom * 280)}px, (min-width: 640px) ${Math.round(zoom * 46)}vw, ${Math.round(zoom * 80)}vw`;
 </script>
 
 <template>
   <section id="more" class="relative cv-auto py-20 sm:py-28" aria-labelledby="more-title">
     <div class="container-x">
-      <ul class="sheet">
-        <li class="sheet-head">
+      <div class="sheet">
+        <div class="sheet-head">
           <h2 id="more-title" class="display text-[2.4rem] sm:text-[3rem]">Everything else.</h2>
           <p class="mt-4 max-w-[19rem] leading-relaxed text-muted">The details you reach for every day, all in the free app.</p>
-        </li>
+        </div>
+        <ul class="frames">
         <li v-for="feature in framedFeatures" :id="feature.id" :key="feature.id" class="frame">
           <ShotCrop
             class="frame-shot"
             :name="feature.shot!"
             :alt="feature.alt ?? feature.title"
             :crop="feature.crop!"
-            sizes="(min-width: 1024px) 600px, (min-width: 768px) 50vw, 75vw"
+            :sizes="thumbSizes(feature.crop!.zoom)"
           />
           <div class="min-w-0">
             <h3 class="font-medium tracking-tight">
@@ -30,7 +35,8 @@ import { framedFeatures, indexFeatures, isNew } from "~/data/features";
             <p class="mt-1 text-[0.875rem] leading-relaxed text-muted">{{ feature.lead }}</p>
           </div>
         </li>
-      </ul>
+        </ul>
+      </div>
 
       <ul class="index mt-14 sm:mt-20">
         <li v-for="feature in indexFeatures" :id="feature.id" :key="feature.id">
@@ -45,35 +51,42 @@ import { framedFeatures, indexFeatures, isNew } from "~/data/features";
 </template>
 
 <style scoped>
-.sheet {
-  display: grid;
-  gap: 1.75rem;
-}
+/* Phones: a strip of frames to swipe through. Wider: a grid, the heading in its first cell. */
 .sheet-head {
-  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+}
+.frames {
+  display: flex;
+  gap: 1rem;
+  margin-inline: -1.25rem;
+  padding-inline: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.25rem;
+  scrollbar-width: none;
 }
 .frame {
-  display: grid;
-  grid-template-columns: 9.5rem minmax(0, 1fr);
-  gap: 1rem;
-  align-items: start;
+  flex: 0 0 78%;
+  scroll-snap-align: start;
 }
 .frame-shot {
   aspect-ratio: 16 / 10;
+  margin-bottom: 1rem;
   border-radius: 10px;
   box-shadow: 0 0 0 1px var(--line-strong);
   background: var(--surface);
 }
 @media (min-width: 640px) {
   .sheet {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 3rem 1.5rem;
   }
-  .frame {
-    display: block;
+  .sheet-head {
+    margin-bottom: 0;
   }
-  .frame-shot {
-    margin-bottom: 1rem;
+  .frames {
+    display: contents;
   }
 }
 @media (min-width: 1024px) {

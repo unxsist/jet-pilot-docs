@@ -36,15 +36,14 @@ const points = [
 
     <div class="themes-band mt-10 sm:mt-14">
       <ShotCrop
-        class="absolute inset-0"
+        class="themes-shot"
         name="themes-library"
         alt="JET Pilot's theme library under Settings › Appearance: built-in themes as cards, each with a live miniature of the app in its colours"
         :crop="{ zoom: 1.75, focus: [0.66, 0.42] }"
         :mobile="{ zoom: 2.6, focus: [0.66, 0.3] }"
-        sizes="(min-width: 768px) 175vw, 260vw"
+        sizes="(min-width: 1600px) 2800px, (min-width: 768px) 175vw, 260vw"
         drift
       />
-      <div class="themes-fade" aria-hidden="true" />
     </div>
 
     <div class="container-x">
@@ -62,20 +61,23 @@ const points = [
   background: var(--plate);
   border-block: 1px solid var(--plate-line);
 }
-.themes-fade {
+.themes-shot {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, var(--plate), transparent 14%, transparent 80%, var(--plate));
+  margin-inline: auto;
+  max-width: 1600px;
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 80%, transparent);
 }
 @media (min-width: 768px) {
   .themes-band {
     height: clamp(30rem, 72svh, 46rem);
   }
-  .themes-fade {
-    background:
-      linear-gradient(to right, var(--plate), transparent 12%, transparent 88%, var(--plate)),
-      linear-gradient(to bottom, var(--plate), transparent 14%, transparent 80%, var(--plate));
+  .themes-shot {
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    mask-image:
+      linear-gradient(to right, transparent, #000 10%, #000 90%, transparent),
+      linear-gradient(to bottom, transparent, #000 14%, #000 80%, transparent);
   }
 }
 .themes-points {
