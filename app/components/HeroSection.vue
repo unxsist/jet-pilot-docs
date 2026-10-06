@@ -13,7 +13,7 @@ const note = computed<{ tag: string; text: string; href: string }>(() =>
 );
 
 /* The hero shot is the LCP element: start fetching it with the HTML. Keep in step with the AppShot below. */
-const sizes = "(min-width: 1024px) 125vw, (min-width: 768px) 125vw, 250vw";
+const sizes = "(min-width: 768px) min(118vw, 1440px), 250vw";
 useHead({
   link: [
     {

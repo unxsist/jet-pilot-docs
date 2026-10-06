@@ -127,7 +127,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
     pointer-events: none;
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
-    mask-image: radial-gradient(ellipse 34% 52% at var(--dof-x) 50%, transparent 60%, #000 100%);
+    mask-image: radial-gradient(ellipse 36% 68% at var(--dof-x) 50%, transparent 62%, #000 100%);
   }
   .macro-left .macro-dof {
     --dof-x: 66%;
