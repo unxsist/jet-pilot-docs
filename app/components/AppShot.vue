@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /*
- * A real JET Pilot screenshot (2x, macOS) in dark and light. Only the
+ * A real JET Pilot screenshot (macOS; 1280, 2400 and 3600 px wide) in dark and light. Only the
  * variant matching the active theme is displayed; the hidden one is lazy
  * so it is never fetched. `priority` is for the hero (LCP) image.
  */
@@ -16,7 +16,7 @@ const props = withDefaults(
 );
 
 const src = (theme: string, ext: string) =>
-  `/images/app/${props.name}-${theme}-1280.${ext} 1280w, /images/app/${props.name}-${theme}-2400.${ext} 2400w`;
+  [1280, 2400, 3600].map((w) => `/images/app/${props.name}-${theme}-${w}.${ext} ${w}w`).join(", ");
 </script>
 
 <template>

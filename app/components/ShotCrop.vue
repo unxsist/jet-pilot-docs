@@ -7,9 +7,11 @@
  * The frame (this element) needs a definite width and height from its parent.
  * Below 768 px (1024 px with `wideFrom="lg"`) the `mobile` crop and anchor apply.
  * The screenshot is `zoom` times the frame's width: cap the frame (not the
- * zoom) to keep the 2400 px source from being stretched on very wide screens.
+ * zoom) so the sources are never stretched; the widest close-ups draw a
+ * Retina detail (app/data/details.ts) instead of the full screenshot.
  */
 import type { Crop } from "~/data/features";
+import { details } from "~/data/details";
 
 const props = withDefaults(
   defineProps<{
@@ -29,6 +31,9 @@ const props = withDefaults(
   }>(),
   { anchor: () => [0.5, 0.5], mobileAnchor: () => [0.5, 0.5], drift: false, mobile: undefined, tablet: undefined, wideFrom: "md" }
 );
+
+/* A Retina detail of this shot, when there is one (app/data/details.ts). */
+const detail = computed(() => details[props.name]);
 
 const style = computed(() => {
   const m = props.mobile ?? props.crop;
@@ -54,7 +59,8 @@ const style = computed(() => {
 <template>
   <div class="shot-crop" :class="`from-${wideFrom}`" :style="style">
     <div class="shot-crop-img" :class="{ 'shot-crop-drift': drift }">
-      <AppShot :name="name" :alt="alt" :sizes="sizes" />
+      <DetailShot v-if="detail" :name="name" :alt="alt" :detail="detail" />
+      <AppShot v-else :name="name" :alt="alt" :sizes="sizes" />
     </div>
   </div>
 </template>
@@ -110,6 +116,7 @@ const style = computed(() => {
   --h: calc(var(--w) * 0.625);
   position: absolute;
   width: var(--w);
+  aspect-ratio: 1440 / 900;
   left: clamp(calc(100cqw - var(--w)), calc(var(--anchor-x) * 100cqw - var(--focus-x) * var(--w)), 0px);
   top: clamp(calc(100cqh - var(--h)), calc(var(--anchor-y) * 100cqh - var(--focus-y) * var(--h)), 0px);
   transform-origin: calc(var(--focus-x) * 100%) calc(var(--focus-y) * 100%);

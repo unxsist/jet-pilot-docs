@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "sync:themes": "tsx scripts/sync-themes.mjs"
+    "sync:themes": "tsx scripts/sync-themes.mjs",
+    "shots": "tsx scripts/shots.mjs"
   },
   "dependencies": {
     "@nuxtjs/color-mode": "^4.0.1",

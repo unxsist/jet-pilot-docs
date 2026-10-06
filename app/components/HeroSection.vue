@@ -13,14 +13,14 @@ const note = computed<{ tag: string; text: string; href: string }>(() =>
 );
 
 /* The hero shot is the LCP element: start fetching it with the HTML. Keep in step with the AppShot below. */
-const sizes = "(min-width: 768px) min(118vw, 1440px), 250vw";
+const sizes = "(min-width: 768px) min(96vw, 1280px), 250vw";
 useHead({
   link: [
     {
       rel: "preload",
       as: "image",
       type: "image/avif",
-      imagesrcset: "/images/app/pods-dark-1280.avif 1280w, /images/app/pods-dark-2400.avif 2400w",
+      imagesrcset: [1280, 2400, 3600].map((w) => `/images/app/pods-dark-${w}.avif ${w}w`).join(", "),
       imagesizes: sizes,
       fetchpriority: "high",
     },
@@ -31,60 +31,51 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
 </script>
 
 <template>
-  <section id="top" class="relative overflow-x-clip pt-28 sm:pt-36 lg:pt-40">
-    <div class="container-x">
-      <div class="grid gap-y-10 lg:grid-cols-12 lg:gap-x-10">
-        <div class="lg:col-span-8">
-          <a :href="note.href" class="group inline-flex items-center gap-2.5 text-[0.85rem] text-muted transition-colors hover:text-fg">
-            <span class="font-mono text-[0.75rem] font-medium text-accent-text">{{ note.tag }}</span>
-            <span class="h-3 w-px bg-line-strong" aria-hidden="true" />
-            <span>{{ note.text }}</span>
-            <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
-          </a>
-          <h1 class="display mt-6 text-[3.4rem] sm:mt-8 sm:text-[6rem] lg:text-[8.25rem]">
-            Kubernetes,<br />beautifully.
-          </h1>
-        </div>
-
-        <div class="lg:col-span-4 lg:self-end lg:pb-3">
-          <p class="max-w-md text-[1.075rem] leading-relaxed text-muted">
-            JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster, from your kubeconfig
-            or your cloud, in one calm app that updates live.
-          </p>
-          <div class="mt-7 flex flex-col gap-2.5 sm:flex-row lg:flex-col xl:flex-row">
-            <a
-              :href="primary.href"
-              class="inline-flex h-12 items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-fg px-5 text-[0.95rem] font-semibold text-bg transition-opacity hover:opacity-90"
-            >
-              <Icon v-if="primary.os === 'macos'" name="apple" :size="17" />
-              <Icon v-else-if="primary.os === 'windows'" name="windows" :size="16" />
-              <Icon v-else name="download" :size="17" />
-              <span>{{ primary.label }}</span>
-            </a>
-            <a
-              :href="REPO_URL"
-              class="inline-flex h-12 items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-line-strong px-5 text-[0.95rem] font-semibold transition-colors hover:bg-fg/5"
-            >
-              <Icon name="github" :size="17" />
-              GitHub
-              <span v-if="stars !== null" class="flex items-center gap-1 text-sm font-medium tabular-nums text-muted">
-                <Icon name="star" :size="13" />{{ stars }}
-              </span>
-            </a>
-          </div>
-          <p class="mt-5 text-[0.8rem] leading-relaxed text-faint">
-            Free and MIT licensed<span v-if="primary.version"> · {{ primary.version }}</span> · macOS, Windows and Linux{{ linuxArm ? " (x64 and ARM64)" : "" }}
-          </p>
-          <p v-if="primary.os === 'macos'" class="mt-1 text-[0.8rem] text-faint">
-            {{ primary.sub }} build<template v-if="primary.alt"> · <a :href="primary.alt.href" class="underline decoration-line-strong underline-offset-4 hover:text-fg">{{ primary.alt.label }}</a></template>
-            · <a href="#macos-note" class="underline decoration-line-strong underline-offset-4 hover:text-fg">One extra step on first launch</a>
-          </p>
-        </div>
+  <section id="top" class="relative overflow-x-clip pt-28 sm:pt-32 lg:pt-36">
+    <div class="container-x flex flex-col items-center text-center">
+      <a :href="note.href" class="group inline-flex items-center gap-2.5 text-[0.85rem] text-muted transition-colors hover:text-fg">
+        <span class="font-mono text-[0.75rem] font-medium text-accent-text">{{ note.tag }}</span>
+        <span class="h-3 w-px bg-line-strong" aria-hidden="true" />
+        <span>{{ note.text }}</span>
+        <Icon name="arrowRight" :size="13" class="shrink-0 transition-transform group-hover:translate-x-0.5" />
+      </a>
+      <h1 class="display mt-6 text-[3.4rem] sm:mt-8 sm:text-[6rem] lg:text-[7.25rem]">Kubernetes,<br />beautifully.</h1>
+      <p class="mt-7 max-w-[36rem] text-balance text-[1.075rem] leading-relaxed text-muted sm:mt-9 sm:text-[1.2rem]">
+        JET Pilot is a fast, native and open-source Kubernetes desktop client. Every cluster, from your kubeconfig or
+        your cloud, in one calm app that updates live.
+      </p>
+      <div class="mt-9 flex w-full flex-col items-center justify-center gap-2.5 sm:w-auto sm:flex-row">
+        <a
+          :href="primary.href"
+          class="inline-flex h-12 w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-fg px-6 text-[0.95rem] font-semibold text-bg transition-opacity hover:opacity-90 sm:w-auto"
+        >
+          <Icon v-if="primary.os === 'macos'" name="apple" :size="17" />
+          <Icon v-else-if="primary.os === 'windows'" name="windows" :size="16" />
+          <Icon v-else name="download" :size="17" />
+          <span>{{ primary.label }}</span>
+        </a>
+        <a
+          :href="REPO_URL"
+          class="inline-flex h-12 w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-line-strong px-6 text-[0.95rem] font-semibold transition-colors hover:bg-fg/5 sm:w-auto"
+        >
+          <Icon name="github" :size="17" />
+          GitHub
+          <span v-if="stars !== null" class="flex items-center gap-1 text-sm font-medium tabular-nums text-muted">
+            <Icon name="star" :size="13" />{{ stars }}
+          </span>
+        </a>
       </div>
+      <p class="mt-6 text-[0.8rem] leading-relaxed text-faint">
+        Free and MIT licensed<span v-if="primary.version"> · {{ primary.version }}</span> · macOS, Windows and Linux{{ linuxArm ? " (x64 and ARM64)" : "" }}
+      </p>
+      <p v-if="primary.os === 'macos'" class="mt-1 text-[0.8rem] text-faint">
+        {{ primary.sub }} build<template v-if="primary.alt"> · <a :href="primary.alt.href" class="underline decoration-line-strong underline-offset-4 hover:text-fg">{{ primary.alt.label }}</a></template>
+        · <a href="#macos-note" class="underline decoration-line-strong underline-offset-4 hover:text-fg">One extra step on first launch</a>
+      </p>
     </div>
 
-    <!-- the app, big: from the text's left edge, out past the right edge of the page -->
-    <div class="container-x mt-14 sm:mt-20">
+    <!-- the app, big and centred -->
+    <div class="mx-auto mt-14 w-full max-w-[84rem] px-5 sm:mt-16 sm:px-8">
       <div class="hero-shot animate-rise">
         <div class="hero-frame">
           <div class="hero-img">
@@ -111,9 +102,6 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
     var(--shadow-float);
   /* Phones: a tall crop of the sidebar and the first columns, at a readable size. */
   height: 118vw;
-  width: calc(100vw - 1.25rem);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
 }
 .hero-img {
   width: 250vw;
@@ -130,7 +118,6 @@ const linuxArm = computed(() => platforms.value.find((p) => p.os === "linux")?.h
 @media (min-width: 768px) {
   .hero-frame {
     height: auto;
-    width: 125%;
     border-radius: 18px;
   }
   .hero-img {
