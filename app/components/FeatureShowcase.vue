@@ -130,7 +130,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
   inset: 0;
   margin-inline: auto;
   max-width: 1600px;
-  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(to bottom, transparent 0, transparent 5%, #000 18%, #000 77%, transparent 91%);
 }
 .macro-title {
   font-size: 2.6rem;
