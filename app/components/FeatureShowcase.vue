@@ -114,20 +114,26 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
   position: absolute;
   inset: 0;
 }
-/* Shallow depth of field: sharp around the focus point, soft towards the edges. */
+/* Shallow depth of field on wide screens: sharp around the focus point, soft towards the words and edges. */
 .macro-dof {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  mask-image: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 55%, #000 100%);
+  display: none;
 }
-.macro-left .macro-dof {
-  mask-image: radial-gradient(ellipse 34% 52% at 66% 50%, transparent 60%, #000 100%);
-}
-.macro-right .macro-dof {
-  mask-image: radial-gradient(ellipse 34% 52% at 34% 50%, transparent 60%, #000 100%);
+@media (min-width: 768px) {
+  .macro-dof {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    mask-image: radial-gradient(ellipse 34% 52% at var(--dof-x) 50%, transparent 60%, #000 100%);
+  }
+  .macro-left .macro-dof {
+    --dof-x: 66%;
+  }
+  .macro-right .macro-dof {
+    --dof-x: 34%;
+  }
 }
 
 /* The picture dissolves into the page: top and bottom here, plus the words' side on wide screens. */

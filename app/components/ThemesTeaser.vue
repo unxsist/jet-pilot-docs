@@ -80,6 +80,7 @@ const points = [
 }
 .themes-points {
   display: grid;
+  margin-top: 1.5rem;
   font-size: 0.875rem;
   color: var(--muted);
 }
