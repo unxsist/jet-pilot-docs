@@ -1,108 +1,45 @@
 /*
- * The private stats page: active installs from the daily totals (./count.ts).
- * Daily actives are the `day` totals of a day; weekly and monthly actives sum
- * the `week` / `month` totals over the days of an ISO week / month, because an
- * install adds to those only on its first check of the period.
+ * The private stats page: update checks per day (./count.ts). The app checks
+ * for updates when it starts, so the numbers follow how often JET Pilot is
+ * started; one person starting it three times counts three times.
  */
 
-export interface DayTotal {
+export interface DayCount {
   day: string;
-  kind: string;
   n: number;
-}
-
-export interface Breakdown {
-  version: string;
-  os: string;
-  arch: string;
-  n: number;
-}
-
-export interface DayCounts {
-  day: string;
-  actives: number;
-  checks: number;
-  plain: number;
 }
 
 export interface Stats {
   today: string;
   /** The 90 full days before today, oldest first. */
-  days: DayCounts[];
-  /** Today so far. */
-  todaySoFar: DayCounts;
-  weeks: { week: string; actives: number }[];
-  months: { month: string; actives: number }[];
-  /** Weekly actives of `breakdownWeek` by version and by platform, largest first. */
-  breakdownWeek: string;
-  versions: { label: string; n: number }[];
-  platforms: { label: string; n: number }[];
+  days: DayCount[];
+  todaySoFar: number;
 }
 
 const DAY = 86_400_000;
 
 export const dayOf = (date: Date) => date.toISOString().slice(0, 10);
 
-/** ISO week of a day ("2026-10-08" → "2026-W41"), like the app's src/lib/usage.ts. */
-export function isoWeek(day: string): string {
-  const thursday = new Date(`${day}T00:00:00Z`);
-  thursday.setUTCDate(thursday.getUTCDate() + 3 - ((thursday.getUTCDay() + 6) % 7));
-  const week = Math.floor((thursday.getTime() - Date.UTC(thursday.getUTCFullYear(), 0, 1)) / DAY / 7) + 1;
-  return `${thursday.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
-}
-
-/** The first and last day of the ISO week before the one `today` is in. */
-export function previousWeek(today: string): [string, string] {
-  const date = new Date(`${today}T00:00:00Z`);
-  const monday = date.getTime() - ((date.getUTCDay() + 6) % 7) * DAY - 7 * DAY;
-  return [dayOf(new Date(monday)), dayOf(new Date(monday + 6 * DAY))];
-}
-
-export function aggregate(now: Date, totals: DayTotal[], breakdown: Breakdown[], breakdownWeek: string): Stats {
+export function aggregate(now: Date, rows: DayCount[]): Stats {
   const today = dayOf(now);
-  const byDay = new Map<string, Record<string, number>>();
-  const weeks = new Map<string, number>();
-  const months = new Map<string, number>();
-  for (const { day, kind, n } of totals) {
-    const entry = byDay.get(day) ?? {};
-    entry[kind] = (entry[kind] ?? 0) + n;
-    byDay.set(day, entry);
-    if (kind === "week") weeks.set(isoWeek(day), (weeks.get(isoWeek(day)) ?? 0) + n);
-    if (kind === "month") months.set(day.slice(0, 7), (months.get(day.slice(0, 7)) ?? 0) + n);
-  }
-
-  const counts = (day: string): DayCounts => {
-    const entry = byDay.get(day) ?? {};
-    return { day, actives: entry.day ?? 0, checks: entry.check ?? 0, plain: entry.plain ?? 0 };
-  };
-  const days = Array.from({ length: 90 }, (_, i) => counts(dayOf(new Date(now.getTime() - (90 - i) * DAY))));
-
-  const group = (key: (b: Breakdown) => string) => {
-    const sums = new Map<string, number>();
-    for (const b of breakdown) sums.set(key(b), (sums.get(key(b)) ?? 0) + b.n);
-    return [...sums].map(([label, n]) => ({ label, n })).sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
-  };
-  const OS_NAMES: Record<string, string> = { linux: "Linux", macos: "macOS", windows: "Windows" };
-
-  return {
-    today,
-    days,
-    todaySoFar: counts(today),
-    weeks: [...weeks].sort().map(([week, actives]) => ({ week, actives })),
-    months: [...months].sort().map(([month, actives]) => ({ month, actives })),
-    breakdownWeek,
-    versions: group((b) => b.version),
-    platforms: group((b) => `${OS_NAMES[b.os] ?? b.os} ${b.arch}`),
-  };
+  const byDay = new Map(rows.map((r) => [r.day, r.n]));
+  const days = Array.from({ length: 90 }, (_, i) => {
+    const day = dayOf(new Date(now.getTime() - (90 - i) * DAY));
+    return { day, n: byDay.get(day) ?? 0 };
+  });
+  return { today, days, todaySoFar: byDay.get(today) ?? 0 };
 }
+
+/** The sum of the last `count` full days. */
+export const lastDays = (stats: Stats, count: number) => stats.days.slice(-count).reduce((sum, d) => sum + d.n, 0);
 
 /* ------------------------------------------------------------------ page -- */
+
 
 const escape = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 const fmt = (n: number) => n.toLocaleString("en-GB");
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const monthName = (month: string) => `${MONTHS[Number(month.slice(5, 7)) - 1]} ${month.slice(0, 4)}`;
 const shortDay = (day: string) => `${Number(day.slice(8, 10))} ${MONTHS[Number(day.slice(5, 7)) - 1]!.slice(0, 3)}`;
 
 /** Rounds a maximum up to a readable axis top (1, 2, 2.5, 5 × 10ⁿ). */
@@ -141,42 +78,17 @@ function lineChart(id: string, title: string, points: { day: string; value: numb
 </figure>`;
 }
 
-/** Horizontal bars, largest first; every bar is labelled, so no legend or hover is needed. */
-function bars(title: string, rows: { label: string; n: number }[], empty: string): string {
-  const max = Math.max(1, ...rows.map((r) => r.n));
-  const total = rows.reduce((sum, r) => sum + r.n, 0);
-  const body = rows.length
-    ? rows
-        .slice(0, 10)
-        .map(
-          (r) => `<div class="bar-row"><span class="bar-label">${escape(r.label)}</span>
-      <span class="bar-track"><span class="bar" style="width:${((r.n / max) * 100).toFixed(1)}%"></span></span>
-      <span class="bar-value">${fmt(r.n)} <span class="muted">${Math.round((r.n / total) * 100)}%</span></span></div>`
-        )
-        .join("")
-    : `<p class="muted">${escape(empty)}</p>`;
-  return `<figure class="bars"><figcaption>${escape(title)}</figcaption>${body}</figure>`;
-}
-
 function tile(label: string, value: number, note: string): string {
   return `<div class="tile"><div class="tile-label">${escape(label)}</div><div class="tile-value">${fmt(value)}</div><div class="muted">${escape(note)}</div></div>`;
 }
 
 export function renderPage(stats: Stats): string {
-  const yesterday = stats.days.at(-1)!;
-  const today = stats.todaySoFar;
-  const thisWeek = isoWeek(stats.today);
-  const lastWeek = isoWeek(previousWeek(stats.today)[0]);
-  const thisMonth = stats.today.slice(0, 7);
-  const lastMonth = dayOf(new Date(Date.UTC(Number(thisMonth.slice(0, 4)), Number(thisMonth.slice(5, 7)) - 2, 1))).slice(0, 7);
-  const week = (w: string) => stats.weeks.find((x) => x.week === w)?.actives ?? 0;
-  const month = (m: string) => stats.months.find((x) => x.month === m)?.actives ?? 0;
-  const plainYesterday = yesterday.plain;
-
+  const week = lastDays(stats, 7);
+  const month = lastDays(stats, 30);
   const table = stats.days
     .slice()
     .reverse()
-    .map((d) => `<tr><td>${d.day}</td><td>${fmt(d.actives)}</td><td>${fmt(d.checks)}</td><td>${fmt(d.plain)}</td></tr>`)
+    .map((d) => `<tr><td>${d.day}</td><td>${fmt(d.n)}</td></tr>`)
     .join("");
 
   return `<!doctype html>
@@ -205,7 +117,8 @@ main { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
 h1 { font-size: 20px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
 .sub { color: var(--muted); margin: 4px 0 32px; }
 .muted { color: var(--muted); }
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 40px; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr; } }
 .tile { border: 1px solid var(--line); border-radius: 10px; padding: 16px; background: var(--raised); }
 .tile-label { color: var(--text-2); }
 .tile-value { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin: 2px 0; }
@@ -221,12 +134,6 @@ svg { display: block; width: 100%; height: auto; overflow: visible; }
 .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
 .tip { position: absolute; top: 0; pointer-events: none; background: var(--raised); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; white-space: nowrap; box-shadow: 0 4px 16px rgb(0 0 0 / 0.12); }
 .tip strong { font-variant-numeric: tabular-nums; }
-.columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
-.bar-row { display: grid; grid-template-columns: 9.5em 1fr 7em; align-items: center; gap: 12px; padding: 4px 0; }
-.bar-label { color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bar-track { height: 10px; }
-.bar { display: block; height: 100%; min-width: 2px; background: var(--series); border-radius: 0 4px 4px 0; }
-.bar-value { text-align: right; font-variant-numeric: tabular-nums; }
 details { border-top: 1px solid var(--line); padding-top: 16px; }
 summary { cursor: pointer; color: var(--text-2); }
 table { border-collapse: collapse; width: 100%; margin-top: 12px; font-variant-numeric: tabular-nums; }
@@ -239,29 +146,21 @@ th { color: var(--text-2); font-weight: 500; }
 <body>
 <main>
   <h1>JET Pilot usage</h1>
-  <p class="sub">Active installs, counted by the update check on startup. Days are UTC.</p>
+  <p class="sub">Update checks per day. JET Pilot checks for updates when it starts, so this follows how often it's used. Days are UTC.</p>
 
   <section class="tiles">
-    ${tile("Daily active", yesterday.actives, `yesterday · ${fmt(today.actives)} today so far`)}
-    ${tile("Weekly active", week(lastWeek), `${lastWeek} · ${fmt(week(thisWeek))} this week so far`)}
-    ${tile("Monthly active", month(lastMonth), `${monthName(lastMonth)} · ${fmt(month(thisMonth))} this month so far`)}
-    ${tile("Older versions", plainYesterday, "update checks yesterday that weren't counted")}
+    ${tile("Yesterday", stats.days.at(-1)!.n, `${fmt(stats.todaySoFar)} today so far`)}
+    ${tile("Last 7 days", week, `${fmt(Math.round(week / 7))} a day`)}
+    ${tile("Last 30 days", month, `${fmt(Math.round(month / 30))} a day`)}
   </section>
 
-  ${lineChart("daily", "Daily active installs, last 90 days", stats.days.map((d) => ({ day: d.day, value: d.actives })), "installs")}
-
-  <section class="columns">
-    ${bars(`Weekly active by version, ${stats.breakdownWeek}`, stats.versions, "No counted checks in this week yet.")}
-    ${bars(`Weekly active by platform, ${stats.breakdownWeek}`, stats.platforms, "No counted checks in this week yet.")}
-  </section>
-
-  ${lineChart("plain", "Update checks that weren't counted, last 90 days", stats.days.map((d) => ({ day: d.day, value: d.plain })), "checks")}
-  <p class="note">Versions from before counting, installs that turned counting off, and manual checks. These are checks, not installs: one install can check several times a day. They fall as people update.</p>
+  ${lineChart("daily", "Update checks per day, last 90 days", stats.days.map((d) => ({ day: d.day, value: d.n })), "checks")}
+  <p class="note">Counted: the app's update checks on startup and when someone checks by hand. Not counted: apps with the startup check turned off, browsers and Homebrew. One person starting the app three times counts three times.</p>
 
   <details>
     <summary>All days as a table</summary>
     <table>
-      <thead><tr><th>Day</th><th>Active installs</th><th>Counted checks</th><th>Other checks</th></tr></thead>
+      <thead><tr><th>Day</th><th>Update checks</th></tr></thead>
       <tbody>${table}</tbody>
     </table>
   </details>

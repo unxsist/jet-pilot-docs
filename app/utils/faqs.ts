@@ -50,7 +50,7 @@ export const faqs = [
   },
   {
     q: "Does JET Pilot collect any data?",
-    a: `Almost nothing. There is no account and no analytics, and nothing about your clusters ever leaves your machine except to your clusters and the cloud accounts you connect. To count how many installs are in use, the update check on startup sends the version, the platform and whether it is the first check today, this week or this month. Nothing identifies you or your machine, the update server keeps only daily totals, and Settings › General › Updates turns it off.`,
+    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters, and to the cloud accounts you connect, with your own credentials, and checks for updates. The update server counts how many update checks it gets each day and keeps nothing else.`,
   },
   {
     q: "How do updates work?",
