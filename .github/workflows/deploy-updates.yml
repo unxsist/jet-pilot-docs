@@ -1,0 +1,40 @@
+name: Deploy the update server
+
+# updates.jet-pilot.app (workers/updates): a Cloudflare Worker that serves
+# latest.json and keeps daily usage totals. Needs the CLOUDFLARE_API_TOKEN
+# (Workers Scripts: Edit, D1: Edit, Workers Routes / Custom Domains on the
+# jet-pilot.app zone) and CLOUDFLARE_ACCOUNT_ID secrets.
+on:
+  push:
+    branches: ["main"]
+    paths: ["workers/updates/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: updates-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: workers/updates
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: workers/updates/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Apply database migrations and deploy
+        run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
