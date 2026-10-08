@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "jet-pilot-updates",
   "main": "src/index.ts",
+  "tsconfig": "tsconfig.json",
   "compatibility_date": "2026-10-01",
   // updates.jet-pilot.app needs the jet-pilot.app zone on Cloudflare.
   "routes": [{ "pattern": "updates.jet-pilot.app", "custom_domain": true }],
@@ -10,8 +11,7 @@
     {
       "binding": "DB",
       "database_name": "jet-pilot-usage",
-      // From `npx wrangler d1 create jet-pilot-usage`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "42c46633-7350-45b4-b143-32f88f0e04bb",
       "migrations_dir": "migrations"
     }
   ],

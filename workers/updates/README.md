@@ -30,17 +30,15 @@ npm run dev        # http://localhost:8787/latest.json, /stats
 ## Deploy
 
 `.github/workflows/deploy-updates.yml` deploys on every push to `main` that
-touches this folder (and on demand), after applying new migrations. One-time
-setup:
+touches this folder (and on demand), after applying new migrations, with the
+`CLOUDFLARE_API_TOKEN` (limited to Workers and D1 in the account, and Workers
+routes and DNS on jet-pilot.app) and `CLOUDFLARE_ACCOUNT_ID` repository
+secrets. The `STATS_PASSWORD` secret is set on the Worker
+(`npx wrangler secret put STATS_PASSWORD`).
 
-1. `npx wrangler login`, then `npx wrangler d1 create jet-pilot-usage` and put
-   the database id in `wrangler.jsonc`.
-2. `npx wrangler secret put STATS_PASSWORD`.
-3. Add the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository
-   secrets.
-4. `updates.jet-pilot.app` is a Workers custom domain, so the jet-pilot.app
-   zone must be on Cloudflare. Delete any existing `updates` DNS record before
-   the first deploy; Cloudflare creates its own.
+`updates.jet-pilot.app` is a Workers custom domain, which can't share its name
+with other DNS records: delete the zone's `updates` records right before a
+deploy attaches it.
 
 The free Workers plan allows 100,000 requests and 100,000 D1 row writes a day.
 A counted check writes up to four rows.
