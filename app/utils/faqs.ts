@@ -50,7 +50,7 @@ export const faqs = [
   },
   {
     q: "Does JET Pilot collect any data?",
-    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters, and to the cloud accounts you connect, with your own credentials, and checks for updates. The update server counts how many update checks it gets each day and keeps nothing else.`,
+    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters, and to the cloud accounts you connect, with your own credentials. Besides that it only checks for updates, reads a small announcements file from this site, contacts Open VSX while you browse the theme gallery, and downloads kubectl, Helm or kubelogin from their official sources when you ask it to. The update server counts how many update checks it gets each day and keeps nothing else. The update server counts how many update checks it gets each day and keeps nothing else.`,
   },
   {
     q: "How do updates work?",
@@ -58,7 +58,7 @@ export const faqs = [
   },
   {
     q: "What is it built with?",
-    a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, installers stay around 20 MB.`,
+    a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, the downloads are small: 15 MB for the Windows installer, about 26 MB for macOS and 27 MB for the Linux packages (the AppImage, which bundles its own libraries, is about 100 MB).`,
   },
 ];
 
