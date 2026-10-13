@@ -2,7 +2,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 const title = "JET Pilot — A beautiful, native Kubernetes desktop client";
 const description =
-  "JET Pilot is a free, open-source Kubernetes desktop client for macOS, Windows and Linux. Every cluster and cloud in one hub, live multi-cluster views, a resource graph, logs across pods, a YAML editor with dry run and a built-in kubectl terminal — native, fast and private.";
+  "Free, open-source Kubernetes desktop client for macOS, Windows and Linux. Every cluster and cloud account in one place, with no account and no telemetry.";
 
 // SITE_PREVIEW=1 (with NUXT_APP_BASE_URL=/preview/) builds just the homepage
 // as a preview under a subfolder of the live site, kept out of search results.
