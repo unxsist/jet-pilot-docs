@@ -12,6 +12,18 @@
         "label": "See what’s new",
         "url": "https://www.jet-pilot.app"
       }
+    },
+    {
+      "id": "2026-10-help-others-find-jet-pilot",
+      "title": "Help others find JET Pilot",
+      "body": "JET Pilot is free, open source and made in spare time. If it's useful to you, a star on GitHub or telling a colleague about it helps other people find it. Thank you!",
+      "severity": "info",
+      "minVersion": "2.0.0",
+      "expiresAt": "2026-12-31",
+      "link": {
+        "label": "Star on GitHub",
+        "url": "https://github.com/unxsist/jet-pilot"
+      }
     }
   ]
 }
