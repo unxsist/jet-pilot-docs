@@ -75,7 +75,7 @@ export default defineNuxtConfig({
     prerender: {
       failOnError: false,
       crawlLinks: !preview,
-      routes: preview ? ["/"] : ["/", "/themes/", "/sitemap.xml", "/robots.txt", "/latest.json"],
+      routes: preview ? ["/"] : ["/", "/themes/", "/compare/", "/sitemap.xml", "/robots.txt", "/latest.json"],
     },
   },
 });

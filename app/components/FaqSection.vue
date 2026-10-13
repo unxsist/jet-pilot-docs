@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { REPO_URL } from "~/composables/useGitHub";
-import { faqs } from "~/utils/faqs";
+import { faqs, type Faq } from "~/utils/faqs";
+
+const props = withDefaults(defineProps<{ items?: Faq[]; title?: string; open?: number }>(), {
+  items: () => faqs,
+  title: "Questions, answered.",
+  open: 1,
+});
 </script>
 
 <template>
   <section id="faq" class="relative cv-auto border-t border-line py-24 sm:py-32" aria-labelledby="faq-title">
     <div class="container-x grid gap-12 lg:grid-cols-12">
       <div class="lg:col-span-4">
-        <h2 id="faq-title" class="display text-[2.6rem] sm:text-[4rem] lg:text-[4.25rem]">Questions, answered.</h2>
+        <h2 id="faq-title" class="display text-[2.6rem] sm:text-[4rem] lg:text-[4.25rem]">{{ props.title }}</h2>
         <p class="mt-5 max-w-xs leading-relaxed text-muted">
           Something else? Open a
           <a :href="`${REPO_URL}/issues`" class="text-fg underline decoration-line-strong underline-offset-4 hover:decoration-fg">GitHub issue</a>
@@ -16,11 +22,11 @@ import { faqs } from "~/utils/faqs";
       </div>
       <div class="lg:col-span-8">
         <details
-          v-for="(item, i) in faqs"
+          v-for="(item, i) in props.items"
           :key="item.q"
           :name="'faq'"
           class="group border-b border-line first:border-t"
-          :open="i === 1"
+          :open="i === props.open"
         >
           <summary
             class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left text-[1.02rem] font-medium tracking-tight transition-colors hover:text-muted [&::-webkit-details-marker]:hidden"

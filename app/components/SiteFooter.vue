@@ -14,6 +14,7 @@ const columns = computed(() => [
       { label: "Themes", href: "/themes/" },
       { label: "Download", href: href("#download") },
       { label: "FAQ", href: href("#faq") },
+      { label: "Compare", href: "/compare/" },
     ],
   },
   {

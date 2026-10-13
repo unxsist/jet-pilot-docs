@@ -1,5 +1,11 @@
 /* FAQ content, shared by the FAQ section and the FAQPage structured data. */
-export const faqs = [
+export interface Faq {
+  q: string;
+  /** HTML. */
+  a: string;
+}
+
+export const faqs: Faq[] = [
   {
     q: "Is JET Pilot really free?",
     a: `Yes. JET Pilot is open source under the MIT licence. There is no paid tier, no trial and no account — download it and go.`,
@@ -60,13 +66,17 @@ export const faqs = [
     q: "What is it built with?",
     a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, the downloads are small: 15 MB for the Windows installer, about 26 MB for macOS and 27 MB for the Linux packages (the AppImage, which bundles its own libraries, is about 100 MB).`,
   },
+  {
+    q: "How does JET Pilot compare to other Kubernetes clients?",
+    a: `It’s free and open source with no account, finds the clusters in your cloud accounts and shows several clusters in one table. It has no plugin system yet. <a href="/compare/">The comparison</a> puts it side by side with other popular clients, including when one of them is the better choice.`,
+  },
 ];
 
-export const faqJsonLd = () =>
+export const faqJsonLd = (items: Faq[] = faqs) =>
   JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: items.map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") },
