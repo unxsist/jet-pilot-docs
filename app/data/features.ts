@@ -193,7 +193,7 @@ export const features: Feature[] = [
     title: "Your own actions",
     lead: "Small YAML files become one-click actions in row menus, the side panel and the command palette.",
     shot: "custom-actions",
-    crop: { zoom: 2.6, focus: [0.55, 0.36] },
+    crop: { zoom: 2.6, focus: [0.585, 0.34] },
     alt: "Settings › Actions: actions such as Logs since…, Open in Grafana and Restart deployment with on/off switches, one broken file with its line number and a Fix in YAML button",
     tier: "more",
     since: "2.2.0",
