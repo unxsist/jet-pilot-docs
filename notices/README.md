@@ -43,8 +43,10 @@ unxsist/jet-pilot.
 
 ## `notices/update-notice.md`: the update dialog notes
 
-Every JET Pilot version shows the release notes from `latest.json` in its update
+Every JET Pilot version shows the notes from `latest.json` in its update
 dialog, including versions from before the announcements feed. On deploy,
-`scripts/patch-update-manifest.mjs` puts this file above those notes. Use it for
-what all clients updating to the latest release should read. Leave it empty
-when there's nothing to say.
+`scripts/patch-update-manifest.mjs` writes them: this file first, then the
+release's entry from the app's `CHANGELOG.md` (the generated release notes when
+there is no entry). Use this file for what all clients updating to the latest
+release should read, not for release highlights: those come from the
+changelog. Leave it empty when there's nothing to say.
