@@ -8,8 +8,8 @@ export const REPO = "unxsist/jet-pilot";
 export const REPO_URL = `https://github.com/${REPO}`;
 export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 
-/** First version with Clusters 2.0: the Clusters hub, every cloud, in-app sign-in and guardrails. */
-export const CLUSTERS_RELEASE_VERSION = "2.0.0";
+/** The release the hero's note is about: GitOps, usage history and access review. */
+export const NOTE_RELEASE_VERSION = "2.2.0";
 
 export interface ReleaseAsset {
   name: string;

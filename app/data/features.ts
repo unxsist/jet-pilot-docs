@@ -10,7 +10,7 @@
  * one-line change.
  *
  * "New" badges are never placed by hand: a feature is new while its `since`
- * has the same major version as the newest feature on this list.
+ * has the same minor version (2.2) as the newest feature on this list.
  *
  * Themes have their own homepage section and page (ThemesTeaser, /themes/).
  */
@@ -76,6 +76,39 @@ export const features: Feature[] = [
     since: "2.0.0",
   },
   {
+    id: "gitops",
+    title: "GitOps, at a glance.",
+    lead: "Every Flux and Argo CD delivery across your clusters on one page, problems first.",
+    points: ["Why it fails, in plain words", "What it delivered, out of sync first", "Reconcile, sync, suspend or refresh"],
+    shot: "gitops",
+    crop: { zoom: 1.5, focus: [0.37, 0.42], mobile: { zoom: 3.2, focus: [0.36, 0.43] } },
+    alt: "The GitOps page: Flux and Argo CD deliveries under Needs attention and In progress, each with its state in words, and the panel of the payments Kustomization, unhealthy because Deployment payments-worker isn't ready, with Reconcile and Suspend buttons and the resources it delivered",
+    tier: "showcase",
+    since: "2.2.0",
+  },
+  {
+    id: "usage",
+    title: "Usage, over time.",
+    lead: "CPU and memory over an hour to a week, right in the side panel, with requests and limits drawn in.",
+    points: ["Finds Prometheus, Thanos or VictoriaMetrics by itself", "Through the API server: nothing to port-forward", "metrics-server’s last 15 minutes as a fallback"],
+    shot: "usage",
+    crop: { zoom: 1.85, focus: [0.81, 0.36], mobile: { zoom: 3.2, focus: [0.82, 0.38] } },
+    alt: "The side panel of the payments-api Deployment: CPU and memory charts over 6 hours with request lines, and a readout at 02:31 of 887m CPU, 74% of the request",
+    tier: "showcase",
+    since: "2.2.0",
+  },
+  {
+    id: "access",
+    title: "Who can do what.",
+    lead: "Ask “Can I delete deployments in payments?” and get a yes or no, with the binding and role behind it.",
+    points: ["Who can: every user, group and service account", "What a subject can do, and how", "Roles and bindings in sentences"],
+    shot: "access-review",
+    crop: { zoom: 1.45, focus: [0.42, 0.33], mobile: { zoom: 3, focus: [0.4, 0.33] } },
+    alt: "Access review: Can I delete deployments in payments? Yes, granted to the group acme:payments-team by RoleBinding payments-team-admin and ClusterRole admin, above a matrix of what you can do in payments",
+    tier: "showcase",
+    since: "2.2.0",
+  },
+  {
     id: "clouds",
     title: "Nine clouds, built in.",
     lead: "Connect an account and JET Pilot finds its clusters, and keeps the list current.",
@@ -92,52 +125,79 @@ export const features: Feature[] = [
     since: "2.0.0",
   },
   {
-    id: "sign-in",
-    title: "Sign in, in the app.",
-    lead: "Device codes and browser sign-ins for kubelogin, gcloud, az, AWS and OIDC plugins appear right in JET Pilot.",
-    points: ["Lists, logs and port forwards reconnect", "Nothing opens a browser on its own"],
-    shot: "sign-in",
-    crop: { zoom: 2.2, focus: [0.5, 0.515], mobile: { zoom: 3.6, focus: [0.5, 0.535] } },
-    alt: "Signing in to AWS inside JET Pilot: the device code QXRW-PLMK, the verification address device.sso.eu-west-1.amazonaws.com and an Open browser button",
-    tier: "showcase",
-    since: "2.0.0",
-  },
-  {
-    id: "live",
-    title: "Live, not polled.",
-    lead: "Tables stream changes straight from the API server, so a scale lands on screen in about 200\u00a0ms.",
-    points: ["CPU and memory sparklines for every pod", "A 2,000-pod snapshot in about 0.7\u00a0s"],
-    shot: "live",
-    crop: { zoom: 2, focus: [0.765, 0.42], clear: [0.5, 0.53], mobile: { zoom: 2.7, focus: [0.7, 0.42] } },
-    alt: "The pods table with CPU and memory sparkline columns next to each pod's status",
-    tier: "showcase",
-    since: "1.37.0",
-  },
-  {
-    id: "logs",
-    title: "Every pod. One stream.",
-    lead: "Open logs on a Deployment, StatefulSet, DaemonSet, Job or Service and follow all of its pods at once.",
-    points: ["Colour-coded per pod", "JSON parsed into fields you can filter on", "Search, pause and export"],
-    shot: "logs",
-    crop: { zoom: 1.4, focus: [0.5, 0.6], mobile: { zoom: 2.8, focus: [0.42, 0.62] } },
-    wide: true,
-    alt: "Logs for the payments-api Deployment: four pods listed with their own colours, container and field filters, and interleaved log lines prefixed with the pod and container they came from",
-    tier: "showcase",
-    since: "1.37.0",
-  },
-  {
     id: "graph",
     title: "What’s broken, first.",
     lead: "Every app gets its own lane, from Ingress to Service to Pods, and health rolls up from pods to apps.",
     points: ["Missing references as red dashed nodes", "<kbd>P</kbd> shows only the problems"],
     shot: "graph",
     crop: { zoom: 1.45, focus: [0.385, 0.56], mobile: { zoom: 3, focus: [0.38, 0.57] } },
+    side: "right",
     alt: "The resource graph with the checkout-api Deployment selected: its Service, PodDisruptionBudget and ConfigMap highlighted along the path, and a side panel listing its pods, relationships and replica status",
     tier: "showcase",
     since: "1.37.0",
   },
 
   /* ---------------------------------------------------------------- more -- */
+  {
+    id: "helm",
+    title: "Helm, built in",
+    lead: "Releases read straight from the cluster, a history that says what changed, chart search and a guided install.",
+    shot: "helm",
+    crop: { zoom: 3.3, focus: [0.85, 0.6] },
+    alt: "The release panel of payments-api: deployed revision 42 of chart 2.14.3, and a history whose latest entry says 2.14.2 → 2.14.3 · image.tag changed",
+    tier: "more",
+    since: "2.2.0",
+  },
+  {
+    id: "operators",
+    title: "Operators, first-class",
+    lead: "cert-manager, Gateway API, Karpenter, KEDA, External Secrets and Prometheus Operator, in plain words.",
+    shot: "operators",
+    crop: { zoom: 4, focus: [0.875, 0.43] },
+    alt: "A certificate whose ACME challenge fails: Issuance failed, the chain from request to order to challenge, and “The CA got a 404 from the challenge URL”",
+    tier: "more",
+    since: "2.2.0",
+  },
+  {
+    id: "details",
+    title: "Panels that explain",
+    lead: "Every side panel opens with the object’s state in a sentence, and links to what it’s connected to.",
+    shot: "side-panel",
+    crop: { zoom: 3.6, focus: [0.87, 0.225] },
+    alt: "The side panel of a crash-looping pod: “Restarting: the container keeps crashing: it exits with code 1”, with its node, owner chain and service account",
+    tier: "more",
+    since: "2.2.0",
+  },
+  {
+    id: "inline-edit",
+    title: "Edit labels in place",
+    lead: "Labels, annotations and node taints, with a preview of every change before you save.",
+    shot: "inline-edit",
+    crop: { zoom: 3, focus: [0.825, 0.68] },
+    alt: "Editing the labels of the payments-api Deployment in its side panel, with a preview of three changes and a Save 3 changes button",
+    tier: "more",
+    since: "2.2.0",
+  },
+  {
+    id: "port-forwards",
+    title: "Port forwards that heal",
+    lead: "Forwards follow their pod through restarts and rollouts, and an HTTP tester sends them requests.",
+    shot: "port-forwards",
+    crop: { zoom: 2.8, focus: [0.34, 0.82] },
+    alt: "The port forwards list: payments-api on localhost:8080, checkout-web reconnected 4 minutes ago because its pod was replaced, and postgres on localhost:5432",
+    tier: "more",
+    since: "2.2.0",
+  },
+  {
+    id: "custom-actions",
+    title: "Your own actions",
+    lead: "Small YAML files become one-click actions in row menus, the side panel and the command palette.",
+    shot: "custom-actions",
+    crop: { zoom: 2.6, focus: [0.55, 0.36] },
+    alt: "Settings › Actions: actions such as Logs since…, Open in Grafana and Restart deployment with on/off switches, one broken file with its line number and a Fix in YAML button",
+    tier: "more",
+    since: "2.2.0",
+  },
   {
     id: "command-palette",
     title: "Command palette",
@@ -189,14 +249,34 @@ export const features: Feature[] = [
     since: "1.37.0",
   },
   {
-    id: "details",
-    title: "Details at a click",
-    lead: "Containers, conditions, labels and events in a side panel, or the full describe.",
-    shot: "side-panel",
-    crop: { zoom: 3.6, focus: [0.87, 0.225] },
-    alt: "The side panel open on a crash-looping pod: its container, conditions and labels",
+    id: "logs",
+    title: "Every pod, one stream",
+    lead: "Follow all pods of a Deployment, StatefulSet, DaemonSet, Job or Service at once, with JSON parsed into fields.",
+    shot: "logs",
+    crop: { zoom: 3, focus: [0.42, 0.6] },
+    alt: "Logs for the payments-api Deployment: four pods listed with their own colours, container and field filters, and interleaved log lines prefixed with the pod and container they came from",
     tier: "more",
-    since: "1.36.0",
+    since: "1.37.0",
+  },
+  {
+    id: "live",
+    title: "Live, not polled",
+    lead: "Tables stream changes from the API server, with CPU and memory sparklines for every pod.",
+    shot: "live",
+    crop: { zoom: 3.4, focus: [0.74, 0.3] },
+    alt: "The pods table with CPU and memory sparkline columns next to each pod's status",
+    tier: "more",
+    since: "1.37.0",
+  },
+  {
+    id: "sign-in",
+    title: "Sign in, in the app",
+    lead: "Device codes and browser sign-ins for kubelogin, gcloud, az, AWS and OIDC plugins appear right in JET Pilot.",
+    shot: "sign-in",
+    crop: { zoom: 2.6, focus: [0.5, 0.48] },
+    alt: "Signing in to AWS inside JET Pilot: the device code QXRW-PLMK, the verification address device.sso.eu-west-1.amazonaws.com and an Open browser button",
+    tier: "more",
+    since: "2.0.0",
   },
   {
     id: "terminal",
@@ -207,6 +287,20 @@ export const features: Feature[] = [
     alt: "The built-in terminal panel below the pods table, opened for prod-eu-west-1 with a note that KUBECONFIG points to a temporary copy",
     tier: "more",
     since: "1.36.0",
+  },
+  {
+    id: "native",
+    title: "Straight to the API",
+    lead: "Describe, YAML, browsing Helm releases and port forwards work without kubectl or helm.",
+    tier: "more",
+    since: "2.2.0",
+  },
+  {
+    id: "crds",
+    title: "Columns for every CRD",
+    lead: "Any custom resource shows its CRD’s own columns, live, and well-known projects get their own section.",
+    tier: "more",
+    since: "2.2.0",
   },
   {
     id: "guardrails",
@@ -244,25 +338,11 @@ export const features: Feature[] = [
     since: "2.0.0",
   },
   {
-    id: "helm",
-    title: "Helm releases",
-    lead: "Upgrade with a values diff, read the history, roll back or uninstall.",
-    tier: "more",
-    since: "1.30.0",
-  },
-  {
     id: "debug",
     title: "Shells and debugging",
     lead: "Shells into any container, ephemeral debug containers, node shells and file copies.",
     tier: "more",
     since: "1.37.0",
-  },
-  {
-    id: "port-forwards",
-    title: "Port forwards",
-    lead: "Start, stop and open forwards, or save profiles that start with the app.",
-    tier: "more",
-    since: "1.29.0",
   },
   {
     id: "hardened",
@@ -273,12 +353,14 @@ export const features: Feature[] = [
   },
 ];
 
-const major = (version: string) => Number.parseInt(version, 10) || 0;
+/* "2.2.0" -> [2, 2]: a release is a minor version, patches don't bring features. */
+const release = (version: string) => version.split(".").slice(0, 2).map((n) => Number.parseInt(n, 10) || 0);
+const newest = features.map((f) => release(f.since)).reduce((a, b) => (b[0] > a[0] || (b[0] === a[0] && b[1] > a[1]) ? b : a));
 
-/** The newest major version on the list: its features carry a "New" badge. */
-export const currentMajor = Math.max(...features.map((f) => major(f.since)));
+/** The newest release on the list ("2.2"): its features carry a "New" badge. */
+export const currentRelease = newest.join(".");
 
-export const isNew = (feature: Feature) => major(feature.since) === currentMajor;
+export const isNew = (feature: Feature) => release(feature.since).join(".") === currentRelease;
 
 export const MAX_SHOWCASE = 6;
 export const showcaseFeatures = features.filter((f) => f.tier === "showcase" && f.shot && f.crop).slice(0, MAX_SHOWCASE);

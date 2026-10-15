@@ -5,7 +5,7 @@
  * edge to edge with the words on its open side; a `wide` feature pulls back
  * to the whole window. Static: rendered without hydrating.
  */
-import { isNew, currentMajor, showcaseFeatures } from "~/data/features";
+import { isNew, currentRelease, showcaseFeatures } from "~/data/features";
 
 /* Macros alternate sides unless a feature says otherwise. */
 const items = (() => {
@@ -52,7 +52,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
         <div class="macro-words">
           <div class="container-x">
             <div class="macro-copy">
-              <p v-if="fresh" class="new-tag">New in {{ currentMajor }}.0</p>
+              <p v-if="fresh" class="new-tag">New in {{ currentRelease }}</p>
               <h2 :id="`${feature.id}-title`" class="macro-title display">{{ feature.title }}</h2>
               <div class="macro-text">
                 <p class="text-[1.06rem] leading-relaxed text-muted sm:text-[1.125rem]">{{ feature.lead }}</p>
@@ -70,7 +70,7 @@ const macroSizes = (zoom: number, mobileZoom: number) =>
         <div class="container-x">
           <div class="grid gap-x-10 gap-y-5 lg:grid-cols-12 lg:items-end">
             <div class="lg:col-span-7">
-              <p v-if="fresh" class="new-tag">New in {{ currentMajor }}.0</p>
+              <p v-if="fresh" class="new-tag">New in {{ currentRelease }}</p>
               <h2 :id="`${feature.id}-title`" class="display text-[2.6rem] sm:text-[4rem] lg:text-[4.75rem]">{{ feature.title }}</h2>
             </div>
             <div class="lg:col-span-5 lg:pb-2">

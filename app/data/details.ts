@@ -18,8 +18,9 @@ export interface Detail {
 
 export const details: Record<string, Detail> = {
   "clusters-hub": { box: [0.35, 0, 1, 0.78], width: 5600, sizes: "(max-width: 767px) 920px, 1820px" },
-  "sign-in": { box: [0.33, 0.17, 0.87, 0.89], width: 7040, sizes: "(max-width: 767px) 760px, 1900px" },
-  live: { box: [0.36, 0, 0.92, 0.88], width: 6400, sizes: "(max-width: 767px) 600px, 1800px" },
+  gitops: { box: [0.18, 0, 0.92, 0.83], width: 6560, sizes: "(max-width: 767px) 920px, 2420px" },
+  usage: { box: [0.36, 0, 1, 0.78], width: 6560, sizes: "(max-width: 767px) 800px, 2100px" },
+  "access-review": { box: [0.21, 0, 0.99, 0.76], width: 6120, sizes: "(max-width: 767px) 910px, 2390px" },
   graph: { box: [0.18, 0.13, 0.94, 0.99], width: 4920, sizes: "(max-width: 767px) 880px, 1850px" },
   "themes-library": { box: [0.34, 0, 0.98, 0.85], width: 5600, sizes: "(max-width: 767px) 650px, 1790px" },
 };

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { CLUSTERS_RELEASE_VERSION, REPO_URL } from "~/composables/useGitHub";
+import { NOTE_RELEASE_VERSION, REPO_URL } from "~/composables/useGitHub";
 
 const { primary, platforms } = useDownloads();
 const { stars } = useGitHub();
-const clustersShipped = useReleaseAtLeast(CLUSTERS_RELEASE_VERSION);
+const noteShipped = useReleaseAtLeast(NOTE_RELEASE_VERSION);
 
-/* This deploys once 2.0 is out, so 2.0 is the note unless the latest release says otherwise. */
+/* This deploys with 2.2, so 2.2 is the note unless the latest release says otherwise. */
 const note = computed<{ tag: string; text: string; href: string }>(() =>
-  clustersShipped.value === false
-    ? { tag: "Coming soon", text: "JET Pilot 2.0: every cluster, every cloud", href: "#features" }
-    : { tag: "2.0", text: "Every cluster, every cloud, in one calm hub", href: "#clusters" }
+  noteShipped.value === false
+    ? { tag: "Coming soon", text: "JET Pilot 2.2: GitOps, usage history and access review", href: "#gitops" }
+    : { tag: "2.2", text: "GitOps, usage history and access review", href: "#gitops" }
 );
 
 /* The hero shot is the LCP element: start fetching it with the HTML. Keep in step with the AppShot below. */
