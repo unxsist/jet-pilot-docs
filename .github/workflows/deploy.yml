@@ -50,8 +50,8 @@ jobs:
         run: npm ci
       - name: Download latest.json manifest
         run: curl -fL -o public/latest.json https://github.com/unxsist/jet-pilot/releases/latest/download/latest.json
-      - name: Prepend the update notice to the release notes
-        run: node scripts/patch-update-manifest.mjs
+      - name: Write the update dialog notes (update notice + CHANGELOG.md entry)
+        run: node scripts/patch-update-manifest.mjs --changelog https://raw.githubusercontent.com/unxsist/jet-pilot/main/CHANGELOG.md
       # Released entries only (see the script); the committed copy stays when this fails.
       - name: Build the changelog from the app's CHANGELOG.md
         run: node scripts/sync-changelog.mjs --url https://raw.githubusercontent.com/unxsist/jet-pilot/main/CHANGELOG.md || echo "::warning::Kept the committed changelog"
