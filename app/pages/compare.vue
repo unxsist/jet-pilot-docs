@@ -59,8 +59,8 @@ const alternatives = [
     text: "Headlamp runs inside your cluster with OIDC sign-in and adapts to each user’s RBAC permissions. It is also the Kubernetes project’s recommended replacement for Kubernetes Dashboard.",
   },
   {
-    when: "You need plugins or GitOps views today.",
-    text: "Headlamp’s plugin catalog covers Flux, Argo CD, Prometheus and more; Aptakube has Flux and Argo CD views built in; Lens includes them on paid plans; Freelens has extensions, including one for Flux. JET Pilot has no plugin system, and Flux, Argo CD and Prometheus views are still on our roadmap.",
+    when: "You need plugins.",
+    text: "Headlamp has a plugin catalog, Lens an extensions marketplace on paid plans, and Freelens and k9s have extensions and plugins of their own. JET Pilot has no plugin system: its custom actions add your own commands, links and patches to menus, but they can’t add new views.",
   },
   {
     when: "Your company wants a vendor and AI features.",

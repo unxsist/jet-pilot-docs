@@ -169,12 +169,12 @@ export const GROUPS: RowGroup[] = [
       },
       {
         label: "Prometheus metrics",
-        cells: { jet: no("Planned"), lens: yes(), freelens: yes(), headlamp: yes("Plugin"), k9s: no(), aptakube: yes() },
+        cells: { jet: yes("Finds Prometheus by itself"), lens: yes(), freelens: yes(), headlamp: yes("Plugin"), k9s: no(), aptakube: yes() },
       },
       {
         label: "Flux and Argo CD views",
         cells: {
-          jet: no("Planned"),
+          jet: yes(),
           lens: yes("On paid plans"),
           freelens: text("Flux via extension"),
           headlamp: yes("Plugins"),
@@ -185,7 +185,7 @@ export const GROUPS: RowGroup[] = [
       {
         label: "Plugins or extensions",
         cells: {
-          jet: no(),
+          jet: no("Custom actions from YAML files"),
           lens: yes("Marketplace, on paid plans"),
           freelens: yes(),
           headlamp: yes("Plugin catalog"),
@@ -312,6 +312,6 @@ export const COMPARE_FAQS = [
   },
   {
     q: "Does JET Pilot collect any data?",
-    a: `No. There is no account, no analytics and no telemetry. It talks to your clusters and the cloud accounts you connect, checks for updates and fetches its own announcements feed.`,
+    a: `No. There is no account, no analytics and no telemetry. It talks to your clusters and the cloud accounts you connect, checks for updates and fetches its own announcements feed. Open VSX and Artifact Hub are only contacted while you browse themes or search for Helm charts.`,
   },
 ];
