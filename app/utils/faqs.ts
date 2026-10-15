@@ -58,7 +58,7 @@ export const faqs = [
   },
   {
     q: "What is it built with?",
-    a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, the downloads are small: 15 MB for the Windows installer, about 26 MB for macOS and 27 MB for the Linux packages (the AppImage, which bundles its own libraries, is about 100 MB).`,
+    a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, the downloads are small: 16 MB for the Windows installer, about 28 MB for macOS and 28 MB for the Linux packages (the AppImage, which bundles its own libraries, is about 100 MB).`,
   },
 ];
 
