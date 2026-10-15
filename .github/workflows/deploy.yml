@@ -52,6 +52,9 @@ jobs:
         run: curl -fL -o public/latest.json https://github.com/unxsist/jet-pilot/releases/latest/download/latest.json
       - name: Prepend the update notice to the release notes
         run: node scripts/patch-update-manifest.mjs
+      # Released entries only (see the script); the committed copy stays when this fails.
+      - name: Build the changelog from the app's CHANGELOG.md
+        run: node scripts/sync-changelog.mjs --url https://raw.githubusercontent.com/unxsist/jet-pilot/main/CHANGELOG.md || echo "::warning::Kept the committed changelog"
       - name: Static HTML export with Nuxt
         run: npx nuxt build --preset github_pages
       - name: Checkout the homepage preview

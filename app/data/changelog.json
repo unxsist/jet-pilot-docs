@@ -1,0 +1,213 @@
+{
+  "releases": [
+    {
+      "version": "2.1.2",
+      "date": "2026-10-13",
+      "kind": "patch",
+      "title": null,
+      "intro": [],
+      "groups": [
+        {
+          "name": "Fixed",
+          "items": [
+            "<strong>The keyboard keeps working after a command palette pick.</strong> After jumping somewhere from the palette (for example <code>:deploy</code>) or switching context there, typing didn’t filter the table and <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> didn’t open the palette again until you clicked somewhere."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "2.1.1",
+      "date": "2026-10-12",
+      "kind": "patch",
+      "title": null,
+      "intro": [],
+      "groups": [
+        {
+          "name": "Fixed",
+          "items": [
+            "<strong>Removing a cluster or cloud account works.</strong> Remove in the confirmation did nothing.",
+            "<strong>Removal no longer gets stuck.</strong> It only asks for your passphrase when the cluster stores credentials, keeps credentials another context still uses, and removes an account’s clusters before its secrets.",
+            "<strong>The clusters hub stays in sync.</strong> A refresh racing an account removal no longer brings clusters back, contexts deleted elsewhere (for example with <code>kubectl</code>) are disconnected, and kubeconfigs are read again when the window regains focus.",
+            "<strong>AWS MFA codes are submitted once</strong>, and the session is kept.",
+            "<strong>Changing Protected for several clusters</strong> applies to all of them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "2026-10-12",
+      "kind": "minor",
+      "title": "Team roles on AWS, and switching your way",
+      "intro": [],
+      "groups": [
+        {
+          "name": "New",
+          "items": [
+            "<strong>Assume team roles on AWS.</strong> Signed in through IAM Identity Center with a personal permission set? Add the team roles you’re allowed to assume, including roles in other accounts: paste a role ARN or pick one from <code>~/.aws/config</code>. JET Pilot finds the EKS clusters in the role’s account, and <code>kubectl</code> tokens for those clusters use the role, in the app and in your terminal. Find it in Add cluster › AWS › IAM Identity Center.",
+            "<strong>Switch with a single pick.</strong> Settings › Clusters › Context switcher can now switch straight to the cluster and namespace you pick and close the menu, like k9s, instead of adding them to the selection. Hold <kbd>⌘</kbd> / <kbd>Ctrl</kbd> while picking to do the other one."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "2026-10-05",
+      "kind": "major",
+      "title": "Every cluster, every cloud, one calm app",
+      "intro": [],
+      "groups": [
+        {
+          "name": "New",
+          "items": [
+            "<strong>The Clusters hub.</strong> Every cluster from every kubeconfig and cloud account in one list, with live status (<kbd>⌘O</kbd> / <kbd>Ctrl+O</kbd>). Give clusters names, colours, environments, folders and tags, star favourites and hide the rest. Click one for its status, version, nodes, sign-in and kubeconfig.",
+            "<strong>Every cloud, built in.</strong> Connect AWS (IAM Identity Center, a profile with MFA, or access keys), Google Cloud and Azure (through gcloud and az), DigitalOcean, Akamai/Linode, Civo, Scaleway, Vultr and Exoscale. JET Pilot finds their clusters and keeps the list current: new clusters wait for you in the hub, and clusters deleted in the cloud are flagged.",
+            "<strong>Add anything.</strong> Paste or import a kubeconfig, or enter a cluster by hand, with Test connection. Added clusters live in JET Pilot’s own kubeconfig (<code>~/.kube/jet-pilot/config</code>) with their credentials in your system keychain, and work in <code>kubectl</code> and <code>k9s</code> too.",
+            "<strong>Sign in without leaving the app.</strong> Device codes and browser sign-ins for kubelogin, gcloud, az, AWS and OIDC plugins appear in JET Pilot, and lists, logs, metrics and port forwards reconnect afterwards. Background work never opens a browser.",
+            "<strong>Production guardrails.</strong> Mark a cluster as production and its colour follows you everywhere. Deleting, draining or scaling to zero asks you to type the name, applying YAML runs a server-side dry run first, and read-only clusters can’t be changed from JET Pilot at all."
+          ]
+        },
+        {
+          "name": "Improved",
+          "items": [
+            "<strong>Settings, rebuilt.</strong> Every setting is searchable (<kbd>⌘,</kbd> / <kbd>Ctrl+,</kbd>), the ones you changed are marked, and there’s a <code>settings.json</code> editor. Kubeconfig files are found by themselves, and JET Pilot can download kubectl, Helm and kubelogin for you, checked against their official checksums.",
+            "<strong>Calmer everywhere.</strong> A design pass over the whole app: fewer boxes, clearer lists and status only when it needs you, plus a setup guide for new installs."
+          ]
+        },
+        {
+          "name": "Upgrading",
+          "items": [
+            "<strong>Settings move by themselves</strong> to <code>settings.json</code> and <code>state.json</code>; the old file is kept as <code>settings.v1.backup.json</code>.",
+            "<strong>Your own kubeconfig is never changed.</strong> To use clusters you added in JET Pilot from a terminal, add <code>~/.kube/jet-pilot/config</code> to <code>KUBECONFIG</code> (Settings › Advanced › Cluster credentials shows the line), or export them into <code>~/.kube/config</code> (a backup is made first).",
+            "<strong>On Linux without a keychain</strong> (no Secret Service), JET Pilot asks for a passphrase the first time it stores a credential."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.39.0",
+      "date": "2026-10-05",
+      "kind": "minor",
+      "title": "Updates you can count on",
+      "intro": [],
+      "groups": [
+        {
+          "name": "New",
+          "items": [
+            "<strong>Announcements.</strong> JET Pilot can show important notices from jet-pilot.app, such as how to update by hand when a release can’t update itself. Dismissed notices stay dismissed."
+          ]
+        },
+        {
+          "name": "Improved",
+          "items": [
+            "<strong>The update dialog waits for the update.</strong> It shows download progress and only offers Restart once the new version is in place. Before, restarting too early brought the old version back.",
+            "<strong>Failed updates are explained</strong>, with Try again and a link to the download page. On macOS, the dialog shows how to clear the quarantine flag that stops an app from replacing itself."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.38.1",
+      "date": "2026-10-05",
+      "kind": "patch",
+      "title": null,
+      "intro": [],
+      "groups": [
+        {
+          "name": "Improved",
+          "items": [
+            "<strong>Calmer muted themes.</strong> Status colours a theme doesn’t define take their tone from the theme’s own palette, and very bright accents are softened for selections and focus rings. Colours a theme sets itself are kept, unless they’d be unreadable.",
+            "<strong>Blossom, Grove, Ocean, Ember and Iris</strong> now sit with the other built-in themes. A palette picked in 1.38.0 carries over.",
+            "<strong>Export › Standard theme…</strong> writes a plain theme file without JET Pilot’s extras.",
+            "<strong>What’s New</strong> only reappears for feature releases, not for patches."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.38.0",
+      "date": "2026-10-05",
+      "kind": "minor",
+      "title": "Themes",
+      "intro": [],
+      "groups": [
+        {
+          "name": "New",
+          "items": [
+            "<strong>Built-in themes.</strong> JET plus favourites like Catppuccin, Tokyo Night, Dracula, Nord, GitHub, One Dark Pro, Rosé Pine and Gruvbox. Hover one in Settings › Appearance to preview it on the whole app.",
+            "<strong>Bring your own.</strong> Drop in a VS Code, Sublime Text or TextMate theme. Light and dark variants pair up by themselves, and the YAML editor and terminal take the theme’s syntax and ANSI colours.",
+            "<strong>Open VSX gallery.</strong> Search and install VS Code themes without leaving the app. Only MIT-licensed themes can be installed, so JET Pilot stays MIT.",
+            "<strong>Write your own in JSON.</strong> A canvas and an accent are enough; everything else is derived with readable contrast. Themes are plain files that reload as you edit them, and they validate in VS Code with <code>https://www.jet-pilot.app/schemas/theme.json</code>.",
+            "<strong>Switch in a keystroke.</strong> <kbd>Mod</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd> opens the theme picker with a live preview, and you can pick a different theme for light and dark mode."
+          ]
+        },
+        {
+          "name": "Fixed",
+          "items": [
+            "<strong>Readable suggestions</strong> in the YAML editor’s light theme."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.37.0",
+      "date": "2026-10-05",
+      "kind": "minor",
+      "title": "Live, fast and seriously capable",
+      "intro": [],
+      "groups": [
+        {
+          "name": "New",
+          "items": [
+            "<strong>Live lists.</strong> Lists stream changes straight from the Kubernetes API instead of polling <code>kubectl</code>: updates appear in a fraction of a second, revisiting a view is instant, and pod tables show CPU and memory sparklines.",
+            "<strong>The resource graph, reimagined.</strong> Every app in its own lane from Ingress to Service to Pods, with config, storage, identity and scaling attached. Health rolls up, missing references stand out, and Problems mode zooms to what’s broken.",
+            "<strong>Logs across every pod.</strong> Open logs on a Deployment, StatefulSet, DaemonSet, Job or Service to follow all its pods at once, colour-coded per pod, with search, filters, previous containers and export.",
+            "<strong>A smarter YAML editor.</strong> Works offline, with autocompletion, docs and validation from your cluster’s own schemas, CRDs included. Saving shows a diff and runs a server-side dry run first, and you can compare an object across contexts.",
+            "<strong>Rollouts, Helm and debugging.</strong> Rollout history with diffs and rollback, Helm upgrades with a values diff, ephemeral debug containers, a node shell, and copying files to and from containers.",
+            "<strong>Workspaces and split view.</strong> Save sets of contexts, namespaces, tabs and port forwards as workspaces, and put two tabs side by side. Tables gained a k9s-style row mode (<kbd>?</kbd> shows every shortcut) and column reordering, resizing and grouping."
+          ]
+        },
+        {
+          "name": "Improved",
+          "items": [
+            "<strong>Faster and leaner.</strong> A faster startup, bounded memory everywhere and no orphaned <code>kubectl</code> processes. When a list can’t be watched, it falls back to polling, and back again."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.36.0",
+      "date": "2026-10-04",
+      "kind": "minor",
+      "title": "A whole new JET Pilot",
+      "intro": [
+        "The biggest release so far: a complete redesign, many clusters at once and a built-in terminal."
+      ],
+      "groups": [
+        {
+          "name": "New",
+          "items": [
+            "<strong>A new design.</strong> Every screen redesigned, with polished dark and light themes, crisp typography and status colours you can read at a glance.",
+            "<strong>Many clusters and namespaces at once.</strong> Connect several contexts across all your kubeconfig files, with any mix of namespaces. Tables combine them with Context and Namespace columns.",
+            "<strong>A built-in terminal.</strong> <kbd>Ctrl</kbd>+<kbd><code>&lt;/kbd&gt; opens a terminal with </code>kubectl` pointed at the current context; your own kubeconfig is never touched. Container shells work on Windows too.",
+            "<strong>Keyboard first.</strong> Better fuzzy search in the <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> palette, type-to-filter on every table and <kbd>⌘S</kbd> / <kbd>Ctrl+S</kbd> in the YAML editor.",
+            "<strong>Linux on ARM64.</strong> Native <code>aarch64</code> builds as <code>.deb</code>, <code>.rpm</code> and AppImage."
+          ]
+        },
+        {
+          "name": "Improved",
+          "items": [
+            "<strong>Richer side panels</strong> with containers, conditions, labels and events, and one-click YAML, describe and logs. Tables gained loading, error and empty states, stable selection and live status colours.",
+            "<strong>Safer.</strong> A strict content security policy, minimal permissions, SSO tokens that are never shown, and edited manifests (Secrets included) piped to <code>kubectl</code> instead of written to disk."
+          ]
+        },
+        {
+          "name": "Fixed",
+          "items": [
+            "<strong>Port forwards</strong> that never became ready, copying text in describe, the missing PersistentVolumes view, context search, “All namespaces” showing only <code>default</code>, a resource graph stuck loading, closed tabs that kept streaming, and crashes in the log viewer."
+          ]
+        }
+      ]
+    }
+  ]
+}

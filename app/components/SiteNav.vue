@@ -12,6 +12,7 @@ const open = ref(false);
 const links = computed(() => [
   { href: href("#features"), label: "Features" },
   { href: "/themes/", label: "Themes", current: route.path.startsWith("/themes") },
+  { href: "/changelog/", label: "Changelog", current: route.path.startsWith("/changelog") },
   { href: href("#download"), label: "Download" },
   { href: href("#faq"), label: "FAQ" },
 ]);
