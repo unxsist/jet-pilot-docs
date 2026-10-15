@@ -18,7 +18,7 @@ export const faqs = [
   },
   {
     q: "What do I need to connect to my clusters?",
-    a: `A kubeconfig, or a cloud account. JET Pilot finds the kubeconfig files you already have, and from 2.0 it connects AWS, Google Cloud, Azure, DigitalOcean, Akamai, Civo, Scaleway, Vultr and Exoscale and finds the clusters in them. You can also paste a kubeconfig, import a file or enter a cluster by hand. It needs <code>kubectl</code> (plus <code>helm</code> for the Helm views); if you don’t have them, Settings › Advanced downloads checksum-verified copies. It works with any conformant cluster you can reach, including exec-plugin and SSO sign-ins such as kubelogin, AWS IAM Identity Center, gcloud and az.`,
+    a: `A kubeconfig, or a cloud account. JET Pilot finds the kubeconfig files you already have, and from 2.0 it connects AWS, Google Cloud, Azure, DigitalOcean, Akamai, Civo, Scaleway, Vultr and Exoscale and finds the clusters in them. You can also paste a kubeconfig, import a file or enter a cluster by hand. It uses <code>kubectl</code> for some tasks and <code>helm</code> to install, upgrade and roll back charts; if you don’t have them, Settings › Advanced downloads checksum-verified copies. It works with any conformant cluster you can reach, including exec-plugin and SSO sign-ins such as kubelogin, AWS IAM Identity Center, gcloud and az.`,
   },
   {
     q: "How does signing in work?",
@@ -50,7 +50,7 @@ export const faqs = [
   },
   {
     q: "Does JET Pilot collect any data?",
-    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters, and to the cloud accounts you connect, with your own credentials. Besides that it only checks for updates, reads a small announcements file from this site, contacts Open VSX while you browse the theme gallery, and downloads kubectl, Helm or kubelogin from their official sources when you ask it to. The update server counts how many update checks it gets each day and keeps nothing else. The update server counts how many update checks it gets each day and keeps nothing else.`,
+    a: `No. There is no account, no analytics and no telemetry in the app. It talks to your clusters, and to the cloud accounts you connect, with your own credentials. Besides that it only checks for updates, reads a small announcements file from this site, contacts Open VSX while you browse the theme gallery, talks to Artifact Hub and your Helm repositories when you look for or install charts, and downloads kubectl, Helm or kubelogin from their official sources when you ask it to. The update server counts how many update checks it gets each day and keeps nothing else.`,
   },
   {
     q: "How do updates work?",
@@ -58,7 +58,7 @@ export const faqs = [
   },
   {
     q: "What is it built with?",
-    a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, the downloads are small: 15 MB for the Windows installer, about 26 MB for macOS and 27 MB for the Linux packages (the AppImage, which bundles its own libraries, is about 100 MB).`,
+    a: `Rust and Tauri 2 for the native app, Vue 3 and TypeScript for the interface. Because Tauri uses the operating system’s own webview, the downloads are small: 16 MB for the Windows installer, about 28 MB for macOS and 28 MB for the Linux packages (the AppImage, which bundles its own libraries, is about 100 MB).`,
   },
 ];
 
