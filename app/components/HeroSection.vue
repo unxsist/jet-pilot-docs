@@ -5,11 +5,11 @@ const { primary, platforms } = useDownloads();
 const { stars } = useGitHub();
 const noteShipped = useReleaseAtLeast(NOTE_RELEASE_VERSION);
 
-/* This deploys with 2.2, so 2.2 is the note unless the latest release says otherwise. */
+/* This deploys with 2.3, so 2.3 is the note unless the latest release says otherwise. */
 const note = computed<{ tag: string; text: string; href: string }>(() =>
   noteShipped.value === false
-    ? { tag: "Coming soon", text: "JET Pilot 2.2: GitOps, usage history and access review", href: "#gitops" }
-    : { tag: "2.2", text: "GitOps, usage history and access review", href: "#gitops" }
+    ? { tag: "Coming soon", text: "JET Pilot 2.3: Health, Ask AI and split view", href: "#health" }
+    : { tag: "2.3", text: "Health, Ask AI and split view", href: "#health" }
 );
 
 /* The hero shot is the LCP element: start fetching it with the HTML. Keep in step with the AppShot below. */
