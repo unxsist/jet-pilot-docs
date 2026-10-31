@@ -28,8 +28,8 @@ export const PLATFORMS: Platform[] = [
     name: "macOS",
     requirement: "Apple Silicon & Intel",
     options: [
-      { id: "mac-arm", label: "Apple Silicon", detail: ".dmg · arm64", match: /_aarch64\.dmg$/, approx: "28 MB" },
-      { id: "mac-intel", label: "Intel", detail: ".dmg · x64", match: /_x64\.dmg$/, approx: "28 MB" },
+      { id: "mac-arm", label: "Apple Silicon", detail: ".dmg · arm64", match: /_aarch64\.dmg$/, approx: "29 MB" },
+      { id: "mac-intel", label: "Intel", detail: ".dmg · x64", match: /_x64\.dmg$/, approx: "29 MB" },
     ],
   },
   {
@@ -37,8 +37,8 @@ export const PLATFORMS: Platform[] = [
     name: "Windows",
     requirement: "Windows 10 or later · x64",
     options: [
-      { id: "win-exe", label: "Installer", detail: ".exe · x64", match: /_x64-setup\.exe$/, approx: "16 MB" },
-      { id: "win-msi", label: "MSI package", detail: ".msi · x64", match: /_x64_en-US\.msi$/, approx: "23 MB" },
+      { id: "win-exe", label: "Installer", detail: ".exe · x64", match: /_x64-setup\.exe$/, approx: "17 MB" },
+      { id: "win-msi", label: "MSI package", detail: ".msi · x64", match: /_x64_en-US\.msi$/, approx: "24 MB" },
     ],
   },
   {
@@ -46,8 +46,8 @@ export const PLATFORMS: Platform[] = [
     name: "Linux",
     requirement: "glibc 2.35+ (Ubuntu 22.04 or newer)",
     options: [
-      { id: "linux-deb", label: "Debian / Ubuntu", detail: ".deb · x64", match: /_amd64\.deb$/, approx: "28 MB" },
-      { id: "linux-rpm", label: "Fedora / RHEL", detail: ".rpm · x64", match: /\.x86_64\.rpm$/, approx: "28 MB" },
+      { id: "linux-deb", label: "Debian / Ubuntu", detail: ".deb · x64", match: /_amd64\.deb$/, approx: "30 MB" },
+      { id: "linux-rpm", label: "Fedora / RHEL", detail: ".rpm · x64", match: /\.x86_64\.rpm$/, approx: "30 MB" },
       { id: "linux-appimage", label: "AppImage", detail: ".AppImage · x64", match: /_amd64\.AppImage$/ },
       { id: "linux-deb-arm", label: "Debian / Ubuntu", detail: ".deb · ARM64", match: /_(arm64|aarch64)\.deb$/, optional: true },
       { id: "linux-rpm-arm", label: "Fedora / RHEL", detail: ".rpm · ARM64", match: /\.aarch64\.rpm$/, optional: true },

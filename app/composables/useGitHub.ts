@@ -8,8 +8,8 @@ export const REPO = "unxsist/jet-pilot";
 export const REPO_URL = `https://github.com/${REPO}`;
 export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 
-/** The release the hero's note is about: GitOps, usage history and access review. */
-export const NOTE_RELEASE_VERSION = "2.2.0";
+/** The release the hero's note is about: Health, Ask AI and split view. */
+export const NOTE_RELEASE_VERSION = "2.3.0";
 
 export interface ReleaseAsset {
   name: string;
